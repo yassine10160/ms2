@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 13:47:42 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/09 14:11:21 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_cmds
 {
