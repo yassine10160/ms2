@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 14:11:21 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/09 14:16:17 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,10 @@ void			free_all(t_all *all);
 size_t			ft_strlen(char *line);
 char			*ft_strcat(char *str_a, char *str_b, int flag, int i);
 char			*ft_strndup(char *str, int n);
+
+/*
+** utils/ft_calloc.c
+*/
+void *ft_calloc(size_t nmemb, size_t size);
 
 #endif

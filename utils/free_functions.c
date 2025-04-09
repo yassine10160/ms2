@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 13:11:59 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/09 14:57:28 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_env(t_env *env)
 {
 	t_env	*save;
 
+	if (!env)
+		return ;
 	while (env->prev)
 		env = env->prev;
 	while (env->next)
@@ -34,9 +36,11 @@ void	free_cmds(t_cmds *cmds)
 {
 	t_cmds	*save;
 
+	if (!cmds)
+		return ;
 	while (cmds->prev)
 		cmds = cmds->prev;
-	while (cmds->next)
+	while (cmds)
 	{
 		if (cmds->cmd)
 			free(cmds->cmd);
@@ -44,8 +48,6 @@ void	free_cmds(t_cmds *cmds)
 		cmds = cmds->next;
 		free(save);
 	}
-	if (cmds)
-		free(cmds);
 }
 
 void	free_data(t_data *data)
@@ -54,11 +56,9 @@ void	free_data(t_data *data)
 
 	while (data->prev)
 		data = data->prev;
-	while (data->next)
+	while (data)
 	{
-		free_cmds(&data->cmds);
-		if (data->line)
-			free(data->line);
+		free_cmds(data->cmds);
 		if (data->fd_in != 0)
 			close(data->fd_in);
 		if (data->fd_out != 1)
@@ -69,12 +69,12 @@ void	free_data(t_data *data)
 		data = data->next;
 		free(save);
 	}
-	if (data)
-		free(data);
 }
 
 void	free_all(t_all *all)
 {
+	if (!all);
+		return ;
 	free_env(all->env);
 	free_data(all->first);
 	free(all);
