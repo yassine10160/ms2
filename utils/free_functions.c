@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 14:57:28 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:03:38 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	free_data(t_data *data)
 {
 	t_data	*save;
 
+	if (!data)
+		return ;
 	while (data->prev)
 		data = data->prev;
 	while (data)
@@ -73,7 +75,7 @@ void	free_data(t_data *data)
 
 void	free_all(t_all *all)
 {
-	if (!all);
+	if (!all)
 		return ;
 	free_env(all->env);
 	free_data(all->first);
