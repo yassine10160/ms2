@@ -3,101 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 15:09:46 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/09 20:03:59 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-t_cmds	*init_cmds(void)
+void init_cmds(t_cmds *cmds)
 {
-	t_cmds	*cmds;
-
-	cmds = ft_calloc(1, sizeof(struct s_cmds));
+	cmds = malloc(sizeof(struct s_cmds));
 	if (!cmds)
-		return (NULL);
-	return (cmds);
+		return;
+	cmds->token = NULL;
+	cmds->prev = NULL;
+	cmds->next = NULL;
 }
 
-t_data	*init_data(void)
+void init_data(t_data *data)
 {
-	t_data	*data;
-	int		fd_pipe[2];
+	int fd_pipe[2];
 
-	data = ft_calloc(1, sizeof(struct s_data));
-	if (!data)
-		return (NULL);
-	data->cmds = init_cmds();
-	if (!data->cmds)
-	{
-		free(data);
-		return (NULL);
-	}
 	if (pipe(fd_pipe) == -1)
-	{
-		free(data->cmds);
-		free(data);
-		return (NULL);
-	}
+		return;
+	data = malloc(sizeof(struct s_data));
+	if (!data)
+		return;
+	data->cmds = NULL;
+	data->fd_in = 0;
 	data->fd_out = 1;
+	data->prev = NULL;
+	data->next = NULL;
 	data->pipe_fd[0] = fd_pipe[0];
 	data->pipe_fd[1] = fd_pipe[1];
-	return (data);
+	init_cmds(data->cmds);
 }
 
-t_all	*init_all(void)
+void init_all(t_all *all)
 {
-	t_all	*all;
-
-	all = ft_calloc(1, sizeof(struct s_all));
+	all = malloc(sizeof(struct s_all));
 	if (!all)
-		return (NULL);
-	all->first = init_data();
-	if (!all->first)
-	{
-		free(all);
-		return (NULL);
-	}
-	return (all);
+		return;
+	init_data(all->first);
 }
 
-t_cmds	*add_next_cmds(t_cmds *current)
-{
-	t_cmds	*new;
+// int  main()
+// {
+// 	t_data	*data;
 
-	new = init_cmds();
-	if (!new)
-		return (NULL);
-	new->prev = current;
-	current->next = new;
-	return (new);
-}
-
-t_data	*add_next_data(t_data *current)
-{
-	t_data	*new;
-
-	new = init_data();
-	if (!new)
-		return (NULL);
-	current->next = new;
-	new->prev = current;
-	return (new);
-}
-
-int  main()
-{
-	t_all	*all;
-
-	all = init_all();
-	if (all)
-	{
-		printf("%d\n%s\n", all->first->fd_out, all->first->cmds->cmd);
-		free_all(all);
-	}
-}
-
+// 	data = calloc(1, sizeof(struct s_data));
+// 	if  (!data)
+// 		printf("ko");
+// 	else
+// 	{
+// 		printf("%d",data->fd_in);
+// 	}
+// }
