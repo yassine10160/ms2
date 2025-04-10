@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 11:46:17 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/10 14:06:45 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,11 @@ char			*ft_strndup(char *str, int n);
 ** utils/ft_calloc.c
 */
 void			*ft_calloc(size_t nmemb, size_t size);
+
+/*
+** utils/ft_itoa.c
+*/
+char			*ft_itoa(int nb);
 
 /*
 ** parsing/init.c
