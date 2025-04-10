@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 14:13:30 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 14:47:22 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,8 +148,11 @@ t_data			*add_next_data(t_data *current);
 /*
 ** parsing/expand.c
 */
+int				should_expand(char *line, int i, int sq);
 char			*expand_status(char *line, int status, int i, int j);
-char			*search_var_in_env(char *line, char *var, int end_var, t_all *all);
+int				find_var_end(char *line, int i, int *sq, int *dq);
+char			*search_var_in_env(char *line, char *var, int end_var, 
+					t_all *all);
 char			*expand_var(char *line, t_all *all, int i, int j);
 
 /*

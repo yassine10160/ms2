@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 13:32:44 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 15:00:56 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ static int	handle_dollar(char *line, int i, int *sq, int *dq)
 	int	save;
 
 	save = *dq;
+	if (!(*sq % 2) && line[i] && line[i] == '$' && line[i + 1] && line[i + 1] == '?')
+	{
+		i += 2;
+		return (i);
+	}
 	while (line[i] && line[i] != ' ' && !(*sq % 2))
 	{
 		is_in_quote(line[i], sq, dq);
@@ -74,6 +79,7 @@ char	*expand_line_var(char *line, char *var_value, int i_var, int sq)
 		}
 		else
 			s[i_s++] = line[i_line++];
+		printf("%c\n", s[i_s -1]);
 	}
 	s[i_s] = '\0';
 	return (s);

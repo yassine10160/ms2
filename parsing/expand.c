@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 14:43:47 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 15:02:36 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,37 +23,29 @@ int	should_expand(char *line, int i, int sq)
 char	*expand_status(char *line, int status, int i, int j)
 {
 	char	*sts;
-	char	*new_line;
-	int		k;
-	int		sq;
-	int		dq;
+	char	*new_var;
+	char	*result;
+	char	*save;
 
-	sq = 0;
-	dq = 0;
+	(void)i;
+	(void)j;
 	sts = ft_itoa(status);
 	if (!sts)
 		return (NULL);
-	new_line = malloc(sizeof(char) * (ft_strlen(line) + ft_strlen(sts)));
-	if (!new_line)
+	new_var = ft_strdup("?=");
+	if (!new_var)
 	{
 		free(sts);
 		return (NULL);
 	}
-	k = 0;
-	while (line && line[k])
-	{
-		is_in_quote(line[k], &sq, &dq);
-		if  (should_expand(line, k, sq))
-		{
-			k = k + 2;
-			while (sts && sts[j])
-				new_line [i++] = sts[j++];
-		}
-		else
-			new_line[i++] = line[k++];
-	}
-	new_line[i] = 0;
-	return (new_line);
+	save = ft_strcat(new_var, sts, 0, 0);
+	free(sts);
+	free(new_var);
+	if (!save)
+		return (NULL);
+	result = expand_line_var(line, save, 0, 0);
+	free(save);
+	return (result);
 }
 
 int	find_var_end(char *line, int i, int *sq, int *dq)
@@ -86,7 +78,7 @@ char *search_var_in_env(char *line, char *var, int end_var, t_all *all)
 		return (NULL);
 	}
 	ptr = find_in_env(all->env, var_name);
-	if (ft_strcmp("?", var_name))
+	if (ft_strcmp(var_name, "?"))
 		expanded_line = expand_status(line, all->status, 0, 0);
 	else if (!ptr)
 		expanded_line = expand_null(line, 0, 0);
@@ -124,10 +116,16 @@ int main(int ac, char **av, char **env)
 	t_all	*all;
 	char	*line;
 
-	line = ft_strdup("Salut la vie '$?' c'est' cool $?");
+
+	line = ft_strdup("Salut la vie '$?' c'est' cool $bn");
 	all = init_all(env);
 	all->first->cmds->token = line;
 	all->status = 12345;
 	line = expand_var(all->first->cmds->token, all, 0, 0);
-	printf("%s\n", line);
+	split_minishell(line, all);
+		while (all->first->cmds->next)
+	{
+		printf("%s\n", all->first->cmds->token);
+		all->first->cmds = all->first->cmds->next;
+	}
 }
