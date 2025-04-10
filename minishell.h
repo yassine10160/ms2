@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 14:06:45 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 14:13:30 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_cmds
 {
@@ -47,7 +49,6 @@ typedef struct s_all
 	t_env	*env;
 	int		status;
 }	t_all;
-
 
 /*
 ** builtin/env_functions.c
@@ -133,16 +134,47 @@ void			*ft_calloc(size_t nmemb, size_t size);
 /*
 ** utils/ft_itoa.c
 */
+int				len_nb(int nb);
 char			*ft_itoa(int nb);
 
 /*
 ** parsing/init.c
 */
-t_data			*init_data();
+t_data			*init_data(void);
 t_all			*init_all(char **env);
 t_cmds			*add_next_cmds(t_cmds *current);
 t_data			*add_next_data(t_data *current);
 
+/*
+** parsing/expand.c
+*/
+char			*expand_status(char *line, int status, int i, int j);
+char			*search_var_in_env(char *line, char *var, int end_var, t_all *all);
+char			*expand_var(char *line, t_all *all, int i, int j);
 
+/*
+** parsing/expand_null.c
+*/
+char			*expand_null(char *line, int flag, int i);
+
+/*
+** parsing/expand_var.c
+*/
+char			*expand_line_var(char *line, char *var_value, int i_var, int sq);
+
+/*
+** parsing/parsing.c
+*/
+int				word_len(char *str);
+char			*str_dup_minishell(char *s, int *i, int k, int j);
+void			split_minishell(char *str, t_all *all);
+
+/*
+** main.c
+*/
+void			exit_parse(char *s, t_all *all, int status);
+int				is_parse_err(char c);
+int				parse_error(char *str, t_all *all);
+int				is_closed(char *line);
 
 #endif

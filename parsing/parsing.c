@@ -3,40 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 12:04:53 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/10 14:14:44 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// static int	count_word_minishell(char *str)
-// {
-// 	int	count;
-// 	int	i;
-// 	int	dq;
-// 	int	sq;
-
-// 	count = 1;
-// 	i = 0;
-// 	sq = 0;
-// 	dq = 0;
-// 	while (str && str[i])
-// 	{
-// 		is_in_quote(str[i], &sq, &dq);
-// 		if (str[i] == ' ' && !(sq % 2) && !(dq % 2))
-// 		{
-// 			count++;
-// 			while (str[i] && str[i] == ' ')
-// 				i++;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// 	return (count);
-// }
 
 int	word_len(char *str)
 {
@@ -112,31 +86,31 @@ void	split_minishell(char *str, t_all *all)
 	return ;
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_all *all;
-	char *line;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_all *all;
+// 	char *line;
 
-	(void)ac;
-	(void)av;
-	line = ft_strdup("Salut'la' vie c'est' cool d'etre' la ");
-	printf("%s\n", line);
-	all = init_all(env);
-	if (!all)
-	{
-		printf("Error");
-		return (0);
-	}
-	split_minishell(line, all);
-	while (all->first->cmds->prev)
-		all->first->cmds = all->first->cmds->prev;
-	while (all->first->cmds->next)
-	{
-		printf("%s\n", all->first->cmds->token);
-		all->first->cmds = all->first->cmds->next;
-	}
-	while (all->first->cmds->prev)
-		all->first->cmds = all->first->cmds->prev;
-	free(line);
-	free_all(all);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	line = ft_strdup("Salut'la' vie c'est' cool d'etre' la ");
+// 	printf("%s\n", line);
+// 	all = init_all(env);
+// 	if (!all)
+// 	{
+// 		printf("Error");
+// 		return (0);
+// 	}
+// 	split_minishell(line, all);
+// 	while (all->first->cmds->prev)
+// 		all->first->cmds = all->first->cmds->prev;
+// 	while (all->first->cmds->next)
+// 	{
+// 		printf("%s\n", all->first->cmds->token);
+// 		all->first->cmds = all->first->cmds->next;
+// 	}
+// 	while (all->first->cmds->prev)
+// 		all->first->cmds = all->first->cmds->prev;
+// 	free(line);
+// 	free_all(all);
+// }

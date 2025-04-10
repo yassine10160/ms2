@@ -6,18 +6,30 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 14:07:24 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 14:43:47 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	should_expand(char *line, int i, int sq)
+{
+	return (line[i] == '$' && !(sq % 2) && line[i + 1] && 
+		(is_alpha(line[i + 1]) || (line[i + 1] == '?')) && 
+		line[i + 1] != ' ' && line[i + 1] != '"' && 
+		line[i + 1] != '\'' && !is_digit(line[i + 1]));
+}
 
 char	*expand_status(char *line, int status, int i, int j)
 {
 	char	*sts;
 	char	*new_line;
 	int		k;
+	int		sq;
+	int		dq;
 
+	sq = 0;
+	dq = 0;
 	sts = ft_itoa(status);
 	if (!sts)
 		return (NULL);
@@ -30,7 +42,8 @@ char	*expand_status(char *line, int status, int i, int j)
 	k = 0;
 	while (line && line[k])
 	{
-		if  (line[k] == '$' && line[k + 1] == '?')
+		is_in_quote(line[k], &sq, &dq);
+		if  (should_expand(line, k, sq))
 		{
 			k = k + 2;
 			while (sts && sts[j])
@@ -43,15 +56,7 @@ char	*expand_status(char *line, int status, int i, int j)
 	return (new_line);
 }
 
-static int should_expand(char *line, int i, int sq)
-{
-	return (line[i] == '$' && !(sq % 2) && line[i + 1] && 
-		is_alpha(line[i + 1]) && 
-		line[i + 1] != ' ' && line[i + 1] != '"' && 
-		line[i + 1] != '\'' && !is_digit(line[i + 1]));
-}
-
-static int find_var_end(char *line, int i, int *sq, int *dq)
+int	find_var_end(char *line, int i, int *sq, int *dq)
 {
 	int	j;
 	int	save;
@@ -81,12 +86,12 @@ char *search_var_in_env(char *line, char *var, int end_var, t_all *all)
 		return (NULL);
 	}
 	ptr = find_in_env(all->env, var_name);
-	if (ft_strcmp(var_name, "?"))
+	if (ft_strcmp("?", var_name))
 		expanded_line = expand_status(line, all->status, 0, 0);
-	if (!ptr)
+	else if (!ptr)
 		expanded_line = expand_null(line, 0, 0);
 	else
-		expanded_line = expand_line_var(line, ptr->line, 0);
+		expanded_line = expand_line_var(line, ptr->line, 0, 0);
 	free(line);
 	free(var_name);
 	return (expanded_line);
@@ -122,6 +127,7 @@ int main(int ac, char **av, char **env)
 	line = ft_strdup("Salut la vie '$?' c'est' cool $?");
 	all = init_all(env);
 	all->first->cmds->token = line;
-	expand_var(all->first->cmds->token, all, 0, 0);
-	printf("%s\n", all->first->cmds->token);
+	all->status = 12345;
+	line = expand_var(all->first->cmds->token, all, 0, 0);
+	printf("%s\n", line);
 }
