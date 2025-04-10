@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 10:17:19 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 10:52:03 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,26 +86,46 @@ char	*str_dup_minishell(char *s, int *i, int k, int j)
 	return (str);
 }
 
-void	(char *str, t_cmds *cmd)
+void	split_minishell(char *str, t_all *all)
 {
-	int		i;
-	int		j;
 	t_cmds	*save;
+	int		i;
 
 	i = 0;
-	j = 0;
 	while (str && str[i])
 	{
 		if (str[i] == ' ')
 			i++;
 		else
 		{
-			cmd->token = str_dup_minishell(str, &i, i, 0);
-			if (!cmd->token)
-				return (NULL);
-			j++;
+			all->first->cmds->token = str_dup_minishell(str, &i, i, 0);
+			if (!all->first->cmds->token)
+				return (free_all(all));
+			save = add_next_cmds(all->first->cmds);
+			if (!save)
+				return (free_all(all));
+			all->first->cmds = save;
 		}
 	}
-	strs[j] = NULL;
-	return (strs);
+	return ;
+}
+
+int main(int ac, char **av, char **env)
+{
+	t_all *all;
+	char *line;
+
+	line = ft_strdup("Salut'la' vie c'est' cool d'etre' la ");
+	init_all(all, env);
+	if (!all)
+	{
+		printf("Error");
+		return (0);
+	}
+	// split_minishell(line, all);
+	while (all->first->cmds->next)
+	{
+		printf("%s\n", all->first->cmds->token);
+		all->first->cmds = all->first->cmds->next;
+	}
 }

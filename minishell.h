@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 10:09:13 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 10:48:32 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void			*ft_calloc(size_t nmemb, size_t size);
 */
 void			init_cmds(t_cmds *cmds);
 void			init_data(t_data *data);
-void			init_all(t_all *all);
+void			init_all(t_all *all, char **env);
 t_cmds			*add_next_cmds(t_cmds *current);
 t_data			*add_next_data(t_data *current);
 

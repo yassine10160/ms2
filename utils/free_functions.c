@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 15:03:38 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/10 10:47:38 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	free_cmds(t_cmds *cmds)
 		cmds = cmds->prev;
 	while (cmds)
 	{
-		if (cmds->cmd)
-			free(cmds->cmd);
+		if (cmds->token)
+			free(cmds->token);
 		save = cmds;
 		cmds = cmds->next;
 		free(save);
@@ -80,4 +80,5 @@ void	free_all(t_all *all)
 	free_env(all->env);
 	free_data(all->first);
 	free(all);
+	all = NULL;
 }

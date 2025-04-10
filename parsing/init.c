@@ -6,11 +6,11 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 10:20:33 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 10:48:15 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 
 void	init_cmds(t_cmds *cmds)
@@ -30,12 +30,14 @@ void	init_data(t_data *data)
 	if (!data->cmds)
 	{
 		free(data);
+		data = NULL;
 		return ;
 	}
 	if (pipe(fd_pipe) == -1)
 	{
 		free(data->cmds);
 		free(data);
+		data = NULL;
 		return ;
 	}
 	data->fd_out = 1;
@@ -53,6 +55,7 @@ void	init_all(t_all *all, char **env)
 	if (!all->first)
 	{
 		free(all);
+		all = NULL;
 		return ;
 	}
 	all->env = env_to_struct(env);
@@ -60,6 +63,7 @@ void	init_all(t_all *all, char **env)
 	{
 		free_data(all->first);
 		free(all);
+		all = NULL;
 		return ;
 	}
 	return ;
