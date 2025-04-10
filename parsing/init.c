@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 11:50:50 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:07:47 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_all	*init_all(char **env)
 		free(all);
 		return (NULL);
 	}
+	all->status = 0;
 	all->env = env_to_struct(env);
 	if (!all->env)
 	{
