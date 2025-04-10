@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 11:53:46 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/10 12:04:53 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	split_minishell(char *str, t_all *all)
 			all->first->cmds = save;
 		}
 	}
+	while (all->first->cmds->prev)
+		all->first->cmds = all->first->cmds->prev;
 	return ;
 }
 
@@ -118,6 +120,7 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	line = ft_strdup("Salut'la' vie c'est' cool d'etre' la ");
+	printf("%s\n", line);
 	all = init_all(env);
 	if (!all)
 	{
@@ -125,9 +128,15 @@ int main(int ac, char **av, char **env)
 		return (0);
 	}
 	split_minishell(line, all);
+	while (all->first->cmds->prev)
+		all->first->cmds = all->first->cmds->prev;
 	while (all->first->cmds->next)
 	{
 		printf("%s\n", all->first->cmds->token);
 		all->first->cmds = all->first->cmds->next;
 	}
+	while (all->first->cmds->prev)
+		all->first->cmds = all->first->cmds->prev;
+	free(line);
+	free_all(all);
 }
