@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:26:08 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 13:36:28 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/10 11:35:26 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ int	ft_export(t_env *env, char *new_var)
 		return (1);
 	if (is_alpha(var_name[0]) != 1)
 	{
-		free(var_name);
 		printf("export: '%s': not a valid identifier\n", var_name);
+		free(var_name);
 		return (2);
 	}
 	save = find_in_env(env, var_name);

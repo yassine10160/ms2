@@ -3,77 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 10:48:15 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/10 11:50:50 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-void	init_cmds(t_cmds *cmds)
+t_data	*init_data()
 {
-	cmds = ft_calloc(1, sizeof(struct s_cmds));
-	return ;
-}
-
-void	init_data(t_data *data)
-{
+	t_data	*data;
 	int		fd_pipe[2];
 
 	data = ft_calloc(1, sizeof(struct s_data));
 	if (!data)
-		return ;
-	init_cmds(data->cmds);
+		return (NULL);
+	data->cmds = ft_calloc(1, sizeof(struct s_cmds));
 	if (!data->cmds)
 	{
 		free(data);
-		data = NULL;
-		return ;
+		return (NULL);
 	}
 	if (pipe(fd_pipe) == -1)
 	{
 		free(data->cmds);
 		free(data);
-		data = NULL;
-		return ;
+		return (NULL);
 	}
 	data->fd_out = 1;
 	data->pipe_fd[0] = fd_pipe[0];
 	data->pipe_fd[1] = fd_pipe[1];
-	return ;
+	return (data);
 }
 
-void	init_all(t_all *all, char **env)
+t_all	*init_all(char **env)
 {
+	t_all	*all;
+
 	all = ft_calloc(1, sizeof(struct s_all));
 	if (!all)
-		return ;
-	init_data(all->first);
+		return (NULL);
+	all->first = init_data();
 	if (!all->first)
 	{
 		free(all);
-		all = NULL;
-		return ;
+		return (NULL);
 	}
 	all->env = env_to_struct(env);
 	if (!all->env)
 	{
 		free_data(all->first);
 		free(all);
-		all = NULL;
-		return ;
+		return (NULL);
 	}
-	return ;
+	return (all);
 }
 
 t_cmds	*add_next_cmds(t_cmds *current)
 {
 	t_cmds	*new;
 
-	init_cmds(new);
+	new = NULL;
+	new = ft_calloc(1, sizeof(struct s_cmds));
 	if (!new)
 		return (NULL);
 	new->prev = current;
@@ -85,6 +78,7 @@ t_data	*add_next_data(t_data *current)
 {
 	t_data	*new;
 
+	new = NULL;
 	init_data(new);
 	if (!new)
 		return (NULL);
@@ -93,14 +87,14 @@ t_data	*add_next_data(t_data *current)
 	return (new);
 }
 
-// int  main()
+// int  main(int ac, char **av, char **env)
 // {
 // 	t_all	*all;
 
-// 	all = init_all();
+// 	all = init_all(env);
+// 	printf("ok");
 // 	if (all)
 // 	{
-// 		printf("%d\n%s\n", all->first->fd_out, all->first->cmds->cmd);
+// 		printf("%d\n%s\n", all->first->fd_out, all->env->line);
 // 		free_all(all);
 // 	}
-// }
