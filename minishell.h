@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/11 13:58:38 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/12 20:11:33 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,11 @@ void split_minishell(char *str, t_all *all);
 ** parsing/split_pipe.case
 */
 char **pipe_split(char const *s, char *delim);
+
+/*
+** parsing/add_space.c
+*/
+char *add_space(char *line);
 
 /*
 ** main.c
