@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 15:02:36 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/12 15:35:29 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,21 +111,21 @@ char	*expand_var(char *line, t_all *all, int i, int j)
 	return (line);
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_all	*all;
-	char	*line;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_all	*all;
+// 	char	*line;
 
 
-	line = ft_strdup("Salut la vie '$?' c'est' cool $bn");
-	all = init_all(env);
-	all->first->cmds->token = line;
-	all->status = 12345;
-	line = expand_var(all->first->cmds->token, all, 0, 0);
-	split_minishell(line, all);
-		while (all->first->cmds->next)
-	{
-		printf("%s\n", all->first->cmds->token);
-		all->first->cmds = all->first->cmds->next;
-	}
-}
+// 	line = ft_strdup("Salut la vie '$?' c'est' cool $bn");
+// 	all = init_all(env);
+// 	all->first->cmds->token = line;
+// 	all->status = 12345;
+// 	line = expand_var(all->first->cmds->token, all, 0, 0);
+// 	split_minishell(line, all);
+// 		while (all->first->cmds->next)
+// 	{
+// 		printf("%s\n", all->first->cmds->token);
+// 		all->first->cmds = all->first->cmds->next;
+// 	}
+// }

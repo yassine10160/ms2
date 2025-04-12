@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:40:32 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/11 10:01:26 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/12 15:35:06 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ int len_nb(int nb)
 char *ft_itoa(int nb)
 {
 	char *nbr;
-	int i;
 	int len;
 
 	len = len_nb(nb);
-	i = 0;
 	nbr = malloc(sizeof(char) * (len + 1));
 	if (!nbr)
 		return (NULL);

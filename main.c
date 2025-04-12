@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/10 10:13:31 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/12 15:32:53 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,21 @@ int is_closed(char *line)
 	return (1);
 }
 
-int main()
+int main(int ac, char **av, char **env)
 {
-	t_all all;
+	t_all *all;
 	char *line;
 
-	init_all(&all);
+	all = init_all(env);
 	while (1)
 	{
 		line = readline(NULL);
 		if (line)
 		{
-			if (!parse_error(line, &all))
+			if (!parse_error(line, all))
 			{
 				if (!is_closed(line))
-					exit_parse("error: line not closed", &all, 258);
+					exit_parse("error: line not closed", all, 258);
 				else
 					exit(0); // handle_line(&all);
 			}

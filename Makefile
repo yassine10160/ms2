@@ -1,22 +1,64 @@
-NAME= minishell
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/04/11 16:20:41 by dorianmazar       #+#    #+#              #
+#    Updated: 2025/04/12 15:36:05 by dorianmazar      ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC=cc
-FLAGS= -Wall -Wextra -Werror
+NAME		= minishell
 
-LIBS = -lreadline
-OBJDIR = .obj
-SRCS= main.c  $(wildcard parsing/*.c) $(wildcard builtin/*.c) $(wildcard utils/*.c)
-HEADERS= minishell.h
-OBJS=$(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+CC			= cc
+CFLAGS		= -Wall -Werror -Wextra
+RL_FLAGS	= -lreadline
+
+# Directories
+BUILTIN_DIR	= builtin
+UTILS_DIR	= utils
+PARSING_DIR	= parsing
+OBJ_DIR		= .obj
+
+# Source files
+BUILTIN_SRC	= env_functions.c env_parsing.c ft_cd.c ft_echo.c ft_env.c \
+			  ft_export.c ft_pwd.c ft_unset.c
+
+UTILS_SRC	= char.c char_utils2.c free_functions.c ft_calloc.c \
+			  ft_itoa.c strcpy.c
+
+PARSING_SRC	= expand.c expand_null.c expand_var.c init.c parsing.c \
+			  split_pipe.c
+
+SRC			= main.c \
+			  $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_SRC)) \
+			  $(addprefix $(UTILS_DIR)/, $(UTILS_SRC)) \
+			  $(addprefix $(PARSING_DIR)/, $(PARSING_SRC))
+
+# Object files
+OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+
+# Rules
 all: $(NAME)
-$(NAME): $(OBJS) $(HEADERS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBS) -o $(NAME)
-$(OBJDIR)/%.o: %.c $(HEADERS)
-	mkdir -p $(dir $@)
-	$(CC) $(FLAGS) $(OPTS) -c $< -o $@
+
+$(NAME): $(OBJ) Makefile
+	$(CC) $(CFLAGS) $(OBJ) $(RL_FLAGS) -o $(NAME)
+	@echo "\033[32mCompilation complete. Executable '$(NAME)' created.\033[0m"
+
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -rf $(OBJDIR)
+	@rm -rf $(OBJ_DIR)
+	@echo "\033[33mObject files removed.\033[0m"
+
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "\033[33mExecutable '$(NAME)' removed.\033[0m"
+
 re: fclean all
+
 .PHONY: all clean fclean re
