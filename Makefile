@@ -1,19 +1,7 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/11 16:20:41 by dorianmazar       #+#    #+#              #
-#    Updated: 2025/04/12 15:36:05 by dorianmazar      ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME		= minishell
 
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Wextra -Werror
 RL_FLAGS	= -lreadline
 
 # Directories
@@ -21,6 +9,9 @@ BUILTIN_DIR	= builtin
 UTILS_DIR	= utils
 PARSING_DIR	= parsing
 OBJ_DIR		= .obj
+
+# Header files
+HEADERS		= minishell.h
 
 # Source files
 BUILTIN_SRC	= env_functions.c env_parsing.c ft_cd.c ft_echo.c ft_env.c \
@@ -43,11 +34,12 @@ OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 # Rules
 all: $(NAME)
 
-$(NAME): $(OBJ) Makefile
+$(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(RL_FLAGS) -o $(NAME)
 	@echo "\033[32mCompilation complete. Executable '$(NAME)' created.\033[0m"
 
-$(OBJ_DIR)/%.o: %.c
+# This pattern rule ensures source files are recompiled if headers or Makefile change
+$(OBJ_DIR)/%.o: %.c $(HEADERS) Makefile
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
