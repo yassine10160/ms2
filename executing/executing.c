@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/14 14:00:24 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/14 15:14:43 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	fd_handle(t_data *data)
 	return (0);
 }
 
-executing(t_all *all)
+void	executing(t_all *all)
 {
 	int	builtin;
 
@@ -65,8 +65,8 @@ executing(t_all *all)
 	}
 }
 
-int main()
-{
-	char	*str = ft_strdup("pwd");
-	printf("%d", is_builtin(str));
-}
+// int main()
+// {
+// 	char	*str = ft_strdup("pwd");
+// 	printf("%d", is_builtin(str));
+// }

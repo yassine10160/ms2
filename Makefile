@@ -21,7 +21,7 @@ UTILS_SRC	= char.c char_utils2.c free_functions.c ft_calloc.c \
 			  ft_itoa.c strcpy.c
 
 PARSING_SRC	= expand.c expand_null.c expand_var.c init.c parsing.c \
-			  split_pipe.c
+			  split_pipe.c add_space.c
 
 SRC			= main.c \
 			  $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_SRC)) \

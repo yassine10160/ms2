@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_space.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:10:16 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/12 20:10:09 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/14 14:59:19 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,3 +104,4 @@ char *add_space(char *line)
 // 	s = add_space(av[1]);
 // 	printf("s:%s\n", s);
 // }
+
