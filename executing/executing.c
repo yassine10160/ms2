@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/14 13:40:34 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:00:24 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,14 @@ executing(t_all *all)
 	{
 		if (fd_handle(all->first))
 			return (exit(all));
-
+		builtin = is_builtin(all->first->cmds->token);
+		if (builtin != 0)
+			if (builtin_caller(all->first->cmds, builtin))
+				return (exit(all));
+		else
+			if (shell_cmd(all->first->cmds))
+				return (exit(all));
+		all->first = all->first->next;
 	}
 }
 

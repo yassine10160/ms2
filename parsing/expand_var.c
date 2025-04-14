@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 15:00:56 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/14 14:45:39 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*alloc_expanded_str(char *line, char *var_value, int i_var)
 {
 	char *s;
 
-	s = malloc(sizeof(char) * (ft_strlen(line) + 
+	s = ft_calloc(sizeof(char), (ft_strlen(line) + 
 		ft_strlen(var_value + i_var) + 2));
 	return (s);
 }
@@ -61,7 +61,10 @@ char	*expand_line_var(char *line, char *var_value, int i_var, int sq)
 	int		i_line;
 	int		i_s;
 	int		dq;
+	int		flag;
 
+
+	flag = 0;
 	i_var = find_var_start(var_value, i_var);
 	s = alloc_expanded_str(line, var_value, i_var);
 	if (!s)
@@ -72,15 +75,14 @@ char	*expand_line_var(char *line, char *var_value, int i_var, int sq)
 	while (line && line[i_line])
 	{
 		is_in_quote(line[i_line], &sq, &dq);
-		if (line[i_line] == '$' && !(sq % 2))
+		if (line[i_line] == '$' && !(sq % 2) && flag == 0)
 		{
 			i_line = handle_dollar(line, i_line, &sq, &dq);
 			i_s = copy_var(var_value, s, i_var, i_s);
+			flag++;
 		}
 		else
 			s[i_s++] = line[i_line++];
-		printf("%c\n", s[i_s -1]);
 	}
-	s[i_s] = '\0';
 	return (s);
 }

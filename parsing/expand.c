@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/12 15:35:29 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/14 14:45:58 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@ int	should_expand(char *line, int i, int sq)
 		line[i + 1] != '\'' && !is_digit(line[i + 1]));
 }
 
-char	*expand_status(char *line, int status, int i, int j)
+char	*expand_status(char *line, int status)
 {
 	char	*sts;
 	char	*new_var;
 	char	*result;
 	char	*save;
 
-	(void)i;
-	(void)j;
 	sts = ft_itoa(status);
 	if (!sts)
 		return (NULL);
@@ -78,8 +76,8 @@ char *search_var_in_env(char *line, char *var, int end_var, t_all *all)
 		return (NULL);
 	}
 	ptr = find_in_env(all->env, var_name);
-	if (ft_strcmp(var_name, "?"))
-		expanded_line = expand_status(line, all->status, 0, 0);
+	if (ft_strcmp("?", var_name))
+		expanded_line = expand_status(line, all->status);
 	else if (!ptr)
 		expanded_line = expand_null(line, 0, 0);
 	else
@@ -111,21 +109,22 @@ char	*expand_var(char *line, t_all *all, int i, int j)
 	return (line);
 }
 
-// int main(int ac, char **av, char **env)
-// {
-// 	t_all	*all;
-// 	char	*line;
+int main(int ac, char **av, char **env)
+{
+	t_all	*all;
+	char	*line;
 
-
-// 	line = ft_strdup("Salut la vie '$?' c'est' cool $bn");
-// 	all = init_all(env);
-// 	all->first->cmds->token = line;
-// 	all->status = 12345;
-// 	line = expand_var(all->first->cmds->token, all, 0, 0);
-// 	split_minishell(line, all);
-// 		while (all->first->cmds->next)
-// 	{
-// 		printf("%s\n", all->first->cmds->token);
-// 		all->first->cmds = all->first->cmds->next;
-// 	}
-// }
+	(void)ac;
+	(void)av;
+	line = ft_strdup("Salut la vie $? c'est' cool $bn");
+	all = init_all(env);
+	all->first->cmds->token = line;
+	all->status = 12345;
+	line = expand_var(all->first->cmds->token, all, 0, 0);
+	split_minishell(line, all);
+		while (all->first->cmds->next)
+	{
+		printf("%s\n", all->first->cmds->token);
+		all->first->cmds = all->first->cmds->next;
+	}
+}

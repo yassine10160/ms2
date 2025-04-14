@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:22:54 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/12 16:06:25 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/14 14:30:16 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_echo(t_cmds *cmd)
 {
 	int	flag;
 
-	flag = is_n(cmd->token);
+	flag = is_n(cmd);
 	if (!cmd && !flag)
 		printf("\n");
 	if (!cmd)

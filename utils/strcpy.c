@@ -6,12 +6,11 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:07:47 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 13:09:55 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/14 14:31:37 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
+#include "../minishell.h"
 
 size_t	ft_strlen(char *line)
 {
@@ -69,3 +68,27 @@ char	*ft_strndup(char *str, int n)
 	dup[i] = 0;
 	return (dup);
 }
+
+// char	**env_to_strs(t_env *env)
+// {
+// 	char	**strs;
+// 	int		count;
+// 	int		i;
+
+// 	count = 1;
+// 	i = 0;
+// 	while (env->prev)
+// 		env = env->prev;
+// 	while (env->next && count++)
+// 		env = env->next;
+// 	while (env->prev)
+// 		env = env->prev;
+// 	strs = malloc(sizeof(char *) * (count + 1));
+// 	if (!strs)
+// 		return (NULL);
+// 	while (env->next)
+// 	{
+		
+// 	}
+// }
+

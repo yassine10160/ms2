@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/12 15:59:13 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/14 14:46:21 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef enum e_builtin
 {
@@ -86,8 +86,8 @@ int ft_cd(t_env *env, char *arg);
 /*
 ** builtin/ft_echo.c
 */
-int is_n(char *flag);
-void ft_echo(char **str);
+int is_n(t_cmds *cmd);
+void ft_echo(t_cmds *cmd);
 
 /*
 ** builtin/ft_env.c
@@ -166,7 +166,7 @@ t_data *add_next_data(t_data *current);
 ** parsing/expand.c
 */
 int should_expand(char *line, int i, int sq);
-char *expand_status(char *line, int status, int i, int j);
+char *expand_status(char *line, int status);
 int find_var_end(char *line, int i, int *sq, int *dq);
 char *search_var_in_env(char *line, char *var, int end_var,
 						t_all *all);
