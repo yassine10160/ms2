@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/14 15:14:43 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/14 16:25:13 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	executing(t_all *all)
 			if (builtin_caller(all->first->cmds, builtin))
 				return (exit(all));
 		else
-			if (shell_cmd(all->first->cmds))
+			if (shell_cmd(all))
 				return (exit(all));
 		all->first = all->first->next;
 	}

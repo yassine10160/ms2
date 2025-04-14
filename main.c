@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/14 14:59:55 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/14 16:28:08 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	new_line(t_all *all)
+{
+	free_data(all->first);
+	all->first = init_data();
+	if (!all->first)
+		ft_exit(all, NULL);
+}
 
 void exit_parse(char *s, t_all *all, int status)
 {
