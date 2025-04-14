@@ -6,50 +6,52 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:22:54 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 13:37:15 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/12 16:06:25 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "../minishell.h"
 
-int	is_n(char *flag)
+int	is_n(t_cmds *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (flag && flag[0] == '-')
+	if (!cmd)
+		return (0);
+	if (cmd->token && cmd->token[0] == '-')
 	{
 		i++;
-		if (!flag[i])
+		if (!cmd->token[i])
 			return (0);
-		while (flag[i] && flag[i] == 'n')
+		while (cmd->token[i] && cmd->token[i] == 'n')
 			i++;
-		if (!flag[i])
+		if (!cmd->token[i])
 			return (1);
 	}
 	return (0);
 }
 
-void	ft_echo(char **str)
+void	ft_echo(t_cmds *cmd)
 {
-	int	i;
 	int	flag;
 
-	flag = is_n(str[0]);
-	if (!str && !flag)
+	flag = is_n(cmd->token);
+	if (!cmd && !flag)
 		printf("\n");
-	if (!str)
+	if (!cmd)
 		return ;
-	i = 0;
 	if (flag)
-		i++;
-	while (str && str[i])
+		cmd = cmd->next;
+	while (cmd->next && cmd->token)
 	{
-		printf("%s", str[i]);
-		if (str[i + 1])
+		printf("%s", cmd->token);
+		if (cmd->next)
 			printf(" ");
-		i++;
+		cmd = cmd->next;
 	}
+	if (cmd->token)
+		printf("%s", cmd->token);
 	if (!flag)
 		printf("\n");
 }

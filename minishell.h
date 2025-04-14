@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 10:20:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/12 20:11:33 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/12 15:59:13 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+
+typedef enum e_builtin
+{
+	EXPORT = 1,
+	ECHO,
+	EXIT,
+	UNSET,
+	ENV,
+	PWD,
+	CD,
+}	t_builtin;
 
 typedef struct s_cmds
 {
@@ -182,11 +193,6 @@ void split_minishell(char *str, t_all *all);
 ** parsing/split_pipe.case
 */
 char **pipe_split(char const *s, char *delim);
-
-/*
-** parsing/add_space.c
-*/
-char *add_space(char *line);
 
 /*
 ** main.c
