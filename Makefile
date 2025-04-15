@@ -21,7 +21,7 @@ BUILTIN_SRC	= env_functions.c env_parsing.c ft_cd.c ft_echo.c ft_env.c \
 UTILS_SRC	= char.c char_utils2.c free_functions.c ft_calloc.c \
 			  ft_itoa.c strcpy.c
 
-PARSING_SRC	= expand.c expand_null.c expand_var.c init.c parsing.c \
+PARSING_SRC	= expand.c expand_null.c expand_var.c init.c split_quote_and_space.c \
 			  split_pipe.c add_space.c handle_line.c
 
 EXEC_SRC	= builtin_caller.c executing.c shell_cmd.c get_path.c check_cmd.c \

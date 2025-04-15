@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 17:46:22 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/15 17:49:00 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void free_str_tab(char **tab, int limit);
 int calc_nb_words(char const *s, char *delim);
 char *fill_word(char *word, char const *s, int start, int end);
 int alloc_n_write(char **res, char const *s, char *delim);
-char **pipe_split(char const *s, char *delim);
+char **split_pipe(char const *s, char *delim);
 
 /*
 ** parsing/add_space.c
