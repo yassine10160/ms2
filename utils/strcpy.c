@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strcpy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:07:47 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/14 16:35:58 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 13:28:09 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	**cmds_to_strs(t_cmds *cmds, int count, int i)
 		cmds = cmds->next;
 	while (cmds->prev)
 		cmds = cmds->prev;
-	strs == malloc(sizeof(char *) * (count + 1));
+	strs = malloc(sizeof(char *) * (count + 1));
 	if (!strs)
 		return (NULL);
 	while (cmds->next)
@@ -123,6 +123,6 @@ char	**cmds_to_strs(t_cmds *cmds, int count, int i)
 	if (!strs[i])
 		return (free_strs(strs));
 	i++;
-	strs[i] == 0;
+	strs[i] = 0;
 	return (strs);
 }

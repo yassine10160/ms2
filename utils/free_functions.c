@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 10:47:38 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 13:23:24 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_env(t_env *env)
 		return ;
 	while (env->prev)
 		env = env->prev;
-	while (env->next)
+	while (env)
 	{
 		if (env->line)
 			free(env->line);
@@ -28,8 +28,6 @@ void	free_env(t_env *env)
 		env = env->next;
 		free(save);
 	}
-	if (env)
-		free(env);
 }
 
 void	free_cmds(t_cmds *cmds)
@@ -81,4 +79,10 @@ void	free_all(t_all *all)
 	free_data(all->first);
 	free(all);
 	all = NULL;
+}
+
+void	free_new_line(t_all *all)
+{
+	free_data(all->first);
+	all->first = init_data();
 }
