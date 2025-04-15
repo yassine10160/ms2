@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 13:53:54 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 14:09:00 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,34 @@ typedef enum e_builtin
 
 typedef struct s_cmds
 {
-	char *token;
-	struct s_cmds *prev;
-	struct s_cmds *next;
-} t_cmds;
+	char			*token;
+	struct s_cmds	*prev;
+	struct s_cmds	*next;
+}	t_cmds;
 
 typedef struct s_env
 {
-	char *line;
-	struct s_env *prev;
-	struct s_env *next;
-} t_env;
+	char			*line;
+	struct s_env	*prev;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_data
 {
-	t_cmds *cmds;
-	int fd_in;
-	int fd_out;
-	int pipe_fd[2];
-	struct s_data *prev;
-	struct s_data *next;
-} t_data;
+	t_cmds			*cmds;
+	int				fd_in;
+	int				fd_out;
+	int				pipe_fd[2];
+	struct s_data	*prev;
+	struct s_data	*next;
+}	t_data;
 
 typedef struct s_all
 {
-	t_data *first;
-	t_env *env;
-	int status;
-} t_all;
+	t_data			*first;
+	t_env			*env;
+	int				status;
+}	t_all;
 
 /*
 ** builtin/env_functions.c
@@ -140,6 +140,21 @@ void	executing(t_all *all);
 void	shell_cmd(t_all *all, t_all *save);
 
 /*
+** executing/get_path.c
+*/
+char	*str_dup_c(char *str, char c_limit, char c_join);
+int		count_str_c_limit(char *str, char c_limit);
+int		find_path_string(char **env);
+char	**split_c(char *str, char c_limit, char c_join);
+char	**get_path_env(char **env);
+
+/*
+** executing/check_cmd.c
+*/
+int		index_path_cmd(char *cmd, char **path);
+char	*get_path_cmd(char *cmd, char **path);
+
+/*
 ** utils/char.c
 */
 int		is_alpha(char c);
@@ -152,6 +167,7 @@ int		pos_in_str(char *str, char c);
 ** utils/char_utils2.c
 */
 void	is_in_sq(char c, int *sq);
+void	*free_strs(char **strs);
 
 /*
 ** utils/free_functions.c
@@ -160,6 +176,7 @@ void	free_env(t_env *env);
 void	free_cmds(t_cmds *cmds);
 void	free_data(t_data *data);
 void	free_all(t_all *all);
+void	free_new_line(t_all *all);
 
 /*
 ** utils/strcpy.c
@@ -169,7 +186,6 @@ char	*ft_strcat(char *str_a, char *str_b, int flag, int i);
 char	*ft_strndup(char *str, int n);
 char	**env_to_strs(t_env *env, int i, int count);
 char	**cmds_to_strs(t_cmds *cmds, int count, int i);
-void	*free_strs(char **strs);
 
 /*
 ** utils/ft_calloc.c
