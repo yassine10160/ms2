@@ -6,22 +6,27 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 17:05:04 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 17:20:26 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-void	child_process(char **cmds, char **env, char *path_cmd)
+void child_process(char **cmds, char **env, char *path_cmd)
 {
-	int	pid;
+	int pid;
 
 	pid = fork();
 	if (pid < 0)
-		return ;
+		return;
 	if (pid == 0)
 	{
 		execve(path_cmd, cmds, env);
+		perror(cmds[0]);
+		free_strs(cmds);
+		free_strs(env);
+		free(path_cmd);
+		exit(EXIT_FAILURE);
 	}
 }
 

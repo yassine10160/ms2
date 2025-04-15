@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 16:55:37 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 17:07:37 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void	executing(t_all *all);
 /*
 ** executing/shell_cmd.c
 */
-int	shell_cmd(t_all *all);
+void	child_process(char **cmds, char **env, char *path_cmd);
+int		shell_cmd(t_all *all);
 
 /*
 ** executing/get_path.c
@@ -154,6 +155,14 @@ char	**get_path_env(t_env *env);
 */
 int		index_path_cmd(char *cmd, char **path);
 char	*get_path_cmd(char *cmd, char **path);
+
+/*
+** executing/fd_management.c
+*/
+int		setup_input_redirection(t_all *all);
+int		setup_output_redirection(t_all *all);
+int		setup_redirections(t_all *all);
+int		reset_std_descriptors(void);
 
 /*
 ** utils/char.c
