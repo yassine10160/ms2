@@ -22,7 +22,7 @@ UTILS_SRC	= char.c char_utils2.c free_functions.c ft_calloc.c \
 			  ft_itoa.c strcpy.c
 
 PARSING_SRC	= expand.c expand_null.c expand_var.c init.c parsing.c \
-			  split_pipe.c add_space.c
+			  split_pipe.c add_space.c handle_line.c
 
 EXEC_SRC	= builtin_caller.c executing.c shell_cmd.c get_path.c check_cmd.c \
 			  fd_management.c

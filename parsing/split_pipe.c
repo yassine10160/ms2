@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:45:18 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/11 13:45:41 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/15 12:07:02 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,17 @@ int calc_nb_words(char const *s, char *delim)
 {
 	int i;
 	int counter;
+	int sq;
+	int dq;
 
+	sq = 0;
+	dq = 0;
 	i = 0;
 	counter = 0;
 	while (s[i])
 	{
-		if ((pos_in_str(delim, s[i]) == -1) && ((pos_in_str(delim, s[i + 1])) >= 0 || s[i + 1] == '\0'))
+		is_in_quote(s[i], &sq, &dq);
+		if ((pos_in_str(delim, s[i]) == -1) && ((pos_in_str(delim, s[i + 1])) >= 0 || s[i + 1] == '\0') && !(sq % 2) && !(dq % 2))
 			counter++;
 		i++;
 	}
@@ -55,7 +60,9 @@ int alloc_n_write(char **res, char const *s, char *delim)
 	int old_i;
 	int i_res;
 	int sq;
+	int dq;
 
+	dq = 0;
 	i = 0;
 	i_res = 0;
 	sq = 0;
@@ -64,8 +71,8 @@ int alloc_n_write(char **res, char const *s, char *delim)
 		while (s[i] && (pos_in_str(delim, s[i])) >= 0)
 			i++;
 		old_i = i;
-		while (s[i] && (pos_in_str(delim, s[i]) == -1 || (sq % 2)))
-			is_in_sq(s[i++], &sq);
+		while (s[i] && (pos_in_str(delim, s[i]) == -1 || (sq % 2) || (dq % 2)))
+			is_in_quote(s[i++], &sq, &dq);
 		if (old_i < i)
 		{
 			res[i_res] = malloc((i - old_i + 1) * sizeof(char));
@@ -77,7 +84,7 @@ int alloc_n_write(char **res, char const *s, char *delim)
 	return (-1);
 }
 
-char **pipe_split(char const *s, char *delim)
+char **split_pipe(char const *s, char *delim)
 {
 	char **res;
 	int nb_words;
@@ -98,3 +105,18 @@ char **pipe_split(char const *s, char *delim)
 	res[nb_words] = NULL;
 	return (res);
 }
+
+// int main()
+// {
+// 	char *s = "ls>a | echo\"|\"";
+// 	int i = 0;
+// 	char **split;
+
+// 	split = split_pipe(s, "|");
+// 	while (s[i])
+// 	{
+// 		printf("mysplit: %s\n", split[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
