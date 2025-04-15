@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 15:24:08 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 16:55:37 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_all
 	t_data			*first;
 	t_env			*env;
 	int				status;
+	int				f_here_doc;
 }	t_all;
 
 /*

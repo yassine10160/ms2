@@ -6,11 +6,24 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 15:56:00 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 17:05:04 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
+
+void	child_process(char **cmds, char **env, char *path_cmd)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return ;
+	if (pid == 0)
+	{
+		execve(path_cmd, cmds, env);
+	}
+}
 
 int	shell_cmd(t_all *all)
 {
@@ -34,17 +47,22 @@ int	shell_cmd(t_all *all)
 		free_strs(cmds);
 		// return (print_error(cmds[0], "command not found"));
 	}
+	child_process(cmds, env, path_cmd);
 	return (0);
 }
 
 // int main(int ac, char **av, char **env)
 // {
 // 	t_all *all = init_all(env);
-// 	char	*str = ft_strdup("cd");
+// 	char	*str = ft_strdup("cat");
 	
 // 	(void)ac;
 // 	(void)av;
 // 	all->first->cmds->token = str;
+// 	int fd = open("Makefile", O_RDONLY);
+// 	if (fd < 0)
+// 		printf("error");
+// 	dup2(fd, STDIN_FILENO);
 // 	shell_cmd(all);
 // }
 
