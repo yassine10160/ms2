@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 13:23:24 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 17:27:27 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	free_all(t_all *all)
 {
 	if (!all)
 		return ;
+	if (all->f_here_doc)
+		unlink(".here_doc.txt");
 	free_env(all->env);
 	free_data(all->first);
 	free(all);
@@ -83,6 +85,8 @@ void	free_all(t_all *all)
 
 void	free_new_line(t_all *all)
 {
+	if (all->f_here_doc)
+		unlink(".here_doc.txt");
 	free_data(all->first);
 	all->first = init_data();
 }
