@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 14:09:00 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 14:36:09 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ void	shell_cmd(t_all *all, t_all *save);
 */
 char	*str_dup_c(char *str, char c_limit, char c_join);
 int		count_str_c_limit(char *str, char c_limit);
-int		find_path_string(char **env);
+int		find_path_string(t_env *env);
 char	**split_c(char *str, char c_limit, char c_join);
-char	**get_path_env(char **env);
+char	**get_path_env(t_env *env);
 
 /*
 ** executing/check_cmd.c

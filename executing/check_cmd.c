@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 14:03:29 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 14:37:00 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ char	*get_path_cmd(char *cmd, char **path)
 			free_strs(path);
 		return (NULL);
 	}
-	splited_cmd = split_c(cmd, ' ', '\0');
-	if (!splited_cmd)
-		return (free_strs(path));
 	i = index_path_cmd(cmd, path);
 	if (i == -1)
 	{
