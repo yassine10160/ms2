@@ -6,7 +6,7 @@
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 17:45:21 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/15 17:46:22 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,7 @@ char *expand_line_var(char *line, char *var_value, int i_var, int sq);
 */
 int word_len(char *str);
 char *str_dup_minishell(char *s, int *i, int k, int j);
-void split_minishell(char *str, t_all *all);
+void split_quote_and_space(char *str, t_all *all);
 
 /*
 ** parsing/split_pipe.c
