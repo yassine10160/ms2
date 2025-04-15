@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:55:37 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 14:35:37 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:25:21 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,19 @@ int	count_str_c_limit(char *str, char c_limit)
 	return (count);
 }
 
-int	find_path_string(t_env *env)
+int	find_path_string(t_env **env)
 {
 	t_env	*save;
 
-	save = env;
-	while (env && env->line)
+	save = *env;
+	while (*env && (*env)->line)
 	{
-		if (env->line[0] == 'P' && env->line[1] == 'A' && env->line[2] == 'T'
-		&& env->line[3] == 'H' && env->line[4] == '=')
-		{
-			env = save;
+		if ((*env)->line[0] == 'P' && (*env)->line[1] == 'A' && (*env)->line[2] == 'T'
+		&& (*env)->line[3] == 'H' && (*env)->line[4] == '=')
 			return (0);
-		}
-		env = env->next;
+		(*env) = (*env)->next;
 	}
-	env = save;
+	(*env) = save;
 	return (-1);
 }
 
@@ -105,12 +102,9 @@ char	**get_path_env(t_env *env)
 	int		i;
 	char	**path;
 
-	i = find_path_string(env);
+	i = find_path_string(&env);
 	if (i == -1)
-	{
-		write(2, "Error: PATH not found in environment\n", 37);
 		return (NULL);
-	}
 	path = split_c(env->line + 5, ':', '/');
 	if (!path)
 		return (NULL);

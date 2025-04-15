@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/15 13:37:19 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:13:43 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,30 +83,30 @@ int is_closed(char *line)
 	return (1);
 }
 
-int main(int ac, char **av, char **env)
-{
-	t_all *all;
-	char *line;
+// int main(int ac, char **av, char **env)
+// {
+// 	t_all *all;
+// 	char *line;
 
-	(void)ac;
-	(void)av;
-	all = init_all(env);
-	while (1)
-	{
-		line = readline(NULL);
-		if (line)
-		{
-			if (!parse_error(line, all))
-			{
-				if (!is_closed(line))
-					exit_parse("error: line not closed", all, 258);
-				else
-					exit(0); // handle_line(&all);
-			}
-			else
-				exit(1);
-		}
-		else
-			ft_exit(all, NULL);
-	}
-}
+// 	(void)ac;
+// 	(void)av;
+// 	all = init_all(env);
+// 	while (1)
+// 	{
+// 		line = readline(NULL);
+// 		if (line)
+// 		{
+// 			if (!parse_error(line, all))
+// 			{
+// 				if (!is_closed(line))
+// 					exit_parse("error: line not closed", all, 258);
+// 				else
+// 					ft_exit(all, NULL); // handle_line(&all);
+// 			}
+// 			else
+// 				ft_exit(all, NULL);
+// 		}
+// 		else
+// 			ft_exit(all, NULL);
+// 	}
+// }

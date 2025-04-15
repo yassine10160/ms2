@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 14:36:09 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:24:08 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ int		ft_unset(t_env *env, t_cmds *cmd);
 /*
 ** executing/builtin_caller.c
 */
-void	caller_next(t_all *all, int builtin, t_all *save);
-void	builtin_caller(t_all *all, int builtin, t_all *save);
+int		caller_next(t_all *all, int builtin);
+int		builtin_caller(t_all *all, int builtin);
 
 /*
 ** executing/executing.c
@@ -137,14 +137,14 @@ void	executing(t_all *all);
 /*
 ** executing/shell_cmd.c
 */
-void	shell_cmd(t_all *all, t_all *save);
+int	shell_cmd(t_all *all);
 
 /*
 ** executing/get_path.c
 */
 char	*str_dup_c(char *str, char c_limit, char c_join);
 int		count_str_c_limit(char *str, char c_limit);
-int		find_path_string(t_env *env);
+int		find_path_string(t_env **env);
 char	**split_c(char *str, char c_limit, char c_join);
 char	**get_path_env(t_env *env);
 

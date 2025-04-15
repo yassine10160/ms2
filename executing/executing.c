@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 13:48:19 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:16:20 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,30 @@ int	fd_handle(t_data *data, int *f_out, int *f_in)
 
 void	executing(t_all *all)
 {
+	t_data	*save;
 	int		builtin;
-	t_all	*save;
 	int		f_out;
 	int		f_in;
 
 	f_out = 0;
 	f_in = 0;
-	save = all;
+	save = all->first;
 	while (all->first)
 	{
 		if (fd_handle(all->first, &f_out, &f_in))
-			return (ft_exit(save, NULL));
+			return (ft_exit(all, NULL));
 		builtin = is_builtin(all->first->cmds->token);
 		if (builtin != 0)
-			builtin_caller(all, builtin, save);
+			all->status = builtin_caller(all, builtin);
 		else
-			shell_cmd(all, save);
+			all->status = shell_cmd(all);
 		all->first = all->first->next;
 	}
-	all = save;
+	all->first = save;
+	free_new_line(all);
+	if (!all->first)
+		return (ft_exit(all, NULL));
+	return ;
 }
 
 // int main()
