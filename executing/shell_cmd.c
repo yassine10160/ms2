@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 17:20:26 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/18 15:09:06 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void child_process(char **cmds, char **env, char *path_cmd)
 		free(path_cmd);
 		exit(EXIT_FAILURE);
 	}
+	waitpid(pid, NULL, 0);
 }
 
 int	shell_cmd(t_all *all)
@@ -52,6 +53,7 @@ int	shell_cmd(t_all *all)
 		free_strs(cmds);
 		// return (print_error(cmds[0], "command not found"));
 	}
+	printf("%s\n", path_cmd);
 	child_process(cmds, env, path_cmd);
 	return (0);
 }

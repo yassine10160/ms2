@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:34:14 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/18 14:49:00 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/18 15:11:07 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void handle_all(t_all *all)
 	data = all->first;
 	while (tmp && data)
 	{
-		// printf("here\n");
 		if (is_infile(tmp->token))
 		{
 			safe_open(all, data->fd_in, tmp->next->token, INFILE);
@@ -161,15 +160,16 @@ void handle_line(t_all **all, char *line)
 	set_line(*all, line);
 	(*all)->first = tmp;
 	handle_all(*all);
-	while (tmp->next)
-	{
-		while (tmp->cmds)
-		{
-			printf("totok: %s\n", tmp->cmds->token);
-			tmp->cmds = tmp->cmds->next;
-		}
-		printf("fdin: %d\n", tmp->fd_in);
-		printf("fdout: %d\n", tmp->fd_out);
-		tmp = tmp->next;
-	}
+	executing(*all);
+	// while (tmp->next)
+	// {
+	// 	while (tmp->cmds)
+	// 	{
+	// 		printf("totok: %s\n", tmp->cmds->token);
+	// 		tmp->cmds = tmp->cmds->next;
+	// 	}
+	// 	printf("fdin: %d\n", tmp->fd_in);
+	// 	printf("fdout: %d\n", tmp->fd_out);
+	// 	tmp = tmp->next;
+	// }
 }
