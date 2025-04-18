@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 17:18:47 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/18 12:47:03 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,14 @@ void	executing(t_all *all)
 	{
 		if (setup_redirections(all))
 			ft_exit(all, NULL);
-		builtin = is_builtin(all->first->cmds->token);
-		if (builtin != 0)
-			all->status = builtin_caller(all, builtin);
-		else
-			all->status = shell_cmd(all);
+		if (all->first->cmds->token)
+		{
+			builtin = is_builtin(all->first->cmds->token);
+			if (builtin != 0)
+				all->status = builtin_caller(all, builtin);
+			else
+				all->status = shell_cmd(all);
+		}
 		all->first = all->first->next;
 		if (reset_std_descriptors())
 			ft_exit(all, NULL);
