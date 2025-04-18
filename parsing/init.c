@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 14:14:21 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/18 14:44:59 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_data	*init_data()
+t_data *init_data()
 {
-	t_data	*data;
-	int		fd_pipe[2];
+	t_data *data;
+	int fd_pipe[2];
 
 	data = ft_calloc(1, sizeof(struct s_data));
 	if (!data)
@@ -38,9 +38,9 @@ t_data	*init_data()
 	return (data);
 }
 
-t_all	*init_all(char **env)
+t_all *init_all(char **env)
 {
-	t_all	*all;
+	t_all *all;
 
 	all = ft_calloc(1, sizeof(struct s_all));
 	if (!all)
@@ -62,9 +62,9 @@ t_all	*init_all(char **env)
 	return (all);
 }
 
-t_cmds	*add_next_cmds(t_cmds *current)
+t_cmds *add_next_cmds(t_cmds *current)
 {
-	t_cmds	*new;
+	t_cmds *new;
 
 	new = NULL;
 	new = ft_calloc(1, sizeof(struct s_cmds));
@@ -75,9 +75,9 @@ t_cmds	*add_next_cmds(t_cmds *current)
 	return (new);
 }
 
-t_data	*add_next_data(t_data *current)
+t_data *add_next_data(t_data *current)
 {
-	t_data	*new;
+	t_data *new;
 
 	new = NULL;
 	new = init_data();
@@ -88,14 +88,50 @@ t_data	*add_next_data(t_data *current)
 	return (new);
 }
 
-// int  main(int ac, char **av, char **env)
+void remove_cmd(t_cmds *current)
+{
+	t_cmds *next;
+	t_cmds *prev;
+
+	prev = current->prev;
+	next = current->next;
+	prev->next = next;
+	if (next)
+		next->prev = prev;
+	printf("je suis la\n");
+	if (current && current->token)
+	{
+		free(current->token);
+		free(current);
+	}
+}
+
+// int main(int ac, char **av, char **env)
 // {
-// 	t_all	*all;
+// 	t_all *all;
+// 	t_cmds *tmp;
 
 // 	all = init_all(env);
-// 	printf("ok");
+// 	printf("ok\n");
+// 	(void)ac;
+// 	(void)av;
 // 	if (all)
 // 	{
-// 		printf("%d\n%s\n", all->first->fd_out, all->env->line);
-// 		free_all(all);
+// 		tmp = all->first->cmds;
+// 		tmp->token = ft_strdup("ls");
+// 		printf("cmds: %s\n", tmp->token);
+// 		tmp = add_next_cmds(tmp);
+// 		tmp->token = ft_strdup(">");
+// 		printf("cmds: %s\n", tmp->token);
+// 		tmp = add_next_cmds(tmp);
+// 		tmp->token = ft_strdup("a");
+// 		printf("cmds: %s\n", tmp->token);
+// 		remove_cmd(tmp->prev);
+// 		printf("new cmds: %s\n", tmp->prev->token);
+// 		remove_cmd(tmp);
+// 		printf("new cmds: %s\n", tmp->token);
+// 		// printf("new cmds: %s\n", tmp->next->next->token);
+// 		// printf("%d\n%s\n", all->first->fd_out, all->env->line);
+// 		// free_all(all);
 // 	}
+// }

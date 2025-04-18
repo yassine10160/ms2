@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/18 13:24:02 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/18 14:45:16 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	remove_node(t_env *node)
+void remove_node(t_env *node)
 {
-	t_env	*prev;
-	t_env	*next;
+	t_env *prev;
+	t_env *next;
 
 	if (node)
 	{
@@ -30,9 +30,9 @@ void	remove_node(t_env *node)
 	}
 }
 
-int	ft_unset(t_env *env, t_cmds *cmd)
+int ft_unset(t_env *env, t_cmds *cmd)
 {
-	t_env	*save;
+	t_env *save;
 
 	if (cmd->next)
 	{
@@ -51,17 +51,17 @@ int	ft_unset(t_env *env, t_cmds *cmd)
 	return (0);
 }
 
-int	main(int ac, char **av, char **env)
-{
-	t_all *all;
+// int	main(int ac, char **av, char **env)
+// {
+// 	t_all *all;
 
-	(void)ac;
-	(void)av;
-	all = init_all(env);
-	all->first->cmds->token = ft_strdup("a");
-	ft_export(all->env, ft_strdup("a=salut"));
-	ft_env(all->env);
-	ft_unset(all->env, all->first->cmds);
-	ft_env(all->env);
-	ft_exit(all, NULL);
-}
+// 	(void)ac;
+// 	(void)av;
+// 	all = init_all(env);
+// 	all->first->cmds->token = ft_strdup("a");
+// 	ft_export(all->env, ft_strdup("a=salut"));
+// 	ft_env(all->env);
+// 	ft_unset(all->env, all->first->cmds);
+// 	ft_env(all->env);
+// 	ft_exit(all, NULL);
+// }

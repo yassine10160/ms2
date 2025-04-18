@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/18 13:16:01 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/18 14:45:47 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	new_line(t_all *all)
+void new_line(t_all *all)
 {
 	free_data(all->first);
 	all->first = init_data();
@@ -83,30 +83,30 @@ int is_closed(char *line)
 	return (1);
 }
 
-// int main(int ac, char **av, char **env)
-// {
-// 	t_all *all;
-// 	char *line;
+int main(int ac, char **av, char **env)
+{
+	t_all *all;
+	char *line;
 
-// 	(void)ac;
-// 	(void)av;
-// 	all = init_all(env);
-// 	while (1)
-// 	{
-// 		line = readline(NULL);
-// 		if (line)
-// 		{
-// 			if (!parse_error(line, all))
-// 			{
-// 				if (!is_closed(line))
-// 					exit_parse("error: line not closed", all, 258);
-// 				else
-// 					ft_exit(all, NULL); // handle_line(&all);
-// 			}
-// 			else
-// 				ft_exit(all, NULL);
-// 		}
-// 		else
-// 			ft_exit(all, NULL);
-// 	}
-// }
+	(void)ac;
+	(void)av;
+	all = init_all(env);
+	while (1)
+	{
+		line = readline(NULL);
+		if (line)
+		{
+			if (!parse_error(line, all))
+			{
+				if (!is_closed(line))
+					exit_parse("error: line not closed", all, 258);
+				else
+					handle_line(&all, line);
+			}
+			else
+				ft_exit(all, NULL);
+		}
+		else
+			ft_exit(all, NULL);
+	}
+}
