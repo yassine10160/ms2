@@ -2,7 +2,25 @@ NAME		= minishell
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
-RL_FLAGS	= -lreadline
+
+# Detect system and set appropriate readline flags
+UNAME_S := $(shell uname -s)
+UNAME_P := $(shell uname -p)
+
+ifeq ($(UNAME_S),Darwin)
+  ifeq ($(UNAME_P),arm)
+    # macOS on ARM (Apple Silicon)
+    READLINE_INC = -I$(shell brew --prefix readline)/include
+    READLINE_LIB = -L$(shell brew --prefix readline)/lib
+    RL_FLAGS = $(READLINE_LIB) -lreadline $(READLINE_INC)
+  else
+    # macOS on Intel
+    RL_FLAGS = -lreadline
+  endif
+else
+  # Linux and other systems
+  RL_FLAGS = -lreadline
+endif
 
 # Directories
 BUILTIN_DIR	= builtin
@@ -40,6 +58,7 @@ OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ)
+	@echo "Compiling $(NAME) with readline flags: $(RL_FLAGS)"
 	$(CC) $(CFLAGS) $(OBJ) $(RL_FLAGS) -o $(NAME)
 	@echo "\033[32mCompilation complete. Executable '$(NAME)' created.\033[0m"
 

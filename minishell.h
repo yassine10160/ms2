@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 17:51:17 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/15 17:59:25 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
+# include <signal.h>
 
 typedef enum e_builtin
 {
@@ -132,13 +134,17 @@ int		builtin_caller(t_all *all, int builtin);
 ** executing/executing.c
 */
 int		is_builtin(char *token);
-int		fd_handle(t_data *data, int *fd_out, int *fd_in);
+void	setup_signal_handlers(void);
+void	restore_signal_handlers(void);
+void	close_parent_pipes(t_all *all);
 void	executing(t_all *all);
 
 /*
 ** executing/shell_cmd.c
 */
+int		print_error(char *cmd, char *message);
 void	child_process(char **cmds, char **env, char *path_cmd);
+int		check_path_cmd(t_all *all, char *cmd, char **env);
 int		shell_cmd(t_all *all);
 
 /*
@@ -249,7 +255,7 @@ void	free_str_tab(char **tab, int limit);
 int		calc_nb_words(char const *s, char *delim);
 char	*fill_word(char *word, char const *s, int start, int end);
 int		alloc_n_write(char **res, char const *s, char *delim);
-char	**pipe_split(char const *s, char *delim);
+char	**split_pipe(char const *s, char *delim);
 
 /*
 ** parsing/add_space.c
@@ -260,11 +266,15 @@ char	*add_space(char *line);
 /*
 ** parsing/handle_line.c
 */
+char	**handle_space(t_all *all, char *line);
+void	set_line(t_all *all, char *line);
 void	handle_line(t_all **all, char *line);
 
 /*
 ** main.c
 */
+void	sigint_handler(int sig);
+void	setup_signals(void);
 void	new_line(t_all *all);
 void	exit_parse(char *s, t_all *all, int status);
 int		is_parse_err(char c);
