@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 17:51:17 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/18 13:15:40 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void	free_str_tab(char **tab, int limit);
 int		calc_nb_words(char const *s, char *delim);
 char	*fill_word(char *word, char const *s, int start, int end);
 int		alloc_n_write(char **res, char const *s, char *delim);
-char	**pipe_split(char const *s, char *delim);
+char	**split_pipe(char const *s, char *delim);
 
 /*
 ** parsing/add_space.c

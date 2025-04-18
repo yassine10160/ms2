@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/14 16:07:48 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/18 13:24:02 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,17 @@ void	remove_node(t_env *node)
 	t_env	*prev;
 	t_env	*next;
 
-	prev = node->prev;
-	next = node->next;
-	prev->next = next;
-	next->prev = prev;
-	if (node->line)
-		free(node->line);
-	free(node);
+	if (node)
+	{
+		prev = node->prev;
+		next = node->next;
+		prev->next = next;
+		if (next)
+			next->prev = prev;
+		if (node->line)
+			free(node->line);
+		free(node);
+	}
 }
 
 int	ft_unset(t_env *env, t_cmds *cmd)
@@ -47,15 +51,17 @@ int	ft_unset(t_env *env, t_cmds *cmd)
 	return (0);
 }
 
-// int	main(int ac, char **av, char **env)
-// {
-// 	char	*str = ft_strdup("asalut");
-// 	t_env *ev;
+int	main(int ac, char **av, char **env)
+{
+	t_all *all;
 
-// 	ev = env_to_struct(env);
-// 	ft_export(ev, str);
-// 	ft_env(ev);
-// 	ft_unset(ev, "a");
-// 	ft_env(ev);
-// 	free_new_env(ev);
-// }
+	(void)ac;
+	(void)av;
+	all = init_all(env);
+	all->first->cmds->token = ft_strdup("a");
+	ft_export(all->env, ft_strdup("a=salut"));
+	ft_env(all->env);
+	ft_unset(all->env, all->first->cmds);
+	ft_env(all->env);
+	ft_exit(all, NULL);
+}
