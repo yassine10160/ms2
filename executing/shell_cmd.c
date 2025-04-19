@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/18 15:09:06 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/19 15:30:44 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void child_process(char **cmds, char **env, char *path_cmd)
 		return;
 	if (pid == 0)
 	{
-		execve(path_cmd, cmds, env);
-		perror(cmds[0]);
-		free_strs(cmds);
+		printf("child : path cmd : %s \ncmds[0] : %s\n", path_cmd, cmds[0]);
+		// execve(path_cmd, cmds, env);
+		// perror(cmds[0]);
+		// free_strs(cmds);
 		free_strs(env);
-		free(path_cmd);
-		exit(EXIT_FAILURE);
+		// free(path_cmd);
+		// exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
 }
@@ -51,9 +52,8 @@ int	shell_cmd(t_all *all)
 	{
 		free_strs(env);
 		free_strs(cmds);
-		// return (print_error(cmds[0], "command not found"));
+		return (1);
 	}
-	printf("%s\n", path_cmd);
 	child_process(cmds, env, path_cmd);
 	return (0);
 }

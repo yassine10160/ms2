@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:26:08 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/10 11:35:26 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/18 13:28:05 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ char	*get_var_name(char *str)
 	j = 0;
 	while (str && str[i] && str[i] != '=')
 		i++;
-	if (!str[i])
-		return (NULL);
 	var = malloc(sizeof(char) * (i + 2));
 	if (!var)
 		return (NULL);

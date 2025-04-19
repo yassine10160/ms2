@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:34:14 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/18 15:11:07 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/19 00:36:58 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
