@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_caller.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 15:02:28 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/19 16:07:08 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,9 @@ int	caller_next(t_all *all, int builtin)
 int	builtin_caller(t_all *all, int builtin)
 {
 	if (builtin == EXIT)
-		ft_exit(all, all->first->cmds);
+		ft_exit(all, all->first->cmds->next);
 	else if (builtin == ECHO)
-	{
-		if (all->first->cmds->next)
-		{
-			all->first->cmds = all->first->cmds->next;
-			while (all->first->cmds->next)
-			{
-				ft_echo(all->first->cmds);
-				all->first->cmds = all->first->cmds->next;
-			}
-			ft_echo(all->first->cmds);
-		}
-	}
+		ft_echo(all->first->cmds->next);
 	else if (builtin == UNSET)
 		ft_unset(all->env, all->first->cmds);
 	else if (builtin == ENV)

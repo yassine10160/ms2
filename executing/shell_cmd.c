@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/19 15:30:44 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:59:10 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void child_process(char **cmds, char **env, char *path_cmd)
 	if (pid == 0)
 	{
 		printf("child : path cmd : %s \ncmds[0] : %s\n", path_cmd, cmds[0]);
-		// execve(path_cmd, cmds, env);
-		// perror(cmds[0]);
-		// free_strs(cmds);
+		execve(path_cmd, cmds, env);
+		perror(cmds[0]);
+		free_strs(cmds);
 		free_strs(env);
-		// free(path_cmd);
-		// exit(EXIT_FAILURE);
+		free(path_cmd);
+		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
 }
