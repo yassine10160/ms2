@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strcpy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:07:47 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 13:28:09 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/20 14:56:15 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,6 @@ char	**cmds_to_strs(t_cmds *cmds, int count, int i)
 		i++;
 		cmds = cmds->next;
 	}
-	strs[i] = ft_strdup(cmds->token);
-	if (!strs[i])
-		return (free_strs(strs));
-	i++;
-	strs[i] = 0;
+	strs[i] = NULL;
 	return (strs);
 }

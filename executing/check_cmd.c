@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 15:27:17 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/20 14:57:40 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*get_path_cmd(char *cmd, char **path)
 	if (i == -1)
 	{
 		free_strs(path);
+		printf("%s : command not found\n", cmd);
 		return (NULL);
 	}
 	path_cmd = ft_strcat(path[i], cmd, 0, 0);
