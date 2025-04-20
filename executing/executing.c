@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/19 15:32:34 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/20 14:38:35 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 int	is_builtin(char *token)
 {
-	if (ft_strcmp("export ", token))
+	if (ft_strcmp("export", token) == 2)
 		return (EXPORT);
-	if (ft_strcmp("echo ", token))
+	if (ft_strcmp("echo", token) == 2)
 		return (ECHO);
-	if (ft_strcmp("exit ", token))
+	if (ft_strcmp("exit", token) == 2)
 		return (EXIT);
-	if (ft_strcmp("unset ", token))
+	if (ft_strcmp("unset", token) == 2)
 		return (UNSET);
-	if (ft_strcmp("env ", token))
+	if (ft_strcmp("env", token) == 2)
 		return (ENV);
-	if (ft_strcmp("pwd ", token))
+	if (ft_strcmp("pwd", token) == 2)
 		return (PWD);
-	if (ft_strcmp("cd ", token))
+	if (ft_strcmp("cd", token) == 2)
 		return (CD);
 	return (0);
 }
