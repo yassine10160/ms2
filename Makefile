@@ -25,7 +25,7 @@ PARSING_SRC	= expand.c expand_null.c expand_var.c init.c split_quote_and_space.c
 			  split_pipe.c add_space.c handle_line.c
 
 EXEC_SRC	= builtin_caller.c executing.c shell_cmd.c get_path.c check_cmd.c \
-			  fd_management.c
+			  fd_management.c cmd_status.c
 
 SRC			= main.c \
 			  $(addprefix $(BUILTIN_DIR)/, $(BUILTIN_SRC)) \

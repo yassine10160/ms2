@@ -3,33 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/20 14:59:15 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/21 14:28:39 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-void child_process(char **cmds, char **env, char *path_cmd)
+int	execute_in_child(char **cmds, char **env, char *path_cmd)
 {
-	int pid;
+	execve(path_cmd, cmds, env);
+	perror(cmds[0]);
+	free_strs(cmds);
+	free_strs(env);
+	free(path_cmd);
+	exit(EXIT_FAILURE);
+	return (1);
+}
 
-	pid = fork();
-	if (pid < 0)
-		return;
-	if (pid == 0)
-	{
-		printf("in child process\n");
-		execve(path_cmd, cmds, env);
-		perror(cmds[0]);
-		free_strs(cmds);
-		free_strs(env);
-		free(path_cmd);
-		exit(EXIT_FAILURE);
-	}
-	waitpid(pid, NULL, 0);
+void	clean_resources(char **cmds, char **env, char *path_cmd)
+{
+	free_strs(cmds);
+	free_strs(env);
+	free(path_cmd);
+}
+
+int	handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all)
+{
+	clean_resources(cmds, env, path_cmd);
+	printf("fork : error\n");
+	ft_exit(all, NULL);
+	return (-1);
 }
 
 int	shell_cmd(t_all *all)
@@ -37,6 +43,7 @@ int	shell_cmd(t_all *all)
 	char	**cmds;
 	char	**env;
 	char	*path_cmd;
+	int		pid;
 
 	cmds = cmds_to_strs(all->first->cmds, 1, 0);
 	if (!cmds)
@@ -52,40 +59,13 @@ int	shell_cmd(t_all *all)
 	{
 		free_strs(env);
 		free_strs(cmds);
-		return (1);
+		return (-1);
 	}
-	child_process(cmds, env, path_cmd);
-	return (0);
+	pid = fork();
+	if (pid < 0)
+		return (handle_fork_error(cmds, env, path_cmd, all));
+	if (pid == 0)
+		execute_in_child(cmds, env, path_cmd);
+	clean_resources(cmds, env, path_cmd);
+	return (pid);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	t_all *all = init_all(env);
-// 	char	*str = ft_strdup("cat");
-	
-// 	(void)ac;
-// 	(void)av;
-// 	all->first->cmds->token = str;
-// 	int fd = open("Makefile", O_RDONLY);
-// 	if (fd < 0)
-// 		printf("error");
-// 	dup2(fd, STDIN_FILENO);
-// 	shell_cmd(all);
-// }
-
-// t_data *save;
-// t_cmds *tmp;
-
-// save = all->first;
-// while (all->first)
-// {
-// 	tmp = all->first->cmds;
-// 	while (all->first->cmds)
-// 	{
-// 		printf("%s", all->first->cmds->token);
-// 		all->first->cmds = all->first->cmds->next;
-// 	}
-// 	all->first->cmds = tmp;
-// 	all->first = all->first->next;
-// }
-// all->first = save;

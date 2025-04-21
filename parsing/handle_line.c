@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:34:14 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/19 00:36:58 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/21 14:44:30 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void set_line(t_all *all, char *line)
 	while (s && s[i])
 	{
 		buf = expand_var(s[i], all, 0, 0);
+		printf("%s\n", buf);
 		if (!buf)
 		{
 			free_strs(s);
@@ -65,10 +66,11 @@ void set_line(t_all *all, char *line)
 		split_quote_and_space(s[i], all);
 		tmp = add_next_data(all->first);
 		if (!tmp)
-			return; // ft_exit(all, NULL);
+			ft_exit(all, NULL);
 		all->first = tmp;
 		i++;
 	}
+	free_strs(s);
 	all->first = save;
 }
 

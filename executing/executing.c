@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/20 14:42:07 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/21 14:40:45 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,76 @@ int	is_builtin(char *token)
 		return (CD);
 	return (0);
 }
+int	count_cmds(t_all *all)
+{
+	t_data	*save;
+	int		count;
+
+	save = all->first;
+	count = 0;
+	while (all->first)
+	{
+		count++;
+		all->first = all->first->next;
+	}
+	all->first = save;
+	return (count);
+}
+
+void	execute_cmd(t_all *all, int *pids, int i, int cmd_count)
+{
+	int	builtin;
+
+	// if (setup_redirections(all))
+		// ft_exit(all, NULL);
+	(void)cmd_count;
+	if (all->first->cmds->token)
+	{
+		builtin = is_builtin(all->first->cmds->token);
+		if (builtin != 0)
+		{
+			// if (cmd_count == 1)
+			all->status = builtin_caller(all, builtin);
+			// else
+			// {
+			// 	pids[i] = fork();
+			// 	if (pids[i] == 0)
+			// 	{
+			// 		builtin_caller(all, builtin);
+			// 		exit(all->status);
+			// 	}
+			// }
+		}
+		else
+			pids[i] = shell_cmd(all);
+	}
+	// if (reset_std_descriptors())
+	// 	ft_exit(all, NULL);
+}
 
 void	executing(t_all *all)
 {
 	t_data	*save;
-	int		builtin;
+	int		*pids;
+	int		cmd_count;
+	int		i;
 
 	save = all->first;
+	cmd_count = count_cmds(all);
+	pids = init_pids_array(cmd_count);
+	if (!pids)
+		ft_exit(all, NULL);
+	i = 0;
 	while (all->first)
 	{
-	// 	if (setup_redirections(all))
-	// 		ft_exit(all, NULL);
-		if (all->first->cmds->token)
-		{
-			builtin = is_builtin(all->first->cmds->token);
-			if (builtin != 0)
-				all->status = builtin_caller(all, builtin);
-			else
-				all->status = shell_cmd(all);
-		}
+		execute_cmd(all, pids, i, cmd_count);
 		all->first = all->first->next;
-		// if (reset_std_descriptors())
-		// 	ft_exit(all, NULL);
+		i++;
 	}
+	wait_for_processes(all, pids, cmd_count);
+	free(pids);
 	all->first = save;
 	free_new_line(all);
 	if (!all->first)
-		return (ft_exit(all, NULL));
-	return ;
+		ft_exit(all, NULL);
 }
-
-// int main()
-// {
-// 	char	*str = ft_strdup("pwd");
-// 	printf("%d", is_builtin(str));
-// }
