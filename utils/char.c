@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   char.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:10:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/11 13:46:13 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/22 13:21:57 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 int is_alpha(char c)
 {
-	if (c >= 'a' && c <= 'z')
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);
 }

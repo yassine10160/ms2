@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:22:54 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/14 14:30:16 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:03:38 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_echo(t_cmds *cmd)
 		printf("\n");
 	if (!cmd)
 		return ;
-	if (flag)
+	if (flag && cmd->next)
 		cmd = cmd->next;
 	while (cmd->next && cmd->token)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/18 14:44:59 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/22 14:09:57 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_all *init_all(char **env)
 		free(all);
 		return (NULL);
 	}
+	all->pids = NULL;
 	return (all);
 }
 

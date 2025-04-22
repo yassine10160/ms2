@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/21 14:15:37 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:09:39 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_all
 	t_env			*env;
 	int				status;
 	int				f_here_doc;
+	int				*pids;
 }	t_all;
 
 /*

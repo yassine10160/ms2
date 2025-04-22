@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/21 14:46:47 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:36:07 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char *search_var_in_env(char *line, char *var, int end_var, t_all *all)
 		return (NULL);
 	}
 	ptr = find_in_env(all->env, var_name);
-	if (ft_strcmp("?", var_name))
+	if (ft_strcmp("?", var_name) == 2)
 		expanded_line = expand_status(line, all->status);
 	else if (!ptr)
 		expanded_line = expand_null(line, 0, 0);
@@ -99,7 +99,6 @@ char	*expand_var(char *line, t_all *all, int i, int j)
 		is_in_quote(line[i], &sq, &dq);
 		if (should_expand(line, i, sq))
 		{
-			printf("OK");
 			j = find_var_end(line, i, &sq, &dq);
 			line = search_var_in_env(line, line + i, (j - i - 1), all);
 			if (!line)

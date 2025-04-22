@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_caller.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/19 16:07:08 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:06:07 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	caller_next(t_all *all, int builtin)
 				ft_export(all->env, all->first->cmds->token);
 				all->first->cmds = all->first->cmds->next;
 			}
-			ft_export(all->env, all->first->cmds->token);
 		}
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:34:14 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/21 14:44:30 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:15:23 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void set_line(t_all *all, char *line)
 	while (s && s[i])
 	{
 		buf = expand_var(s[i], all, 0, 0);
-		printf("%s\n", buf);
 		if (!buf)
 		{
 			free_strs(s);

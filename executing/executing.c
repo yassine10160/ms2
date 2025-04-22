@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/21 14:40:45 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:10:57 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ void	execute_cmd(t_all *all, int *pids, int i, int cmd_count)
 		if (builtin != 0)
 		{
 			// if (cmd_count == 1)
-			all->status = builtin_caller(all, builtin);
+				all->status = builtin_caller(all, builtin);
 			// else
 			// {
 			// 	pids[i] = fork();
 			// 	if (pids[i] == 0)
 			// 	{
-			// 		builtin_caller(all, builtin);
-			// 		exit(all->status);
+			// 		all->status = builtin_caller(all, builtin);
+			// 		exit(0) ;
 			// 	}
 			// }
 		}
@@ -80,24 +80,22 @@ void	execute_cmd(t_all *all, int *pids, int i, int cmd_count)
 void	executing(t_all *all)
 {
 	t_data	*save;
-	int		*pids;
 	int		cmd_count;
 	int		i;
 
 	save = all->first;
 	cmd_count = count_cmds(all);
-	pids = init_pids_array(cmd_count);
-	if (!pids)
+	all->pids = init_pids_array(cmd_count);
+	if (!all->pids)
 		ft_exit(all, NULL);
 	i = 0;
 	while (all->first)
 	{
-		execute_cmd(all, pids, i, cmd_count);
+		execute_cmd(all, all->pids, i, cmd_count);
 		all->first = all->first->next;
 		i++;
 	}
-	wait_for_processes(all, pids, cmd_count);
-	free(pids);
+	wait_for_processes(all, all->pids, cmd_count);
 	all->first = save;
 	free_new_line(all);
 	if (!all->first)

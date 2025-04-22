@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/20 14:57:40 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/22 14:06:55 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,27 @@ int	index_path_cmd(char *cmd, char **path)
 	return (-1);
 }
 
+void	check_local(char *cmd, char **path_cmd)
+{
+	char	*pwd;
+
+	pwd = get_pwd(NULL);
+	if (!pwd)
+	{
+		*path_cmd = NULL;
+		return ;
+	}
+	*path_cmd = ft_strcat(ft_strcat(pwd, "/", 0, 0), cmd, 0, 0);
+	free(pwd);
+	if (!*path_cmd)
+		return ;
+	if (access(*path_cmd, F_OK | X_OK) == 0)
+		return ;
+	free(*path_cmd);
+	*path_cmd = NULL;
+	return ;
+}
+
 char	*get_path_cmd(char *cmd, char **path)
 {
 	int		i;
@@ -46,6 +67,12 @@ char	*get_path_cmd(char *cmd, char **path)
 		if (path)
 			free_strs(path);
 		return (NULL);
+	}
+	check_local(cmd, &path_cmd);
+	if (path_cmd)
+	{
+		free_strs(path);
+		return (path_cmd);
 	}
 	i = index_path_cmd(cmd, path);
 	if (i == -1)

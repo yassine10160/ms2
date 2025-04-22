@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/20 15:41:57 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:11:21 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	free_all(t_all *all)
 	free_env(all->env);
 	free_data(all->first);
 	free(all);
+	if (all->pids)
+		free(all->pids);
 	all = NULL;
 }
 

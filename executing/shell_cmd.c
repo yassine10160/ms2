@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/21 14:28:39 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/22 13:13:17 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-int	execute_in_child(char **cmds, char **env, char *path_cmd)
+int	execute_in_child(char **cmds, char **env, char *path_cmd, t_all *all)
 {
 	execve(path_cmd, cmds, env);
 	perror(cmds[0]);
 	free_strs(cmds);
 	free_strs(env);
 	free(path_cmd);
+	free_all(all);
 	exit(EXIT_FAILURE);
 	return (1);
 }
@@ -27,7 +28,8 @@ void	clean_resources(char **cmds, char **env, char *path_cmd)
 {
 	free_strs(cmds);
 	free_strs(env);
-	free(path_cmd);
+	if (path_cmd)
+		free(path_cmd);
 }
 
 int	handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all)
@@ -57,15 +59,14 @@ int	shell_cmd(t_all *all)
 	path_cmd = get_path_cmd(cmds[0], get_path_env(all->env));
 	if (!path_cmd)
 	{
-		free_strs(env);
-		free_strs(cmds);
+		clean_resources(cmds, env, NULL);
 		return (-1);
 	}
 	pid = fork();
 	if (pid < 0)
 		return (handle_fork_error(cmds, env, path_cmd, all));
 	if (pid == 0)
-		execute_in_child(cmds, env, path_cmd);
+		execute_in_child(cmds, env, path_cmd, all);
 	clean_resources(cmds, env, path_cmd);
 	return (pid);
 }
