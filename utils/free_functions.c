@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 14:11:21 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:14:58 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void	free_all(t_all *all)
 		return ;
 	if (all->f_here_doc)
 		unlink(".here_doc.txt");
+	if (all->pids)
+		free(all->pids);
 	free_env(all->env);
 	free_data(all->first);
 	free(all);
-	if (all->pids)
-		free(all->pids);
 	all = NULL;
 }
 

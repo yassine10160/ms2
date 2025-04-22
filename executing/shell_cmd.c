@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/22 13:13:17 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/22 15:09:25 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	shell_cmd(t_all *all)
 		free_strs(cmds);
 		ft_exit(all, NULL);
 	}
-	path_cmd = get_path_cmd(cmds[0], get_path_env(all->env));
+	path_cmd = get_path_cmd(cmds[0], get_path_env(all->env), all);
 	if (!path_cmd)
 	{
 		clean_resources(cmds, env, NULL);

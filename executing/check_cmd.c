@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 14:06:55 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:19:19 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	check_local(char *cmd, char **path_cmd)
 	return ;
 }
 
-char	*get_path_cmd(char *cmd, char **path)
+char	*get_path_cmd(char *cmd, char **path, t_all *all)
 {
 	int		i;
 	char	*path_cmd;
@@ -78,6 +78,7 @@ char	*get_path_cmd(char *cmd, char **path)
 	if (i == -1)
 	{
 		free_strs(path);
+		all->status = 127;
 		printf("%s : command not found\n", cmd);
 		return (NULL);
 	}

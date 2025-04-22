@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 14:09:39 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:19:39 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ char	**get_path_env(t_env *env);
 ** executing/check_cmd.c
 */
 int		index_path_cmd(char *cmd, char **path);
-char	*get_path_cmd(char *cmd, char **path);
+char	*get_path_cmd(char *cmd, char **path, t_all *all);
 
 /*
 ** executing/fd_management.c
