@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 13:53:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 14:09:57 by dmazari          ###   ########.fr       */
+/*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
+/*   Updated: 2025/04/26 15:27:49 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,19 @@ t_data *init_data()
 	int fd_pipe[2];
 
 	data = ft_calloc(1, sizeof(struct s_data));
+	// data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
+	data->next = NULL;
+	data->prev = NULL;
 	data->cmds = ft_calloc(1, sizeof(struct s_cmds));
 	if (!data->cmds)
 	{
 		free(data);
 		return (NULL);
 	}
+	// data->cmds->next = NULL;
+	// data->cmds->prev = NULL;
 	if (pipe(fd_pipe) == -1)
 	{
 		free(data->cmds);
@@ -46,6 +51,7 @@ t_all *init_all(char **env)
 	if (!all)
 		return (NULL);
 	all->first = init_data();
+	// all->first->next = NULL;
 	if (!all->first)
 	{
 		free(all);
@@ -72,6 +78,7 @@ t_cmds *add_next_cmds(t_cmds *current)
 	if (!new)
 		return (NULL);
 	new->prev = current;
+	new->next = NULL;
 	current->next = new;
 	return (new);
 }
@@ -81,30 +88,36 @@ t_data *add_next_data(t_data *current)
 	t_data *new;
 
 	new = NULL;
-	new = init_data();
+	new = ft_calloc(1, sizeof(t_data));
 	if (!new)
 		return (NULL);
 	current->next = new;
 	new->prev = current;
+	new->next = NULL;
 	return (new);
 }
 
-void remove_cmd(t_cmds *current)
+t_cmds *remove_cmd(t_cmds *current)
 {
 	t_cmds *next;
 	t_cmds *prev;
 
 	prev = current->prev;
 	next = current->next;
-	prev->next = next;
+	if (prev)
+		prev->next = next;
 	if (next)
 		next->prev = prev;
-	printf("je suis la\n");
 	if (current && current->token)
 	{
 		free(current->token);
 		free(current);
 	}
+	if (next->next)
+		current = next;
+	else
+		current = prev;
+	return (current);
 }
 
 // int main(int ac, char **av, char **env)

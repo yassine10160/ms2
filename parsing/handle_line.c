@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_line.c                                      :+:      :+:    :+:   */
+/*   handle2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 14:34:14 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/22 13:15:23 by dmazari          ###   ########.fr       */
+/*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
+/*   Updated: 2025/04/26 15:29:05 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,19 @@ int is_infile(char *s)
 	return (0);
 }
 
-void safe_open(t_all *all, int fd, char *file, int type)
+void safe_open(t_all *all, t_data *data, char *file, int type)
 {
 	if (type == INFILE)
 	{
-		fd = open(file, O_RDONLY);
-		if (fd == -1)
-			ft_exit(all, NULL);
+		data->fd_in = open(file, O_RDONLY);
+		if (data->fd_in == -1)
+			printf("no such file\n");
+		// ft_exit(all, NULL);
 	}
 	else
 	{
-		fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-		if (fd == -1)
+		data->fd_out = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+		if (data->fd_out == -1)
 			ft_exit(all, NULL);
 	}
 }
@@ -117,7 +118,7 @@ int handle_here_doc(t_all *all, t_cmds *cmd)
 		return (1);
 }
 
-void handle_all(t_all *all)
+t_cmds *handle_all(t_all *all)
 {
 	t_cmds *tmp;
 	t_data *data;
@@ -128,15 +129,16 @@ void handle_all(t_all *all)
 	{
 		if (is_infile(tmp->token))
 		{
-			safe_open(all, data->fd_in, tmp->next->token, INFILE);
-			remove_cmd(tmp->next);
-			remove_cmd(tmp);
+			safe_open(all, data, tmp->next->token, INFILE);
+			tmp = remove_cmd(tmp);
+			tmp = remove_cmd(tmp);
 		}
 		else if (is_outfile(tmp->token))
 		{
-			safe_open(all, data->fd_out, tmp->next->token, OUTFILE);
-			remove_cmd(tmp->next);
-			remove_cmd(tmp);
+			safe_open(all, data, tmp->next->token, OUTFILE);
+			tmp = remove_cmd(tmp);
+			tmp = remove_cmd(tmp);
+			// printf("my node: %s\n", tmp->next);
 		}
 		else if (is_here_doc(tmp->token))
 		{
@@ -144,33 +146,42 @@ void handle_all(t_all *all)
 			remove_cmd(tmp->next);
 			remove_cmd(tmp);
 		}
-		if (!tmp->next && data->next)
+		if (!tmp->next->next)
 		{
-			data = data->next;
+			if (data->next->next)
+				data = data->next;
+			else
+				break;
 			tmp = data->cmds;
 		}
-		tmp = tmp->next;
+		else
+			tmp = tmp->next;
 	}
+	return (tmp);
 }
 
 void handle_line(t_all **all, char *line)
 {
 	t_data *tmp;
+	t_cmds *cmd;
 
 	tmp = (*all)->first;
 	set_line(*all, line);
 	(*all)->first = tmp;
-	handle_all(*all);
-	executing(*all);
-	// while (tmp->next)
-	// {
-	// 	while (tmp->cmds)
-	// 	{
-	// 		printf("totok: %s\n", tmp->cmds->token);
-	// 		tmp->cmds = tmp->cmds->next;
-	// 	}
-	// 	printf("fdin: %d\n", tmp->fd_in);
-	// 	printf("fdout: %d\n", tmp->fd_out);
-	// 	tmp = tmp->next;
-	// }
+	cmd = handle_all(*all);
+	// printf("new cmd %s\n", cmd->token);
+	tmp->cmds = cmd;
+	// tmp = (*all)->first;
+	// printf("here\n");
+	while (tmp->next)
+	{
+		while (tmp->cmds)
+		{
+			printf("totok: %s\n", tmp->cmds->token);
+			tmp->cmds = tmp->cmds->next;
+		}
+		printf("fdin: %d\n", tmp->fd_in);
+		printf("fdout: %d\n", tmp->fd_out);
+		tmp = tmp->next;
+	}
 }
