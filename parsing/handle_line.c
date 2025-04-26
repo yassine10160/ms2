@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle2.c                                          :+:      :+:    :+:   */
+/*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/26 15:29:05 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/26 16:15:37 by yassinefahf      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void set_line(t_all *all, char *line)
 	while (s && s[i])
 	{
 		split_quote_and_space(s[i], all);
+		// write(1, "here\n", 5);
 		tmp = add_next_data(all->first);
 		if (!tmp)
 			ft_exit(all, NULL);
@@ -132,13 +133,14 @@ t_cmds *handle_all(t_all *all)
 			safe_open(all, data, tmp->next->token, INFILE);
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
+			// printf("my node: %s\n", tmp->token);
 		}
 		else if (is_outfile(tmp->token))
 		{
 			safe_open(all, data, tmp->next->token, OUTFILE);
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
-			// printf("my node: %s\n", tmp->next);
+			// printf("my node: %s\n", tmp->token);
 		}
 		else if (is_here_doc(tmp->token))
 		{
@@ -146,7 +148,7 @@ t_cmds *handle_all(t_all *all)
 			remove_cmd(tmp->next);
 			remove_cmd(tmp);
 		}
-		if (!tmp->next->next)
+		if (!tmp->next || !tmp->next->next)
 		{
 			if (data->next->next)
 				data = data->next;
