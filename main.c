@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/20 15:31:34 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/04/28 16:43:34 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int parse_error(char *str, t_all *all)
 			i++;
 			while (str[i] == ' ')
 				i++;
-			if ((is_parse_err(str[i]) || str[i] == '\0'))
+			if ((is_parse_err(str[i]) && !str[i + 1]) || str[i] == '\0'|| str[0] == '|')
 			{
 				exit_parse("parsing error\n", all, 258);
 				return (1);

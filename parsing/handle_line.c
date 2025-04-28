@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/26 16:15:37 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/28 16:45:25 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,13 @@ void set_line(t_all *all, char *line)
 	while (s && s[i])
 	{
 		split_quote_and_space(s[i], all);
-		// write(1, "here\n", 5);
 		tmp = add_next_data(all->first);
+		// all->first->next = tmp;
+		// write(1, "here\n", 5);
+		all->first = tmp;
+		// printf("tmp_token: %s\n", tmp->prev->cmds->token);
 		if (!tmp)
 			ft_exit(all, NULL);
-		all->first = tmp;
 		i++;
 	}
 	free_strs(s);
@@ -104,6 +106,7 @@ int is_outfile(char *s)
 		return (1);
 	return (0);
 }
+
 int is_here_doc(char *s)
 {
 	if (s && s[0] == '<' && s[1] == '<')
@@ -119,7 +122,7 @@ int handle_here_doc(t_all *all, t_cmds *cmd)
 		return (1);
 }
 
-t_cmds *handle_all(t_all *all)
+void	handle_all(t_all *all)
 {
 	t_cmds *tmp;
 	t_data *data;
@@ -134,6 +137,10 @@ t_cmds *handle_all(t_all *all)
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
 			// printf("my node: %s\n", tmp->token);
+			// if (tmp && !tmp->prev)
+			// 	printf("no prev\n");
+			if (data == all->first && tmp && !tmp->prev)
+				all->first->cmds = tmp;
 		}
 		else if (is_outfile(tmp->token))
 		{
@@ -159,27 +166,25 @@ t_cmds *handle_all(t_all *all)
 		else
 			tmp = tmp->next;
 	}
-	return (tmp);
 }
 
 void handle_line(t_all **all, char *line)
 {
 	t_data *tmp;
-	t_cmds *cmd;
+	// t_cmds *cmd;
 
 	tmp = (*all)->first;
 	set_line(*all, line);
 	(*all)->first = tmp;
-	cmd = handle_all(*all);
-	// printf("new cmd %s\n", cmd->token);
-	tmp->cmds = cmd;
-	// tmp = (*all)->first;
-	// printf("here\n");
+	handle_all(*all);
+	tmp = (*all)->first;
+	// printf("tmp %s\n", tmp->cmds->token);
 	while (tmp->next)
 	{
 		while (tmp->cmds)
 		{
-			printf("totok: %s\n", tmp->cmds->token);
+			if (tmp->cmds && tmp->cmds->token)
+				printf("totok: %s\n", tmp->cmds->token);
 			tmp->cmds = tmp->cmds->next;
 		}
 		printf("fdin: %d\n", tmp->fd_in);

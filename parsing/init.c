@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init2.c                                            :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/26 15:27:49 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/28 15:58:35 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ t_data *init_data()
 	}
 	// data->cmds->next = NULL;
 	// data->cmds->prev = NULL;
-	if (pipe(fd_pipe) == -1)
-	{
-		free(data->cmds);
-		free(data);
-		return (NULL);
-	}
+	// if (pipe(fd_pipe) == -1)
+	// {
+	// 	free(data->cmds);
+	// 	free(data);
+	// 	return (NULL);
+	// }
 	data->fd_out = 1;
 	data->pipe_fd[0] = fd_pipe[0];
 	data->pipe_fd[1] = fd_pipe[1];
@@ -88,12 +88,14 @@ t_data *add_next_data(t_data *current)
 	t_data *new;
 
 	new = NULL;
-	new = ft_calloc(1, sizeof(t_data));
+	// new = ft_calloc(1, sizeof(t_data));
+	new = init_data();
 	if (!new)
 		return (NULL);
 	current->next = new;
 	new->prev = current;
 	new->next = NULL;
+	// printf("current: %s\n", new->prev->cmds->next->token);
 	return (new);
 }
 
@@ -102,21 +104,33 @@ t_cmds *remove_cmd(t_cmds *current)
 	t_cmds *next;
 	t_cmds *prev;
 
+	if (!current)
+		return (NULL);
 	prev = current->prev;
 	next = current->next;
 	if (prev)
 		prev->next = next;
+	else if (next)
+		next->prev = NULL;
 	if (next)
 		next->prev = prev;
+	else if (prev)
+		prev->next = NULL;
 	if (current && current->token)
 	{
 		free(current->token);
 		free(current);
 	}
-	if (next->next)
+	if (next->token)
+	{
+		// printf("Here next %s\n", next->token);
 		current = next;
+	}
 	else
+	{
+		// printf("Here prev %s\n", prev->token);
 		current = prev;
+	}
 	return (current);
 }
 
