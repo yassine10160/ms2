@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/28 16:45:25 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/28 18:47:10 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,14 +139,14 @@ void	handle_all(t_all *all)
 			// printf("my node: %s\n", tmp->token);
 			// if (tmp && !tmp->prev)
 			// 	printf("no prev\n");
-			if (data == all->first && tmp && !tmp->prev)
-				all->first->cmds = tmp;
+			data->cmds = tmp;
 		}
 		else if (is_outfile(tmp->token))
 		{
 			safe_open(all, data, tmp->next->token, OUTFILE);
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
+			data->cmds = tmp;
 			// printf("my node: %s\n", tmp->token);
 		}
 		else if (is_here_doc(tmp->token))
