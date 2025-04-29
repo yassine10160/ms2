@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/28 19:02:28 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:53:56 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #define OUTFILE 2
 #define PIPE 3
 #define NONE 4
+#define APPEND 5
 
 typedef enum e_builtin
 {
@@ -219,6 +220,14 @@ void *ft_calloc(size_t nmemb, size_t size);
 */
 int len_nb(int nb);
 char *ft_itoa(int nb);
+
+/*
+**
+*/
+int is_outfile(char *s);
+int is_here_doc(char *s);
+int	is_append(char *s);
+int is_infile(char *s);
 
 /*
 ** parsing/init.c

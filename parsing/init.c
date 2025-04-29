@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/28 19:07:39 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:16:03 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,14 @@ t_data *init_data(int mode)
 	t_data *data;
 
 	data = ft_calloc(1, sizeof(struct s_data));
-	// data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	data->next = NULL;
-	data->prev = NULL;
 	data->cmds = ft_calloc(1, sizeof(struct s_cmds));
 	if (!data->cmds)
 	{
 		free(data);
 		return (NULL);
 	}
-	data->cmds->next = NULL;
-	data->cmds->prev = NULL;
 	data->pipe_fd[0] = -2;
 	data->pipe_fd[1] = -2;
 	if (mode == PIPE)
@@ -40,9 +35,14 @@ t_data *init_data(int mode)
 			free(data);
 			return (NULL);
 		}
+		data->fd_in = data->pipe_fd[0];
+		data->fd_out = data->pipe_fd[1];
 	}
-	data->fd_in = 0;
-	data->fd_out = 1;
+	else
+	{
+		data->fd_in = 0;
+		data->fd_out = 1;
+	}
 	return (data);
 }
 

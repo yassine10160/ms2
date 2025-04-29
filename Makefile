@@ -19,7 +19,7 @@ BUILTIN_SRC	= env_functions.c env_parsing.c ft_cd.c ft_echo.c ft_env.c \
 			  ft_export.c ft_pwd.c ft_unset.c ft_exit.c
 
 UTILS_SRC	= char.c char_utils2.c free_functions.c ft_calloc.c \
-			  ft_itoa.c strcpy.c
+			  ft_itoa.c strcpy.c redir.c
 
 PARSING_SRC	= expand.c expand_null.c expand_var.c init.c split_quote_and_space.c \
 			  split_pipe.c add_space.c handle_line.c

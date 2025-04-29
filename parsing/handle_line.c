@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/29 11:39:35 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:21:55 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,17 @@ void set_line(t_all *all, char *line)
 	while (s && s[i])
 	{
 		split_quote_and_space(s[i], all);
-		tmp = add_next_data(all->first);
-		// all->first->next = tmp;
-		// write(1, "here\n", 5);
-		all->first = tmp;
-		// printf("tmp_token: %s\n", tmp->prev->cmds->token);
-		if (!tmp)
-			ft_exit(all, NULL);
+		if (s[i + 1])
+		{
+			tmp = add_next_data(all->first);
+			all->first = tmp;
+			if (!tmp)
+				ft_exit(all, NULL);
+		}
 		i++;
 	}
 	free_strs(s);
 	all->first = save;
-}
-
-int is_infile(char *s)
-{
-	if (s && s[0] == '<')
-		return (1);
-	return (0);
 }
 
 void safe_open(t_all *all, t_data *data, char *file, int type)
@@ -92,41 +85,28 @@ void safe_open(t_all *all, t_data *data, char *file, int type)
 			printf("no such file\n");
 		// ft_exit(all, NULL);
 	}
-	else
+	else if (type == OUTFILE)
 	{
 		data->fd_out = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 		if (data->fd_out == -1)
 			ft_exit(all, NULL);
 	}
-}
-
-int is_outfile(char *s)
-{
-	if (s && s[0] == '>')
-		return (1);
-	return (0);
-}
-
-int is_here_doc(char *s)
-{
-	if (s && s[0] == '<' && s[1] == '<')
-		return (1);
-	return (0);
-}
-
-int	is_append(char *s)
-{
-	if (s && s[0] == '>' && s[1] == '>')
-		return (1);
-	return (0);
+	else
+	{
+		data->fd_out = open(file, O_WRONLY | O_CREAT, 0777);
+		if (data->fd_out == -1)
+			ft_exit(all, NULL);
+	}
 }
 
 int handle_here_doc(t_all *all, t_cmds *cmd)
 {
-	if (cmd || all)
-		return (0);
-	else
-		return (1);
+	all->f_here_doc = open(".tmp", O_WRONLY | O_TRUNC | O_CREAT, 0777);
+	if (all->f_here_doc == -1)
+		ft_exit(all, NULL);
+	check_delim()
+	
+
 }
 
 void	handle_all(t_all *all)
@@ -148,7 +128,7 @@ void	handle_all(t_all *all)
 		else if (is_outfile(tmp->token))
 		{
 			if (is_append(tmp->token))
-				safe_open(all, data, tmp->next->token, );
+				safe_open(all, data, tmp->next->token, APPEND);
 			else
 				safe_open(all, data, tmp->next->token, OUTFILE);
 			tmp = remove_cmd(tmp);
