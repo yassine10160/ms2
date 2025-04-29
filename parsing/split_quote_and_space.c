@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quote_and_space.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 16:28:44 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/29 14:14:43 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char *str_dup_minishell(char *s, int *i, int k, int j)
 	return (str);
 }
 
-void split_quote_and_space(char *str, t_all *all)
+int split_quote_and_space(char *str, t_all *all)
 {
 	t_cmds *save;
 	int i;
@@ -73,16 +73,16 @@ void split_quote_and_space(char *str, t_all *all)
 		{
 			all->first->cmds->token = str_dup_minishell(str, &i, i, 0);
 			if (!all->first->cmds->token)
-				return (free_all(all));
+				return (1);
 			save = add_next_cmds(all->first->cmds);
 			if (!save)
-				return (free_all(all));
+				return (1);
 			all->first->cmds = save;
 		}
 	}
 	while (all->first->cmds->prev)
 		all->first->cmds = all->first->cmds->prev;
-	return;
+	return (0);
 }
 
 // int main(int ac, char **av, char **env)

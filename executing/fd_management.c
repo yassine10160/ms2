@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_management.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:53:08 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/15 16:53:20 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/29 15:51:47 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ int	setup_input_redirection(t_all *all)
 		all->first->fd_in = 0;
 	}
 	else if (all->first->prev)
-	{
-		if (dup2(all->first->prev->pipe_fd[0], STDIN_FILENO) == -1)
-			return (1);
+		{
+			if (dup2(all->first->prev->pipe_fd[0], STDIN_FILENO) == -1)			return (1);
 		close(all->first->prev->pipe_fd[0]);
 	}
 	return (0);

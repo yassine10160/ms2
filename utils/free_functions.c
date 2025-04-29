@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/28 19:08:38 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:45:13 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,11 @@ void	free_data(t_data *data)
 			close(data->fd_in);
 		if (data->fd_out != 1)
 			close(data->fd_out);
-		close(data->pipe_fd[0]);
-		close(data->pipe_fd[1]);
+		if (data->pipe_fd[0] != -2)
+		{
+			close(data->pipe_fd[0]);
+			close(data->pipe_fd[1]);
+		}
 		save = data;
 		data = data->next;
 		free(save);

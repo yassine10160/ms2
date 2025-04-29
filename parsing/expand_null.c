@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_null.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:28:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/10 13:29:14 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/04/29 13:37:13 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

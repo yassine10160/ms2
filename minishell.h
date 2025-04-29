@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/29 11:53:56 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:23:59 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ char *expand_line_var(char *line, char *var_value, int i_var, int sq);
 */
 int word_len(char *str);
 char *str_dup_minishell(char *s, int *i, int k, int j);
-void split_quote_and_space(char *str, t_all *all);
+int split_quote_and_space(char *str, t_all *all);
 
 /*
 ** parsing/split_pipe.c
@@ -288,7 +288,7 @@ void handle_line(t_all **all, char *line);
 ** main.c
 */
 void new_line(t_all *all);
-void exit_parse(char *s, t_all *all, int status);
+void exit_parse(char *line, char *s, t_all *all, int status);
 int is_parse_err(char c);
 int parse_error(char *str, t_all *all);
 int is_closed(char *line);

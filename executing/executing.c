@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/22 14:10:57 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/29 15:44:15 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	execute_cmd(t_all *all, int *pids, int i, int cmd_count)
 {
 	int	builtin;
 
-	// if (setup_redirections(all))
-		// ft_exit(all, NULL);
+	if (setup_redirections(all))
+		ft_exit(all, NULL);
 	(void)cmd_count;
 	if (all->first->cmds->token)
 	{
@@ -73,8 +73,8 @@ void	execute_cmd(t_all *all, int *pids, int i, int cmd_count)
 		else
 			pids[i] = shell_cmd(all);
 	}
-	// if (reset_std_descriptors())
-	// 	ft_exit(all, NULL);
+	if (reset_std_descriptors())
+		ft_exit(all, NULL);
 }
 
 void	executing(t_all *all)

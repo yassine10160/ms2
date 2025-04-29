@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/28 19:07:59 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:51:31 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void new_line(t_all *all)
 		ft_exit(all, NULL);
 }
 
-void exit_parse(char *s, t_all *all, int status)
+void exit_parse(char *line, char *s, t_all *all, int status)
 {
+	if (line)
+		free(line);
 	write(2, s, ft_strlen(s));
 	write(2, "\n", 1);
 	all->status = status;
@@ -56,7 +58,7 @@ int parse_error(char *str, t_all *all)
 				i++;
 			if ((is_parse_err(str[i]) && !str[i + 1]) || str[i] == '\0'|| str[0] == '|')
 			{
-				exit_parse("parsing error\n", all, 258);
+				exit_parse(NULL, "parsing error\n", all, 258);
 				return (1);
 			}
 		}
@@ -100,7 +102,7 @@ int main(int ac, char **av, char **env)
 			if (!parse_error(line, all))
 			{
 				if (!is_closed(line))
-					exit_parse("error: line not closed", all, 258);
+					exit_parse(line, "error: line not closed", all, 258);
 				else
 					handle_line(&all, line);
 			}
@@ -111,6 +113,9 @@ int main(int ac, char **av, char **env)
 			}
 		}
 		else
+		{
+			free(line);
 			ft_exit(all, NULL);
+		}
 	}
 }
