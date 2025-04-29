@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/28 18:47:10 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/29 11:39:35 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,13 @@ int is_here_doc(char *s)
 	return (0);
 }
 
+int	is_append(char *s)
+{
+	if (s && s[0] == '>' && s[1] == '>')
+		return (1);
+	return (0);
+}
+
 int handle_here_doc(t_all *all, t_cmds *cmd)
 {
 	if (cmd || all)
@@ -136,18 +143,17 @@ void	handle_all(t_all *all)
 			safe_open(all, data, tmp->next->token, INFILE);
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
-			// printf("my node: %s\n", tmp->token);
-			// if (tmp && !tmp->prev)
-			// 	printf("no prev\n");
 			data->cmds = tmp;
 		}
 		else if (is_outfile(tmp->token))
 		{
-			safe_open(all, data, tmp->next->token, OUTFILE);
+			if (is_append(tmp->token))
+				safe_open(all, data, tmp->next->token, );
+			else
+				safe_open(all, data, tmp->next->token, OUTFILE);
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
 			data->cmds = tmp;
-			// printf("my node: %s\n", tmp->token);
 		}
 		else if (is_here_doc(tmp->token))
 		{

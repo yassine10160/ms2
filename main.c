@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/28 16:43:34 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/28 19:07:59 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void new_line(t_all *all)
 {
 	free_data(all->first);
-	all->first = init_data();
+	all->first = init_data(NONE);
 	if (!all->first)
 		ft_exit(all, NULL);
 }

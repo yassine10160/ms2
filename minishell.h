@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/26 15:30:38 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/04/28 19:02:28 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 #define INFILE 1
 #define OUTFILE 2
+#define PIPE 3
+#define NONE 4
 
 typedef enum e_builtin
 {
@@ -221,7 +223,7 @@ char *ft_itoa(int nb);
 /*
 ** parsing/init.c
 */
-t_data *init_data(void);
+t_data *init_data(int mode);
 t_all *init_all(char **env);
 t_cmds *add_next_cmds(t_cmds *current);
 t_data *add_next_data(t_data *current);
