@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/29 14:23:59 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:11:58 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <sys/wait.h>
+#include <stdbool.h>
 
 #define INFILE 1
 #define OUTFILE 2
 #define PIPE 3
 #define NONE 4
 #define APPEND 5
+
+# ifndef BUFFER_SIZE
+	# define BUFFER_SIZE 1000
+# endif
 
 typedef enum e_builtin
 {
@@ -187,6 +192,11 @@ void is_in_quote(char c, int *sq, int *dq);
 int pos_in_str(char *str, char c);
 
 /*
+** parsing/redir.c
+*/
+int	check_here_doc(t_all *all, char *s);
+
+/*
 ** utils/char_utils2.c
 */
 void is_in_sq(char c, int *sq);
@@ -200,6 +210,14 @@ void free_cmds(t_cmds *cmds);
 void free_data(t_data *data);
 void free_all(t_all *all);
 void free_new_line(t_all *all);
+
+/*
+** utils/get_next_line.c
+*/
+char	*get_next_line(int fd);
+char	*ft_strjoin_gnl(char const *s1, char const *s2, int index);
+void	ft_reset(char *s, int stop);
+int	ft_index_line(char *s);
 
 /*
 ** utils/strcpy.c

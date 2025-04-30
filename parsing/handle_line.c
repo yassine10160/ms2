@@ -6,13 +6,13 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/29 17:02:07 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/04/30 18:50:54 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char **handle_space(t_all *all, char *line)
+char **handle_space(t_all *all, char *line, int *fd)
 {
 	char **s;
 	int i;
@@ -32,31 +32,32 @@ char **handle_space(t_all *all, char *line)
 			free_all(all);
 			// ft_exit(all, NULL)
 		}
-		// if (is_here_doc(s[i]))
-		// 	handle_here_doc()
+		*fd = check_here_doc(all, buf);
 		free(s[i]);
 		s[i++] = buf;
 	}
 	return (s);
 }
 
-void set_line(t_all *all, char *line)
+int set_line(t_all *all, char *line)
 {
 	char **s;
 	int i;
 	char *buf;
 	t_data *save;
 	t_data *tmp;
+	int		fd;
 
+	fd = -2;
 	i = 0;
-	s = handle_space(all, line);
+	s = handle_space(all, line , &fd);
 	while (s && s[i])
 	{
 		buf = expand_var(s[i], all, 0, 0);
 		if (!buf)
 		{
 			free_strs(s);
-			return; // ft_exit(all, NULL)
+			return (-1); // ft_exit(all, NULL)
 		}
 		s[i++] = buf;
 	}
@@ -76,6 +77,7 @@ void set_line(t_all *all, char *line)
 	}
 	free_strs(s);
 	all->first = save;
+	return (fd);
 }
 
 void	safe_open(t_all *all, t_data *data, char *file, int type)
@@ -101,41 +103,7 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 	}
 }
 
-int	is_quote_delim(char *delim)
-{
-	int	sq;
-	int	dq;
-	int	i = 0;
-	
-	while (delim && delim[i])
-	{
-		is_in_quote(delim[i], &sq, &dq);
-		if ((sq % 2) || (dq % 2))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int handle_here_doc(t_all *all, t_data *data, t_cmds *cmd)
-{
-	char	*file;
-
-	file = ".tmp";
-	data->fd_in = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-	if (data->fd_in == -1)
-		ft_exit(all, NULL);
-	printf("\n> ");
-	is_quote_delim(cmd->next->token);
-	file = get_next_line(data->fd_in);
-	while (file)
-	{
-
-	}
-	return (data->fd_in);
-}
-
-void	handle_all(t_all *all)
+void	handle_all(t_all *all, int fd)
 {
 	t_cmds *tmp;
 	t_data *data;
@@ -146,10 +114,10 @@ void	handle_all(t_all *all)
 	{
 		if (is_infile(tmp->token))
 		{
-			if (is_here_doc(tmp->token))
-				handle_here_doc(all, data, tmp);
-			else
+			if (is_here_doc(tmp->token) == -1)
 				safe_open(all, data, tmp->next->token, INFILE);
+			else if (fd != -2)
+				data->fd_in = fd;
 			tmp = remove_cmd(tmp);
 			tmp = remove_cmd(tmp);
 			data->cmds = tmp;
@@ -164,7 +132,7 @@ void	handle_all(t_all *all)
 			tmp = remove_cmd(tmp);
 			data->cmds = tmp;
 		}
-		if (!tmp->next)
+		if (!tmp || !tmp->next)
 		{
 			if (data->next)
 				data = data->next;
@@ -180,22 +148,25 @@ void	handle_all(t_all *all)
 void handle_line(t_all **all, char *line)
 {
 	t_data *tmp;
+	int		fd;
 
+	fd = -2;
 	tmp = (*all)->first;
-	set_line(*all, line);
+	fd = set_line(*all, line);
 	(*all)->first = tmp;
-	handle_all(*all);
+	handle_all(*all, fd);
 	tmp = (*all)->first;
-	while (tmp)
-	{
-		while (tmp->cmds)
-		{
-			if (tmp->cmds && tmp->cmds->token)
-				printf("totok: %s\n", tmp->cmds->token);
-			tmp->cmds = tmp->cmds->next;
-		}
-		printf("fdin: %d\n", tmp->fd_in);
-		printf("fdout: %d\n", tmp->fd_out);
-		tmp = tmp->next;
-	}
+	executing(*all);
+	// while (tmp)
+	// {
+	// 	while (tmp->cmds)
+	// 	{
+	// 		if (tmp->cmds && tmp->cmds->token)
+	// 			printf("totok: %s\n", tmp->cmds->token);
+	// 		tmp->cmds = tmp->cmds->next;
+	// 	}
+	// 	printf("fdin: %d\n", tmp->fd_in);
+	// 	printf("fdout: %d\n", tmp->fd_out);
+	// 	tmp = tmp->next;
+	// }
 }

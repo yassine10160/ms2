@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   fd_management.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:53:08 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/29 15:51:47 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:43:20 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
+#include <errno.h>
 int	setup_input_redirection(t_all *all)
 {
 	if (all->first->fd_in != 0)
@@ -23,7 +23,8 @@ int	setup_input_redirection(t_all *all)
 	}
 	else if (all->first->prev)
 		{
-			if (dup2(all->first->prev->pipe_fd[0], STDIN_FILENO) == -1)			return (1);
+			if (dup2(all->first->prev->pipe_fd[0], STDIN_FILENO) == -1)	
+					return (1);
 		close(all->first->prev->pipe_fd[0]);
 	}
 	return (0);

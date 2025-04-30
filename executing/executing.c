@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/29 15:44:15 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/04/30 18:50:02 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ void	executing(t_all *all)
 	int		cmd_count;
 	int		i;
 
+	if (!all->first->cmds)
+	{
+		free_new_line(all);
+		return;
+	}
 	save = all->first;
 	cmd_count = count_cmds(all);
 	all->pids = init_pids_array(cmd_count);
