@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:22:20 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/09 13:22:40 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/02 17:57:07 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,11 @@
 
 char	*get_pwd(char *prefix)
 {
-	size_t	size;
 	char	*pwd;
-	char	*save;
 
-	pwd = NULL;
-	save = NULL;
-	size = 0;
-	while (!pwd)
-	{
-		pwd = malloc(sizeof(char) * size);
-		if (!pwd)
-			return (NULL);
-		save = pwd;
-		pwd = getcwd(pwd, size);
-		if (!pwd)
-		{
-			free(save);
-			size++;
-		}
-	}
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (NULL);
 	pwd = ft_strcat(prefix, pwd, 1, 0);
 	return (pwd);
 }
@@ -82,7 +67,7 @@ int	ft_cd(t_env *env, char *arg)
 		return (1);
 	old_pwd = get_pwd("OLDPWD=");
 	if (!old_pwd)
-		return (2);
+		printf("getcwd : no working directory\n");
 	if (chdir(arg) == -1)
 	{
 		free(old_pwd);
@@ -90,12 +75,11 @@ int	ft_cd(t_env *env, char *arg)
 		return (1);
 	}
 	new_pwd = get_pwd("PWD=");
-	if (!new_pwd)
-	{
-		free(old_pwd);
-		return (2);
-	}
-	put_pwd(env, &new_pwd, 1);
-	put_pwd(env, &old_pwd, 2);
+	if (new_pwd)
+		put_pwd(env, &new_pwd, 1);
+	if (old_pwd)
+		put_pwd(env, &old_pwd, 2);
+	if (!old_pwd)
+		return (1);
 	return (0);
 }

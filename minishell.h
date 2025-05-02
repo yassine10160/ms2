@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/30 18:11:58 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:58:26 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int print_export(t_env *env, int i);
 int add_lst_str(t_env *prev, char *var);
 char *get_var_name(char *str);
 void modify_line(t_env *env, char *new_line);
-int ft_export(t_env *env, char *new_var);
+int ft_export(t_env *env, t_cmds *cmd);
 
 /*
 ** builtin/ft_pwd.c

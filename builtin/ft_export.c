@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:26:08 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 15:15:30 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/02 17:59:53 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,17 @@ int	add_lst_str(t_env *prev, char *var)
 {
 	t_env	*new_node;
 	t_env	*ptr;
+	char	*dup;
 
+	dup = ft_strdup(var);
+	// if (!dup)
+	// 	ft_exit(all);
 	if (!prev->prev && !prev->next && !prev->line)
 	{
-		prev->line = var;
+		prev->line = dup;
 		ptr = add_lst(prev);
-		if (!ptr)
-			return (2);
+		// if (!ptr)
+		// 	ft_exit(all);
 		return (0);
 	}
 	new_node = malloc(sizeof(t_env));
@@ -60,7 +64,7 @@ int	add_lst_str(t_env *prev, char *var)
 	new_node->prev = prev;
 	new_node->next = prev->next;
 	prev->next = new_node;
-	new_node->line = var;
+	new_node->line = dup;
 	return (0);
 }
 
@@ -89,20 +93,24 @@ char	*get_var_name(char *str)
 void	modify_line(t_env *env, char *new_line)
 {
 	char	*save;
+	char	*str;
 
 	save = env->line;
 	free(save);
-	env->line = new_line;
+	str = ft_strdup(new_line);
+	// if (!str)
+		// ft_exit(all);
+	env->line = str;
 }
 
-int	ft_export(t_env *env, char *new_var)
+int	ft_export(t_env *env, t_cmds *cmds)
 {
 	char	*var_name;
 	t_env	*save;
 
-	if (!new_var)
+	if (!cmds || !cmds->token)
 		return (print_export(env, 0));
-	var_name = get_var_name(new_var);
+	var_name = get_var_name(cmds->token);
 	if (!var_name)
 		return (1);
 	if (is_alpha(var_name[0]) != 1)
@@ -115,26 +123,10 @@ int	ft_export(t_env *env, char *new_var)
 	free(var_name);
 	if (!save)
 	{
-		if (add_lst_str(env, new_var) == 1)
+		if (add_lst_str(env, cmds->token) == 1)
 			return (1);
 	}
 	else
-		modify_line(save, new_var);
+		modify_line(save, cmds->token);
 	return (0);
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	t_env *menv;
-// 	char	*str1 = ft_strdup("a=salut");
-// 	char	*str2 = ft_strdup("b=coucou");
-// 	char	*str3 = ft_strdup("a=coucou");
-// 	menv = env_to_struct(env);
-
-// 	ft_export(menv, str1);
-// 	ft_export(menv, str2);
-// 	ft_export(menv, str3);
-// 	ft_env(menv);
-// 	ft_export(menv, NULL);
-// 	free_new_env(menv);
-// }
