@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/30 19:00:43 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:20:48 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int main(int ac, char **av, char **env)
 	all = init_all(env);
 	while (1)
 	{
-		// write(1, "Schwarzenegger : ", 18);
 		line = readline("Schwarzenegger : ");
 		if (line)
 		{
@@ -115,7 +114,6 @@ int main(int ac, char **av, char **env)
 		else
 		{
 			free(line);
-			write(1, "here\n", 5);
 			ft_exit(all, NULL);
 		}
 	}

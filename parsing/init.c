@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/29 13:16:03 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:26:49 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_data *init_data(int mode)
+t_data *init_data()
 {
 	t_data *data;
 
@@ -25,24 +25,14 @@ t_data *init_data(int mode)
 		free(data);
 		return (NULL);
 	}
-	data->pipe_fd[0] = -2;
-	data->pipe_fd[1] = -2;
-	if (mode == PIPE)
+	if (pipe(data->pipe_fd) == -1)
 	{
-		if (pipe(data->pipe_fd) == -1)
-		{
-			free(data->cmds);
-			free(data);
-			return (NULL);
-		}
-		data->fd_in = data->pipe_fd[0];
-		data->fd_out = data->pipe_fd[1];
+		free(data->cmds);
+		free(data);
+		return (NULL);
 	}
-	else
-	{
-		data->fd_in = 0;
-		data->fd_out = 1;
-	}
+	data->fd_in = 0;
+	data->fd_out = 1;
 	return (data);
 }
 
@@ -53,7 +43,7 @@ t_all *init_all(char **env)
 	all = ft_calloc(1, sizeof(struct s_all));
 	if (!all)
 		return (NULL);
-	all->first = init_data(NONE);
+	all->first = init_data();
 	// all->first->next = NULL;
 	if (!all->first)
 	{
@@ -92,7 +82,7 @@ t_data *add_next_data(t_data *current)
 
 	new = NULL;
 	// new = ft_calloc(1, sizeof(t_data));
-	new = init_data(PIPE);
+	new = init_data();
 	if (!new)
 		return (NULL);
 	current->next = new;

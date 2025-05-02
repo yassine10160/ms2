@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/04/30 18:45:14 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:17:47 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,10 @@ void	write_and_expand_file(t_all *all, int fd, char *line, bool is_quote)
 		{
 			free(line);
 			ft_exit(all, NULL);
+		}
+		if (buf[ft_strlen(buf) - 1] != '\n')
+		{
+			buf[ft_strlen(buf)] = '\n';
 		}
 		line = buf;
 	}

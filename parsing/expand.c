@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/30 17:36:50 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:15:00 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	find_var_end(char *line, int i, int *sq, int *dq)
 
 	j = i;
 	save = *dq;
-	while (line[j] && line[j] != ' ' && !(*sq % 2))
+	while (line[j] && line[j] != ' ' && line[j] != '\n' && !(*sq % 2))
 	{
 		is_in_quote(line[j], sq, dq);
 		if (*dq != save)

@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:10:16 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/29 12:55:27 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/02 19:30:40 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int count_space(char *line)
 		{
 			if (line[i + 1] && !irs(line[i + 1]) && !(sq % 2) && !(dq % 2))
 				tmp++;
-			if (line[i - 1] && !irs(line[i - 1]) && !(sq % 2) && !(dq % 2))
+			if (i > 0 && line[i - 1] && !irs(line[i - 1]) && !(sq % 2) && !(dq % 2))
 				tmp++;
 		}
 		i++;

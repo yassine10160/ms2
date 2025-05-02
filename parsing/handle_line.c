@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/30 18:50:54 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:59:15 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 	{
 		data->fd_in = open(file, O_RDONLY);
 		if (data->fd_in == -1)
-			printf("no such file\n");
-		// ft_exit(all, NULL);
+			printf("%s : No such file\n", file);
 	}
 	else if (type == OUTFILE)
 	{

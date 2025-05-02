@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/02 17:58:26 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/02 19:26:02 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ int is_infile(char *s);
 /*
 ** parsing/init.c
 */
-t_data *init_data(int mode);
+t_data *init_data();
 t_all *init_all(char **env);
 t_cmds *add_next_cmds(t_cmds *current);
 t_data *add_next_data(t_data *current);

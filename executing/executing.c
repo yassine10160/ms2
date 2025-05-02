@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/30 18:50:02 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/02 19:28:44 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,21 @@ int	count_cmds(t_all *all)
 	return (count);
 }
 
-void	execute_cmd(t_all *all, int *pids, int i, int cmd_count)
+void	execute_cmd(t_all *all, int *pids, int i)
 {
 	int	builtin;
 
-	if (setup_redirections(all))
+	if (!setup_redirections(all))
 		ft_exit(all, NULL);
-	(void)cmd_count;
-	if (all->first->cmds->token)
+	if (all->first->cmds->token && all->first->fd_in != -1)
 	{
 		builtin = is_builtin(all->first->cmds->token);
 		if (builtin != 0)
-		{
-			// if (cmd_count == 1)
-				all->status = builtin_caller(all, builtin);
-			// else
-			// {
-			// 	pids[i] = fork();
-			// 	if (pids[i] == 0)
-			// 	{
-			// 		all->status = builtin_caller(all, builtin);
-			// 		exit(0) ;
-			// 	}
-			// }
-		}
+			all->status = builtin_caller(all, builtin);
 		else
 			pids[i] = shell_cmd(all);
 	}
-	if (reset_std_descriptors())
+	if (!reset_std_descriptors())
 		ft_exit(all, NULL);
 }
 
@@ -96,7 +83,7 @@ void	executing(t_all *all)
 	i = 0;
 	while (all->first)
 	{
-		execute_cmd(all, all->pids, i, cmd_count);
+		execute_cmd(all, all->pids, i);
 		all->first = all->first->next;
 		i++;
 	}
