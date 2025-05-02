@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/29 14:05:42 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/02 18:17:12 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ static char	*alloc_expanded_str(char *line, char *var_value, int i_var)
 
 static int	copy_var(char *var_value, char *s, int i_var, int i_s)
 {
+	while (var_value && var_value[i_var] != '=')
+		i_var++;
+	if (var_value && var_value[i_var] == '=')
+		i_var++;
 	while (var_value && var_value[i_var])
 		s[i_s++] = var_value[i_var++];
 	return (i_s);
