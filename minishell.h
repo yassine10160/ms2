@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/02 19:26:02 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/02 20:26:06 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,8 +172,8 @@ char *get_path_cmd(char *cmd, char **path, t_all *all);
 */
 int setup_input_redirection(t_all *all);
 int setup_output_redirection(t_all *all);
-int setup_redirections(t_all *all);
-int reset_std_descriptors(void);
+int setup_redirections(t_all *all, int *fd_save_in, int *fd_save_out);
+int reset_std_descriptors(int *fd_save_in, int *fd_save_out);
 
 /*
 ** executing/cmd_status.c

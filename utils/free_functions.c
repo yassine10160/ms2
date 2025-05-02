@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/02 18:57:52 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/02 19:47:21 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,9 @@ void	free_data(t_data *data)
 		if (data->fd_out != 1)
 			close(data->fd_out);
 		if (data->pipe_fd[0] != -2)
-		{
 			close(data->pipe_fd[0]);
+		if (data->pipe_fd[1] != -2)
 			close(data->pipe_fd[1]);
-		}
 		save = data;
 		data = data->next;
 		free(save);
