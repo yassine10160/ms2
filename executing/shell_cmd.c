@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/22 15:09:25 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/03 21:51:15 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../minishell.h"
 
-int	execute_in_child(char **cmds, char **env, char *path_cmd, t_all *all)
+int	execute_in_child(char **cmds, char **env, char *path_cmd)
 {
 	execve(path_cmd, cmds, env);
 	perror(cmds[0]);
 	free_strs(cmds);
 	free_strs(env);
 	free(path_cmd);
-	free_all(all);
 	exit(EXIT_FAILURE);
 	return (1);
 }
@@ -66,7 +65,10 @@ int	shell_cmd(t_all *all)
 	if (pid < 0)
 		return (handle_fork_error(cmds, env, path_cmd, all));
 	if (pid == 0)
-		execute_in_child(cmds, env, path_cmd, all);
+	{
+		free_all(all);
+		execute_in_child(cmds, env, path_cmd);
+	}
 	clean_resources(cmds, env, path_cmd);
 	return (pid);
 }
