@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 14:07:04 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:30:00 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,24 @@ int	count_cmds(t_all *all)
 	return (count);
 }
 
+int	builtin_child(t_all *all, int builtin)
+{
+	int	pid;
+	int	rtn;
+
+	pid = fork();
+	if (pid < 0)
+		handle_fork_error(NULL, NULL, NULL, all);
+	if (pid == 0)
+	{
+		rtn = builtin_caller(all, builtin);
+		free_all(all);
+		exit(rtn);
+	}
+	return (pid);
+}
+
+
 void	execute_cmd(t_all *all, int *pids, int i)
 {
 	int	builtin;
@@ -56,8 +74,10 @@ void	execute_cmd(t_all *all, int *pids, int i)
 	if (all->first->cmds->token && all->first->fd_in != -1)
 	{
 		builtin = is_builtin(all->first->cmds->token);
-		if (builtin != 0)
+		if (builtin != 0 && !all->first->next && !all->first->prev)
 			all->status = builtin_caller(all, builtin);
+		else if (builtin != 0)
+			pids[i] = builtin_child(all, builtin);
 		else
 			pids[i] = shell_cmd(all);
 	}

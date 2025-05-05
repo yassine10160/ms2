@@ -3,62 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/03 16:58:21 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/05/05 15:15:43 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void new_line(t_all *all)
-{
-	free_data(all->first);
-	all->first = init_data();
-	if (!all->first)
-		ft_exit(all, NULL);
-}
-
-void exit_parse(char *line, char *s, t_all *all, int status)
+void	write_error(char *line, char *s, t_all *all, int status)
 {
 	if (line)
 		free(line);
 	write(2, s, ft_strlen(s));
 	write(2, "\n", 1);
 	all->status = status;
-	// il faut free la struct all
 }
 
-int is_parse_err(char c)
+int	parse_err(char c)
 {
 	if (c == '<' || c == '>' || c == '|')
 		return (1);
 	return (0);
 }
 
-int parse_error(char *str, t_all *all)
+int	parse_error(char *s, t_all *all)
 {
-	int i;
-	int sq;
-	int dq;
+	int	i;
+	int	sq;
+	int	dq;
 
 	i = -1;
 	sq = 0;
 	dq = 0;
-	while (str && str[++i])
+	while (s && s[++i])
 	{
-		is_in_quote(str[i], &sq, &dq);
-		if ((is_parse_err(str[i])) && !(sq % 2) && !(dq % 2))
+		is_in_quote(s[i], &sq, &dq);
+		if ((parse_err(s[i])) && !(sq % 2) && !(dq % 2))
 		{
-			if (is_parse_err(str[i + 1]) && str[i] == str[i + 1] && str[i] != '|')
+			if (parse_err(s[i + 1]) && s[i] == s[i + 1] && s[i] != '|')
 				i++;
 			i++;
-			while (str[i] == ' ')
+			while (s[i] == ' ')
 				i++;
-			if ((is_parse_err(str[i]) && !str[i + 1]) || str[i] == '\0' || str[0] == '|')
+			if ((parse_err(s[i]) && !s[i + 1]) || s[i] == '\0' || s[0] == '|')
 			{
-				exit_parse(NULL, "parsing error\n", all, 258);
+				write_error(NULL, "Error : synthax", all, 258);
 				return (1);
 			}
 		}
@@ -66,11 +57,11 @@ int parse_error(char *str, t_all *all)
 	return (0);
 }
 
-int is_closed(char *line)
+int	is_closed(char *line)
 {
-	int i;
-	int sq;
-	int dq;
+	int	i;
+	int	sq;
+	int	dq;
 
 	i = 0;
 	sq = 0;
@@ -85,33 +76,39 @@ int is_closed(char *line)
 	return (1);
 }
 
-int main(int ac, char **av, char **env)
+int process_line(char *line, t_all *all) 
 {
-	t_all *all;
-	char *line;
+	if (!line)
+		return (0);
+	if (!parse_error(line, all)) 
+	{
+		if (!is_closed(line)) 
+			write_error(line, "Error: line not closed", all, 258);
+		else 
+			handle_line(&all, line);
+	}
+	else 
+	{
+		all->status = 1;
+		free(line);
+	}
+	return (1);
+}
+
+int main(int ac, char **av, char **env) 
+{
+	t_all	*all;
+	char	*line;
 
 	(void)ac;
 	(void)av;
 	all = init_all(env);
-	while (1)
+	while (1) 
 	{
 		line = readline("Schwarzenegger : ");
-		if (line)
-		{
-			if (!parse_error(line, all))
-			{
-				if (!is_closed(line))
-					exit_parse(line, "error: line not closed", all, 258);
-				else
-					handle_line(&all, line);
-			}
-			else
-			{
-				all->status = 1;
-				free(line);
-			}
-		}
-		else
+		if (line) 
+			process_line(line, all);
+		else 
 		{
 			free(line);
 			ft_exit(all, NULL);

@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/05 14:32:02 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:07:45 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ t_all	*init_all(char **env)
 
 	all = ft_calloc(1, sizeof(struct s_all));
 	if (!all)
-		return (NULL);
+		exit(1);
 	all->first = init_data();
 	if (!all->first)
 	{
 		free(all);
-		return (NULL);
+		exit(1);
 	}
 	all->status = 0;
 	all->env = env_to_struct(env);
@@ -55,7 +55,7 @@ t_all	*init_all(char **env)
 	{
 		free_data(all->first);
 		free(all);
-		return (NULL);
+		exit(1);
 	}
 	all->fd_save[0] = -1;
 	all->fd_save[1] = -1;
