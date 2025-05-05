@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/02 20:24:28 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:54:33 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,8 @@ int	count_cmds(t_all *all)
 void	execute_cmd(t_all *all, int *pids, int i)
 {
 	int	builtin;
-	int	fd_save[2];
 
-	if (!setup_redirections(all, &fd_save[0], &fd_save[1]))
+	if (!setup_redirections(all, &all->fd_save[0], &all->fd_save[1]))
 		ft_exit(all, NULL);
 	if (all->first->cmds->token && all->first->fd_in != -1)
 	{
@@ -61,7 +60,7 @@ void	execute_cmd(t_all *all, int *pids, int i)
 		else
 			pids[i] = shell_cmd(all);
 	}
-	if (!reset_std_descriptors(&fd_save[0], &fd_save[1]))
+	if (!reset_std_descriptors(&all->fd_save[0], &all->fd_save[1]))
 		ft_exit(all, NULL);
 }
 

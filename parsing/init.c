@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/02 19:40:37 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:51:04 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ t_all *init_all(char **env)
 		free(all);
 		return (NULL);
 	}
+	all->fd_save[0] = -1;
+	all->fd_save[1] = -1;
 	all->pids = NULL;
 	return (all);
 }

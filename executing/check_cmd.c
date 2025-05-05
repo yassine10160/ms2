@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 10:33:52 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/05 12:00:32 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	index_path_cmd(char *cmd, char **path)
 	return (-1);
 }
 
-void	check_local(char *cmd, char **path_cmd)
+int	check_local(char *cmd, char **path_cmd)
 {
 	char	*pwd;
 
@@ -44,17 +44,17 @@ void	check_local(char *cmd, char **path_cmd)
 	if (!pwd)
 	{
 		*path_cmd = NULL;
-		return ;
+		return (0);
 	}
 	*path_cmd = ft_strcat(ft_strcat(pwd, "/", 0, 0), cmd, 0, 0);
 	free(pwd);
 	if (!*path_cmd)
-		return ;
+		return (0);
 	if (access(*path_cmd, F_OK | X_OK) == 0)
-		return ;
+		return (1);
 	free(*path_cmd);
 	*path_cmd = NULL;
-	return ;
+	return (0);
 }
 
 char	*get_path_cmd(char *cmd, char **path, t_all *all)
@@ -62,13 +62,15 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 	int		i;
 	char	*path_cmd;
 
-	if (!path || !cmd)
+	path_cmd = NULL;
+	if ((!path || !cmd) && !check_local(cmd, &path_cmd))
 	{
 		if (path)
 			free_strs(path);
+		else
+			printf("Error : PATH not defined\n");
 		return (NULL);
 	}
-	check_local(cmd, &path_cmd);
 	if (!path_cmd)
 	{
 		i = index_path_cmd(cmd, path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:17:17 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/20 14:48:14 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/05 13:14:17 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ int	ft_strcmp(char *s1, char *s2)
 t_env	*find_in_env(t_env *env, char *str)
 {
 	t_env	*save;
+	int		i;
 
 	save = env;
 	while (save->prev)
 		save = save->prev;
 	while (save->next)
 	{
-		if (ft_strcmp(save->line, str))
+		i = 0;
+		while (save->line[i] && str && str[i] && str[i] == save->line[i])
+			i++;
+		if ((!save->line[i] || save->line[i] == '=') && !str[i])
 			return (save);
 		save = save->next;
 	}

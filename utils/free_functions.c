@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/03 16:59:31 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/05/05 13:55:23 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ void free_new_line(t_all *all)
 {
 	if (all->f_here_doc)
 		unlink(".tmp");
+	if (all->pids)
+		free(all->pids);
 	all->f_here_doc = 0;
+	close_init_fd(&all->fd_save[0], &all->fd_save[1]);
 	free_data(all->first);
 	all->first = init_data();
 }

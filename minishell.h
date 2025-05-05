@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:14:10 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/02 20:26:06 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 13:50:29 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_all
 	int status;
 	int f_here_doc;
 	int *pids;
+	int	fd_save[2];
 } t_all;
 
 /*
@@ -121,7 +122,7 @@ void ft_exit(t_all *all, t_cmds *cmd);
 int print_export(t_env *env, int i);
 int add_lst_str(t_env *prev, char *var);
 char *get_var_name(char *str);
-void modify_line(t_env *env, char *new_line);
+int modify_line(t_env *env, char *new_line);
 int ft_export(t_env *env, t_cmds *cmd);
 
 /*
