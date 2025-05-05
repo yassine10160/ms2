@@ -6,7 +6,7 @@
 /*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:55:37 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/15 15:25:21 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/05 10:35:46 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ char	**get_path_env(t_env *env)
 
 	i = find_path_string(&env);
 	if (i == -1)
+	{
+		printf("Error : PATH not defined\n");
 		return (NULL);
+	}
 	path = split_c(env->line + 5, ':', '/');
 	if (!path)
 		return (NULL);

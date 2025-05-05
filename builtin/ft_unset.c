@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/02 17:57:50 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 10:39:14 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void remove_node(t_env *node)
+void	remove_node(t_env *node)
 {
-	t_env *prev;
-	t_env *next;
+	t_env	*prev;
+	t_env	*next;
 
 	if (node)
 	{
@@ -30,7 +30,7 @@ void remove_node(t_env *node)
 	}
 }
 
-int ft_unset(t_env *env, t_cmds *cmd)
+int	ft_unset(t_env *env, t_cmds *cmd)
 {
 	t_env	*save;
 	t_cmds	*ptr;

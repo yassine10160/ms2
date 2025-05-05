@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:26:08 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/03 16:59:05 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/05/05 10:43:27 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int print_export(t_env *env, int i)
+int	print_export(t_env *env, int i)
 {
-	int q;
+	int	q;
 
 	while (env->prev)
 		env = env->prev;
@@ -41,15 +41,14 @@ int print_export(t_env *env, int i)
 	return (0);
 }
 
-int add_lst_str(t_env *prev, char *var)
+int	add_lst_str(t_env *prev, char *var)
 {
-	t_env *new_node;
-	// t_env	*ptr;
-	char *dup;
+	t_env	*new_node;
+	char	*dup;
 
 	dup = ft_strdup(var);
-	// if (!dup)
-	// 	ft_exit(all);
+	if (!dup)
+		return (-1);
 	if (!prev->prev && !prev->next && !prev->line)
 	{
 		prev->line = dup;
@@ -68,11 +67,11 @@ int add_lst_str(t_env *prev, char *var)
 	return (0);
 }
 
-char *get_var_name(char *str)
+char	*get_var_name(char *str)
 {
-	char *var;
-	int i;
-	int j;
+	char	*var;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -90,10 +89,10 @@ char *get_var_name(char *str)
 	return (var);
 }
 
-void modify_line(t_env *env, char *new_line)
+void	modify_line(t_env *env, char *new_line)
 {
-	char *save;
-	char *str;
+	char	*save;
+	char	*str;
 
 	save = env->line;
 	free(save);
@@ -103,16 +102,16 @@ void modify_line(t_env *env, char *new_line)
 	env->line = str;
 }
 
-int ft_export(t_env *env, t_cmds *cmds)
+int	ft_export(t_env *env, t_cmds *cmds)
 {
-	char *var_name;
-	t_env *save;
+	char	*var_name;
+	t_env	*save;
 
 	if (!cmds || !cmds->token)
 		return (print_export(env, 0));
 	var_name = get_var_name(cmds->token);
 	if (!var_name)
-		return (1);
+		return (-1);
 	if (is_alpha(var_name[0]) != 1)
 	{
 		printf("export: '%s': not a valid identifier\n", var_name);

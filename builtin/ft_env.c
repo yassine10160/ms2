@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:23:59 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/18 13:23:11 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/05 10:39:36 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include  "../minishell.h"
+#include "../minishell.h"
 
 int	is_printable(char *str)
 {
@@ -25,7 +25,6 @@ int	is_printable(char *str)
 	}
 	return (0);
 }
-
 
 void	ft_env(t_env *env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 14:19:19 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 10:33:52 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,18 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 		return (NULL);
 	}
 	check_local(cmd, &path_cmd);
-	if (path_cmd)
+	if (!path_cmd)
 	{
-		free_strs(path);
-		return (path_cmd);
+		i = index_path_cmd(cmd, path);
+		if (i == -1)
+		{
+			free_strs(path);
+			all->status = 127;
+			printf("%s : command not found\n", cmd);
+			return (NULL);
+		}
+		path_cmd = ft_strcat(path[i], cmd, 0, 0);
 	}
-	i = index_path_cmd(cmd, path);
-	if (i == -1)
-	{
-		free_strs(path);
-		all->status = 127;
-		printf("%s : command not found\n", cmd);
-		return (NULL);
-	}
-	path_cmd = ft_strcat(path[i], cmd, 0, 0);
 	free_strs(path);
 	return (path_cmd);
 }
