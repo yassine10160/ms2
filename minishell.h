@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:50:29 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/05 14:07:45 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:43:09 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ char	**get_path_env(t_env *env);
 int		execute_in_child(char **cmds, char **env, char *path_cmd);
 void	clean_resources(char **cmds, char **env, char *path_cmd);
 int		handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all);
+int		prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd);
 int		shell_cmd(t_all *all);
 
 /*
@@ -218,11 +219,15 @@ char	*expand_var(char *line, t_all *all, int i, int j);
 /*
 ** parsing/expand_null.c
 */
+void	init_expand_vars(int *sq, int *dq, char **dup, char *line);
+int		skip_var(char *line, int i, int *sq, int *dq);
 char	*expand_null(char *line, int flag, int i);
 
 /*
 ** parsing/expand_var.c
 */
+int		find_var_start(char *var_value, int i);
+char	*alloc_expanded_str(char *line, char *var_value, int i_var);
 char	*expand_line_var(char *line, char *var_value, int i_var, int sq);
 
 /*
@@ -244,13 +249,17 @@ t_data	*add_next_data(t_data *current);
 t_cmds	*remove_cmd(t_cmds *current);
 
 /*
-** parsing/redir.c
+** parsing/redir_utils.c
 */
 int		is_outfile(char *s);
 int		is_here_doc(char *s);
 int		is_append(char *s);
 int		is_infile(char *s);
 bool	is_quote_delim(char *s, int index);
+
+/*
+** parsing/redir.c
+*/
 int		len_delim(char *s, int start);
 char	*get_delim(char *s, int index, int len);
 void	write_and_expand_file(t_all *all, int fd, char *line, bool is_quote);

@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/05 14:39:18 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:47:31 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 	{
 		write(0, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		if (!line || ft_strcmp(line, delim))
+		if (!line || ft_strcmp(line, delim) == 2)
 		{
 			free(line);
 			break ;
