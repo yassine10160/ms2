@@ -6,28 +6,25 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/02 18:17:12 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:25:58 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	find_var_start(char *var_value, int i)
+int	find_var_start(char *var_value, int i)
 {
 	while (var_value && var_value[i] && (i > 0 && var_value[i - 1] != '='))
 		i++;
 	return (i);
 }
 
-static char	*alloc_expanded_str(char *line, char *var_value, int i_var)
+char	*alloc_expanded_str(char *line, char *var_value, int i_var)
 {
-	char *s;
+	char	*s;
 
-	(void)var_value;
-	(void)i_var;
-	(void)line;
-	s = ft_calloc(sizeof(char), (ft_strlen(line) + 
-		ft_strlen(var_value + i_var) + 2));
+	s = ft_calloc(sizeof(char), (ft_strlen(line)
+				+ ft_strlen(var_value + i_var) + 2));
 	return (s);
 }
 
@@ -47,7 +44,8 @@ static int	handle_dollar(char *line, int i, int *sq, int *dq)
 	int	save;
 
 	save = *dq;
-	if (!(*sq % 2) && line[i] && line[i] == '$' && line[i + 1] && line[i + 1] == '?')
+	if (!(*sq % 2) && line[i] && line[i] == '$'
+		&& line[i + 1] && line[i + 1] == '?')
 	{
 		i += 2;
 		return (i);
@@ -56,7 +54,7 @@ static int	handle_dollar(char *line, int i, int *sq, int *dq)
 	{
 		is_in_quote(line[i], sq, dq);
 		if (save != *dq)
-			break;
+			break ;
 		i++;
 	}
 	return (i);
@@ -69,7 +67,6 @@ char	*expand_line_var(char *line, char *var_value, int i_var, int sq)
 	int		i_s;
 	int		dq;
 	int		flag;
-
 
 	flag = 0;
 	i_var = find_var_start(var_value, i_var);

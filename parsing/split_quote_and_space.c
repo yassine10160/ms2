@@ -6,17 +6,17 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/29 14:14:43 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:35:53 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int word_len(char *str)
+int	word_len(char *str)
 {
-	int i;
-	int dq;
-	int sq;
+	int	i;
+	int	dq;
+	int	sq;
 
 	i = 0;
 	dq = 0;
@@ -31,11 +31,11 @@ int word_len(char *str)
 	return (i);
 }
 
-char *str_dup_minishell(char *s, int *i, int k, int j)
+char	*str_dup_minishell(char *s, int *i, int k, int j)
 {
-	char *str;
-	int dq;
-	int sq;
+	char	*str;
+	int		dq;
+	int		sq;
 
 	str = malloc(sizeof(char) * (word_len(s + *i) + 1));
 	if (!str)
@@ -46,10 +46,11 @@ char *str_dup_minishell(char *s, int *i, int k, int j)
 	{
 		is_in_quote(s[k], &sq, &dq);
 		if ((s[k] == ' ') && !(sq % 2) && !(dq % 2))
-			break;
+			break ;
 		else if (s[k] == '$' && !is_alpha(s[k + 1]) && (!(sq % 2) && !(dq % 2)))
 			k += 2;
-		else if ((s[k] == '\'' && ((sq % 2) || (!(dq % 2)))) || (s[k] == '\"' && ((dq % 2) || (!(sq % 2)))))
+		else if ((s[k] == '\'' && ((sq % 2) || (!(dq % 2))))
+			|| (s[k] == '\"' && ((dq % 2) || (!(sq % 2)))))
 			k++;
 		else
 			str[j++] = s[k++];
@@ -59,10 +60,10 @@ char *str_dup_minishell(char *s, int *i, int k, int j)
 	return (str);
 }
 
-int split_quote_and_space(char *str, t_all *all)
+int	split_quote_and_space(char *str, t_all *all)
 {
-	t_cmds *save;
-	int i;
+	t_cmds	*save;
+	int		i;
 
 	i = 0;
 	while (str && str[i])

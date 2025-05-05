@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   char_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:46:31 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/15 13:24:53 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:17:33 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void is_in_sq(char c, int *sq)
+void	is_in_sq(char c, int *sq)
 {
 	if (c == '\'')
 		*sq = *sq + 1;

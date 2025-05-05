@@ -6,18 +6,18 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 13:55:23 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:19:12 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void free_env(t_env *env)
+void	free_env(t_env *env)
 {
-	t_env *save;
+	t_env	*save;
 
 	if (!env)
-		return;
+		return ;
 	while (env->prev)
 		env = env->prev;
 	while (env)
@@ -30,12 +30,12 @@ void free_env(t_env *env)
 	}
 }
 
-void free_cmds(t_cmds *cmds)
+void	free_cmds(t_cmds *cmds)
 {
-	t_cmds *save;
+	t_cmds	*save;
 
 	if (!cmds)
-		return;
+		return ;
 	while (cmds->prev)
 		cmds = cmds->prev;
 	while (cmds)
@@ -49,12 +49,12 @@ void free_cmds(t_cmds *cmds)
 	}
 }
 
-void free_data(t_data *data)
+void	free_data(t_data *data)
 {
-	t_data *save;
+	t_data	*save;
 
 	if (!data)
-		return;
+		return ;
 	while (data->prev)
 		data = data->prev;
 	while (data)
@@ -74,21 +74,22 @@ void free_data(t_data *data)
 	}
 }
 
-void free_all(t_all *all)
+void	free_all(t_all *all)
 {
 	if (!all)
-		return;
+		return ;
 	if (all->f_here_doc)
 		unlink(".tmp");
 	if (all->pids)
 		free(all->pids);
+	close_init_fd(&all->fd_save[0], &all->fd_save[1]);
 	free_env(all->env);
 	free_data(all->first);
 	free(all);
 	all = NULL;
 }
 
-void free_new_line(t_all *all)
+void	free_new_line(t_all *all)
 {
 	if (all->f_here_doc)
 		unlink(".tmp");

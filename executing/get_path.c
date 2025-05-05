@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:55:37 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 11:57:49 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:16:40 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,9 @@ int	find_path_string(t_env **env)
 	save = *env;
 	while (*env && (*env)->line)
 	{
-		if ((*env)->line[0] == 'P' && (*env)->line[1] == 'A' && (*env)->line[2] == 'T'
-		&& (*env)->line[3] == 'H' && (*env)->line[4] == '=')
+		if ((*env)->line[0] == 'P' && (*env)->line[1] == 'A'
+			&& (*env)->line[2] == 'T' && (*env)->line[3] == 'H'
+			&& (*env)->line[4] == '=')
 			return (0);
 		(*env) = (*env)->next;
 	}

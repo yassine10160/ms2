@@ -6,15 +6,15 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:45:18 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/29 11:57:50 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:34:13 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void free_str_tab(char **tab, int limit)
+void	free_str_tab(char **tab, int limit)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < limit)
@@ -22,12 +22,12 @@ void free_str_tab(char **tab, int limit)
 	free(tab);
 }
 
-int calc_nb_words(char const *s, char *delim)
+int	calc_nb_words(char const *s, char *delim)
 {
-	int i;
-	int counter;
-	int sq;
-	int dq;
+	int	i;
+	int	counter;
+	int	sq;
+	int	dq;
 
 	sq = 0;
 	dq = 0;
@@ -36,16 +36,18 @@ int calc_nb_words(char const *s, char *delim)
 	while (s[i])
 	{
 		is_in_quote(s[i], &sq, &dq);
-		if ((pos_in_str(delim, s[i]) == -1) && ((pos_in_str(delim, s[i + 1])) >= 0 || s[i + 1] == '\0') && !(sq % 2) && !(dq % 2))
+		if ((pos_in_str(delim, s[i]) == -1)
+			&& ((pos_in_str(delim, s[i + 1])) >= 0
+				|| s[i + 1] == '\0') && !(sq % 2) && !(dq % 2))
 			counter++;
 		i++;
 	}
 	return (counter);
 }
 
-char *fill_word(char *word, char const *s, int start, int end)
+char	*fill_word(char *word, char const *s, int start, int end)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (start < end)
@@ -54,13 +56,13 @@ char *fill_word(char *word, char const *s, int start, int end)
 	return (word);
 }
 
-int alloc_n_write(char **res, char const *s, char *delim)
+int	alloc_n_write(char **res, char const *s, char *delim)
 {
-	int i;
-	int old_i;
-	int i_res;
-	int sq;
-	int dq;
+	int	i;
+	int	old_i;
+	int	i_res;
+	int	sq;
+	int	dq;
 
 	dq = 0;
 	i = 0;
@@ -84,11 +86,11 @@ int alloc_n_write(char **res, char const *s, char *delim)
 	return (-1);
 }
 
-char **split_pipe(char const *s, char *delim)
+char	**split_pipe(char const *s, char *delim)
 {
-	char **res;
-	int nb_words;
-	int i_alloc_res;
+	char	**res;
+	int		nb_words;
+	int		i_alloc_res;
 
 	if (!s)
 		return (NULL);

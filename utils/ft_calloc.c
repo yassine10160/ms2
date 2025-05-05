@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yassinefahfouhi <yassinefahfouhi@studen    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 14:14:28 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/04/09 14:14:50 by yassinefahf      ###   ########.fr       */
+/*   Updated: 2025/05/05 14:17:50 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void *ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t nmemb, size_t size)
 {
-	void *dest;
-	size_t i;
+	void	*dest;
+	size_t	i;
 
 	if (size != 0 && nmemb > __SIZE_MAX__ / size)
 		return (NULL);

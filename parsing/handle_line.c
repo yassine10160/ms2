@@ -6,23 +6,23 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/02 18:59:15 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:30:05 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char **handle_space(t_all *all, char *line, int *fd)
+char	**handle_space(t_all *all, char *line, int *fd)
 {
-	char **s;
-	int i;
-	char *buf;
+	char	**s;
+	char	*buf;
+	int		i;
 
 	i = 0;
 	s = split_pipe(line, "|");
 	free(line);
 	if (!s)
-		return NULL; // ft_exit(all, NULL)
+		ft_exit(all, NULL);
 	while (s && s[i])
 	{
 		buf = add_space(s[i]);
@@ -30,7 +30,7 @@ char **handle_space(t_all *all, char *line, int *fd)
 		{
 			free_strs(s);
 			free_all(all);
-			// ft_exit(all, NULL)
+			ft_exit(all, NULL);
 		}
 		*fd = check_here_doc(all, buf);
 		free(s[i]);
@@ -39,25 +39,25 @@ char **handle_space(t_all *all, char *line, int *fd)
 	return (s);
 }
 
-int set_line(t_all *all, char *line)
+int	set_line(t_all *all, char *line)
 {
-	char **s;
-	int i;
-	char *buf;
-	t_data *save;
-	t_data *tmp;
+	char	**s;
+	char	*buf;
+	t_data	*save;
+	t_data	*tmp;
+	int		i;
 	int		fd;
 
 	fd = -2;
 	i = 0;
-	s = handle_space(all, line , &fd);
+	s = handle_space(all, line, &fd);
 	while (s && s[i])
 	{
 		buf = expand_var(s[i], all, 0, 0);
 		if (!buf)
 		{
 			free_strs(s);
-			return (-1); // ft_exit(all, NULL)
+			ft_exit(all, NULL);
 		}
 		s[i++] = buf;
 	}
@@ -104,9 +104,9 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 
 void	handle_all(t_all *all, int fd)
 {
-	t_cmds *tmp;
-	t_data *data;
-	
+	t_cmds	*tmp;
+	t_data	*data;
+
 	tmp = all->first->cmds;
 	data = all->first;
 	while (tmp && data)
@@ -136,7 +136,7 @@ void	handle_all(t_all *all, int fd)
 			if (data->next)
 				data = data->next;
 			else
-				break;
+				break ;
 			tmp = data->cmds;
 		}
 		else
@@ -144,9 +144,9 @@ void	handle_all(t_all *all, int fd)
 	}
 }
 
-void handle_line(t_all **all, char *line)
+void	handle_line(t_all **all, char *line)
 {
-	t_data *tmp;
+	t_data	*tmp;
 	int		fd;
 
 	fd = -2;
@@ -155,17 +155,5 @@ void handle_line(t_all **all, char *line)
 	(*all)->first = tmp;
 	handle_all(*all, fd);
 	tmp = (*all)->first;
-	executing(*all);
-	// while (tmp)
-	// {
-	// 	while (tmp->cmds)
-	// 	{
-	// 		if (tmp->cmds && tmp->cmds->token)
-	// 			printf("totok: %s\n", tmp->cmds->token);
-	// 		tmp->cmds = tmp->cmds->next;
-	// 	}
-	// 	printf("fdin: %d\n", tmp->fd_in);
-	// 	printf("fdout: %d\n", tmp->fd_out);
-	// 	tmp = tmp->next;
-	// }
+	executing(*all, 0);
 }

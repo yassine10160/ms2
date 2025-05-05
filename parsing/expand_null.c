@@ -6,40 +6,40 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:28:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/29 13:37:13 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:23:29 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void init_expand_vars(int *sq, int *dq, char **dup, char *line)
+void	init_expand_vars(int *sq, int *dq, char **dup, char *line)
 {
 	*sq = 0;
 	*dq = 0;
 	*dup = malloc(sizeof(char) * (ft_strlen(line) + 1));
 }
 
-static int skip_var(char *line, int i, int *sq, int *dq)
+int	skip_var(char *line, int i, int *sq, int *dq)
 {
-	int save;
+	int	save;
 
 	save = *dq;
 	while (line[i] && line[i] != ' ' && !(*sq % 2))
 	{
 		is_in_quote(line[i], sq, dq);
 		if (save != *dq)
-			break;
+			break ;
 		i++;
 	}
 	return (i);
 }
 
-char *expand_null(char *line, int flag, int i)
+char	*expand_null(char *line, int flag, int i)
 {
-	char *dup;
-	int j;
-	int dq;
-	int sq;
+	char	*dup;
+	int		j;
+	int		dq;
+	int		sq;
 
 	init_expand_vars(&sq, &dq, &dup, line);
 	if (!dup)

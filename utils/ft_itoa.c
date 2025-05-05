@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:40:32 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/04/12 15:35:06 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/05 14:18:12 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int len_nb(int nb)
+int	len_nb(int nb)
 {
-	int count;
+	int	count;
 
 	count = 0;
 	if (nb == 0)
@@ -32,10 +32,10 @@ int len_nb(int nb)
 	return (count);
 }
 
-char *ft_itoa(int nb)
+char	*ft_itoa(int nb)
 {
-	char *nbr;
-	int len;
+	char	*nbr;
+	int		len;
 
 	len = len_nb(nb);
 	nbr = malloc(sizeof(char) * (len + 1));

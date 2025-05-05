@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/02 19:15:00 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:22:37 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	should_expand(char *line, int i, int sq)
 {
-	return (line[i] == '$' && !(sq % 2) && line[i + 1] && 
-		(is_alpha(line[i + 1]) || (line[i + 1] == '?')) && 
-		line[i + 1] != ' ' && line[i + 1] != '"' && 
-		line[i + 1] != '\'' && !is_digit(line[i + 1]));
+	return (line[i] == '$' && !(sq % 2) && line[i + 1]
+		&& (is_alpha(line[i + 1]) || (line[i + 1] == '?'))
+		&& line[i + 1] != ' ' && line[i + 1] != '"'
+		&& line[i + 1] != '\'' && !is_digit(line[i + 1]));
 }
 
 char	*expand_status(char *line, int status)
@@ -57,13 +57,13 @@ int	find_var_end(char *line, int i, int *sq, int *dq)
 	{
 		is_in_quote(line[j], sq, dq);
 		if (*dq != save)
-			break;
+			break ;
 		j++;
 	}
 	return (j);
 }
 
-char *search_var_in_env(char *line, char *var, int end_var, t_all *all)
+char	*search_var_in_env(char *line, char *var, int end_var, t_all *all)
 {
 	t_env	*ptr;
 	char	*var_name;

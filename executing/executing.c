@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 13:54:33 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:07:04 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	is_builtin(char *token)
 		return (CD);
 	return (0);
 }
+
 int	count_cmds(t_all *all)
 {
 	t_data	*save;
@@ -64,32 +65,31 @@ void	execute_cmd(t_all *all, int *pids, int i)
 		ft_exit(all, NULL);
 }
 
-void	executing(t_all *all)
+void	executing(t_all *all, int i)
 {
 	t_data	*save;
 	int		cmd_count;
-	int		i;
 
 	if (!all->first->cmds)
-	{
 		free_new_line(all);
-		return;
-	}
-	save = all->first;
-	cmd_count = count_cmds(all);
-	all->pids = init_pids_array(cmd_count);
-	if (!all->pids)
-		ft_exit(all, NULL);
-	i = 0;
-	while (all->first)
+	else
 	{
-		execute_cmd(all, all->pids, i);
-		all->first = all->first->next;
-		i++;
+		save = all->first;
+		cmd_count = count_cmds(all);
+		all->pids = init_pids_array(cmd_count);
+		if (!all->pids)
+			ft_exit(all, NULL);
+		i = 0;
+		while (all->first)
+		{
+			execute_cmd(all, all->pids, i);
+			all->first = all->first->next;
+			i++;
+		}
+		wait_for_processes(all, all->pids, cmd_count);
+		all->first = save;
+		free_new_line(all);
 	}
-	wait_for_processes(all, all->pids, cmd_count);
-	all->first = save;
-	free_new_line(all);
 	if (!all->first)
 		ft_exit(all, NULL);
 }

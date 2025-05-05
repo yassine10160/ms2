@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 10:32:37 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/05 14:14:18 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minishell.h"
+#include "../minishell.h"
 
 int	execute_in_child(char **cmds, char **env, char *path_cmd)
 {
@@ -25,8 +25,10 @@ int	execute_in_child(char **cmds, char **env, char *path_cmd)
 
 void	clean_resources(char **cmds, char **env, char *path_cmd)
 {
-	free_strs(cmds);
-	free_strs(env);
+	if (cmds)
+		free_strs(cmds);
+	if (env)
+		free_strs(env);
 	if (path_cmd)
 		free(path_cmd);
 }
@@ -39,6 +41,26 @@ int	handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all)
 	return (-1);
 }
 
+int	prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd)
+{
+	*cmds = cmds_to_strs(all->first->cmds, 1, 0);
+	if (!*cmds)
+		ft_exit(all, NULL);
+	*env = env_to_strs(all->env, 0, 1);
+	if (!*env)
+	{
+		free_strs(*cmds);
+		ft_exit(all, NULL);
+	}
+	*path_cmd = get_path_cmd((*cmds)[0], get_path_env(all->env), all);
+	if (!*path_cmd)
+	{
+		clean_resources(*cmds, *env, NULL);
+		return (0);
+	}
+	return (1);
+}
+
 int	shell_cmd(t_all *all)
 {
 	char	**cmds;
@@ -46,21 +68,8 @@ int	shell_cmd(t_all *all)
 	char	*path_cmd;
 	int		pid;
 
-	cmds = cmds_to_strs(all->first->cmds, 1, 0);
-	if (!cmds)
-		ft_exit(all, NULL);
-	env = env_to_strs(all->env, 0, 1);
-	if (!env)
-	{
-		free_strs(cmds);
-		ft_exit(all, NULL);
-	}
-	path_cmd = get_path_cmd(cmds[0], get_path_env(all->env), all);
-	if (!path_cmd)
-	{
-		clean_resources(cmds, env, NULL);
+	if (!prepare_execution(all, &cmds, &env, &path_cmd))
 		return (-1);
-	}
 	pid = fork();
 	if (pid < 0)
 		return (handle_fork_error(cmds, env, path_cmd, all));

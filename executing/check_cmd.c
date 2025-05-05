@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 12:00:32 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 14:15:52 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,10 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 	path_cmd = NULL;
 	if ((!path || !cmd) && !check_local(cmd, &path_cmd))
 	{
-		if (path)
-			free_strs(path);
-		else
+		if (!path)
 			printf("Error : PATH not defined\n");
-		return (NULL);
 	}
-	if (!path_cmd)
+	else if (path && cmd && !path_cmd)
 	{
 		i = index_path_cmd(cmd, path);
 		if (i == -1)
@@ -83,6 +80,7 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 		}
 		path_cmd = ft_strcat(path[i], cmd, 0, 0);
 	}
-	free_strs(path);
+	if (path)
+		free_strs(path);
 	return (path_cmd);
 }
