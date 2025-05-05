@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:50:29 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/05 16:19:14 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:31:06 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,14 @@ int		ft_strcmp(char *s1, char *s2);
 t_env	*find_in_env(t_env *env, char *str);
 
 /*
+** builtin/export_utils.c
+*/
+int		add_lst_str(t_env *prev, char *var);
+char	*get_var_name(char *str);
+int		modify_line(t_env *env, char *new_line);
+int		is_valid_identifier(char *var_name, char *token);
+
+/*
 ** builtin/env_parsing.c
 */
 void	*free_new_env(t_env *env);
@@ -128,9 +136,6 @@ void	ft_exit(t_all *all, t_cmds *cmd);
 ** builtin/ft_export.c
 */
 int		print_export(t_env *env, int i);
-int		add_lst_str(t_env *prev, char *var);
-char	*get_var_name(char *str);
-int		modify_line(t_env *env, char *new_line);
 int		ft_export(t_env *env, t_cmds *cmds);
 
 /*
