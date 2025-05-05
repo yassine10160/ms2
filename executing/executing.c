@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 15:30:00 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:49:43 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	builtin_child(t_all *all, int builtin)
 	}
 	return (pid);
 }
-
 
 void	execute_cmd(t_all *all, int *pids, int i)
 {

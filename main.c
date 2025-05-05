@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/05 15:15:43 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 15:50:39 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,11 @@ int main(int ac, char **av, char **env)
 	while (1) 
 	{
 		line = readline("Schwarzenegger : ");
-		if (line) 
+		if (line)
+		{
+			add_history(line);
 			process_line(line, all);
+		}
 		else 
 		{
 			free(line);
