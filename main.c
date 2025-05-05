@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/05 15:50:39 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:15:30 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,18 @@ int	is_closed(char *line)
 	return (1);
 }
 
-int process_line(char *line, t_all *all) 
+int	process_line(char *line, t_all *all)
 {
 	if (!line)
 		return (0);
-	if (!parse_error(line, all)) 
+	if (!parse_error(line, all))
 	{
-		if (!is_closed(line)) 
+		if (!is_closed(line))
 			write_error(line, "Error: line not closed", all, 258);
-		else 
+		else
 			handle_line(&all, line);
 	}
-	else 
+	else
 	{
 		all->status = 1;
 		free(line);
@@ -95,7 +95,7 @@ int process_line(char *line, t_all *all)
 	return (1);
 }
 
-int main(int ac, char **av, char **env) 
+int main(int ac, char **av, char **env)
 {
 	t_all	*all;
 	char	*line;
@@ -103,7 +103,7 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	all = init_all(env);
-	while (1) 
+	while (1)
 	{
 		line = readline("Schwarzenegger : ");
 		if (line)
@@ -111,7 +111,7 @@ int main(int ac, char **av, char **env)
 			add_history(line);
 			process_line(line, all);
 		}
-		else 
+		else
 		{
 			free(line);
 			ft_exit(all, NULL);

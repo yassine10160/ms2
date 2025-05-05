@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 14:08:06 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:22:02 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	caller_next(t_all *all, int builtin)
 		while (all->first->cmds)
 		{
 			rtn = ft_export(all->env, all->first->cmds);
-			if (rtn == 1)
+			if (rtn == 2)
 				ft_exit(all, NULL);
 			if (!all->first->cmds->next || !all->first->cmds->next->token)
 				break ;

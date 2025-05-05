@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:50:29 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/05 14:43:09 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/05 16:19:14 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@
 # define NONE 4
 # define APPEND 5
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif
+# define BUFFER_SIZE 1000
 
 typedef enum e_builtin
 {
@@ -60,9 +58,9 @@ typedef struct s_env
 typedef struct s_data
 {
 	t_cmds			*cmds;
+	int				pipe_fd[2];
 	int				fd_in;
 	int				fd_out;
-	int				pipe_fd[2];
 	struct s_data	*prev;
 	struct s_data	*next;
 }	t_data;
@@ -71,10 +69,10 @@ typedef struct s_all
 {
 	t_data			*first;
 	t_env			*env;
-	int				status;
-	int				f_here_doc;
 	int				*pids;
 	int				fd_save[2];
+	int				f_here_doc;
+	int				status;
 }	t_all;
 
 /*
@@ -198,7 +196,7 @@ char	**get_path_env(t_env *env);
 int		execute_in_child(char **cmds, char **env, char *path_cmd);
 void	clean_resources(char **cmds, char **env, char *path_cmd);
 int		handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all);
-int		prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd);
+int		prepare_execution(t_all *all, char ***cmd, char ***env, char **path_c);
 int		shell_cmd(t_all *all);
 
 /*
