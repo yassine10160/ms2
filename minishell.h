@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 13:50:29 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/06 13:01:00 by mazakov          ###   ########.fr       */
+/*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
+/*   Updated: 2025/05/06 13:22:21 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,7 @@ typedef struct s_all
 /*
 ** main.c
 */
-void	new_line(t_all *all);
-void	exit_parse(char *line, char *s, t_all *all, int status);
-int		is_parse_err(char c);
-int		parse_error(char *str, t_all *all);
-int		is_closed(char *line);
+int		process_line(char *line, t_all *all);
 
 /*
 ** builtin/env_functions.c
@@ -174,6 +170,7 @@ int		*init_pids_array(int cmd_count);
 */
 int		is_builtin(char *token);
 int		count_cmds(t_all *all);
+int		builtin_child(t_all *all, int builtin);
 void	execute_cmd(t_all *all, int *pids, int i);
 void	executing(t_all *all, int i);
 
@@ -238,18 +235,26 @@ char	*expand_null(char *line, int flag, int i);
 /*
 ** parsing/expand_var.c
 */
-int		find_var_start(char *var_value, int i);
+int		find_var_start(char *var_value, int i, char **s, char *line);
 char	*alloc_expanded_str(char *line, char *var_value, int i_var);
+int		copy_var(char *var_value, char *s, int i_var, int i_s);
+int		handle_dollar(char *line, int i, int *sq, int *dq);
 char	*expand_line_var(char *line, char *var_value, int i_var, int sq);
 
 /*
 ** parsing/handle_line.c
 */
 char	**handle_space(t_all *all, char *line, int *fd);
-int		set_line(t_all *all, char *line);
-void	safe_open(t_all *all, t_data *data, char *file, int type);
+int		set_line(t_all *all, char *line, int i, int fd);
 void	handle_all(t_all *all, int fd);
 void	handle_line(t_all **all, char *line);
+
+/*
+** parsing/handle_line_utils.c
+*/
+void	safe_open(t_all *all, t_data *data, char *file, int type);
+void	handle_redirection(t_all *all, t_cmds **tmp, t_data *data, int fd);
+int		process_lines(char **s, t_all *all, int i);
 
 /*
 ** parsing/init.c
@@ -284,7 +289,7 @@ int		check_here_doc(t_all *all, char *s);
 void	free_str_tab(char **tab, int limit);
 int		calc_nb_words(char const *s, char *delim);
 char	*fill_word(char *word, char const *s, int start, int end);
-int		alloc_n_write(char **res, char const *s, char *delim);
+int		alloc_n_write(char **res, char const *s, char *delim, int i);
 char	**split_pipe(char const *s, char *delim);
 
 /*

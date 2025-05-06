@@ -22,7 +22,8 @@ UTILS_SRC	= char.c char_utils2.c free_functions.c ft_calloc.c \
 			  ft_itoa.c strcpy.c get_next_line.c get_next_line_utils.c
 
 PARSING_SRC	= expand.c expand_null.c expand_var.c init.c split_quote_and_space.c \
-			  split_pipe.c add_space.c handle_line.c redir.c redir_utils.c
+			  split_pipe.c add_space.c handle_line.c handle_line_utils.c redir.c redir_utils.c \
+              handle_input.c
 
 EXEC_SRC	= builtin_caller.c executing.c shell_cmd.c get_path.c check_cmd.c \
 			  fd_management.c cmd_status.c
