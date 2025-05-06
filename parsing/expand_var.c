@@ -6,17 +6,18 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/06 13:09:46 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:33:56 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	find_var_start(char *var_value, int i, char **s, char *line)
+int	find_var_start(char *var_value, int i, int *j, int *k)
 {
 	while (var_value && var_value[i] && (i > 0 && var_value[i - 1] != '='))
 		i++;
-	*s = alloc_expanded_str(line, var_value, i);
+	*j = 0;
+	*k = 0;
 	return (i);
 }
 
@@ -69,20 +70,20 @@ char	*expand_line_var(char *line, char *var_value, int i_var, int sq)
 	int		dq;
 	int		flag;
 
-	i_var = find_var_start(var_value, i_var, &s, line);
+	i_var = find_var_start(var_value, i_var, &flag, &i_line);
+	s = alloc_expanded_str(line, var_value, i_var);
 	if (!s)
 		return (NULL);
-	flag = 0;
 	dq = 0;
-	i_line = 0;
 	i_s = 0;
 	while (line && line[i_line])
 	{
 		is_in_quote(line[i_line], &sq, &dq);
-		if (line[i_line] == '$' && !(sq % 2) && flag == 0 && flag++)
+		if (line[i_line] == '$' && !(sq % 2) && flag == 0)
 		{
 			i_line = handle_dollar(line, i_line, &sq, &dq);
 			i_s = copy_var(var_value, s, i_var, i_s);
+			flag++;
 		}
 		else
 			s[i_s++] = line[i_line++];

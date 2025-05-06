@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/06 13:18:33 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:24:40 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	set_line(t_all *all, char *line, int i, int fd)
 	t_data	*tmp;
 
 	s = handle_space(all, line, &fd);
-	process_lines(s, all, i);
+	i = process_lines(s, all, i);
 	i = 0;
 	save = all->first;
 	while (s && s[i])

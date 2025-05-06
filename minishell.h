@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/06 13:22:21 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:34:14 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,7 @@ char	*expand_null(char *line, int flag, int i);
 /*
 ** parsing/expand_var.c
 */
-int		find_var_start(char *var_value, int i, char **s, char *line);
+int		find_var_start(char *var_value, int i, int *j, int *k);
 char	*alloc_expanded_str(char *line, char *var_value, int i_var);
 int		copy_var(char *var_value, char *s, int i_var, int i_s);
 int		handle_dollar(char *line, int i, int *sq, int *dq);
