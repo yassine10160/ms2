@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:45:18 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/05 14:34:13 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:19:38 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,14 @@ char	*fill_word(char *word, char const *s, int start, int end)
 	return (word);
 }
 
-int	alloc_n_write(char **res, char const *s, char *delim)
+int	alloc_n_write(char **res, char const *s, char *delim, int i)
 {
-	int	i;
 	int	old_i;
 	int	i_res;
 	int	sq;
 	int	dq;
 
 	dq = 0;
-	i = 0;
 	i_res = 0;
 	sq = 0;
 	while (s && s[i])
@@ -98,7 +96,7 @@ char	**split_pipe(char const *s, char *delim)
 	res = malloc((nb_words + 1) * sizeof(char *));
 	if (!res)
 		return (NULL);
-	i_alloc_res = alloc_n_write(res, s, delim);
+	i_alloc_res = alloc_n_write(res, s, delim, 0);
 	if (i_alloc_res != -1)
 	{
 		free_str_tab(res, i_alloc_res);

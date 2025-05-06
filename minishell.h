@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 13:50:29 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/05 16:31:06 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/06 13:01:00 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,15 @@ int		setup_output_redirection(t_all *all);
 int		setup_redirections(t_all *all, int *fd_save_in, int *fd_save_out);
 void	close_init_fd(int *fd_in, int *fd_out);
 int		reset_std_descriptors(int *fd_save_in, int *fd_save_out);
+
+/*
+** executing/handle_input.c
+*/
+void	write_error(char *line, char *s, t_all *all, int status);
+int		parse_err(char c);
+int		parse_error(char *s, t_all *all);
+int		is_closed(char *line);
+int		process_line(char *line, t_all *all);
 
 /*
 ** executing/get_path.c
