@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/06 13:33:56 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 15:39:33 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ int	copy_var(char *var_value, char *s, int i_var, int i_s)
 	if (var_value && var_value[i_var] == '=')
 		i_var++;
 	while (var_value && var_value[i_var])
+	{
 		s[i_s++] = var_value[i_var++];
+	}
 	return (i_s);
 }
 
@@ -52,7 +54,7 @@ int	handle_dollar(char *line, int i, int *sq, int *dq)
 		i += 2;
 		return (i);
 	}
-	while (line[i] && line[i] != ' ' && !(*sq % 2))
+	while (line[i] && line[i] != ' ' && !(*sq % 2) && line[i] != '=')
 	{
 		is_in_quote(line[i], sq, dq);
 		if (save != *dq)

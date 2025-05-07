@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/06 13:34:54 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 15:34:28 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	find_var_end(char *line, int i, int *sq, int *dq)
 
 	j = i;
 	save = *dq;
-	while (line[j] && line[j] != ' ' && line[j] != '\n' && !(*sq % 2))
+	while (line[j] && line[j] != ' ' && line[j] != '\n' && !(*sq % 2) && line[j] != '=')
 	{
 		is_in_quote(line[j], sq, dq);
 		if (*dq != save)
