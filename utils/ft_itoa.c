@@ -6,16 +6,17 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:40:32 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/07 12:57:55 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:32:00 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
 int	ft_strncmp(const char *s1, const char *s2, int n)
 {
-	int	i = 0;
+	int	i ;
+
+	i = 0;
 	while (s1 && s2 && s1[i] == s2[i] && i < n)
 		i++;
 	return (s2[i] - s1[i]);
@@ -58,11 +59,3 @@ char	*ft_itoa(int nb)
 	}
 	return (nbr);
 }
-
-// int main()
-// {
-// 	char *dest;
-// 	dest = ft_itoa(2500);
-// 	// printf("len: %d\n", len_nb(255));
-// 	printf("itoa: %s\n", dest);
-// }
