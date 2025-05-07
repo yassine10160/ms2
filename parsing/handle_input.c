@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:58:44 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/06 12:59:41 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 15:06:20 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	parse_error(char *s, t_all *all)
 				i++;
 			if ((parse_err(s[i]) && !s[i + 1]) || s[i] == '\0' || s[0] == '|')
 			{
-				write_error(NULL, "Error : synthax", all, 258);
+				write_error(NULL, "Error : syntax", all, 258);
 				return (1);
 			}
 		}
@@ -89,7 +89,7 @@ int	process_line(char *line, t_all *all)
 	}
 	else
 	{
-		all->status = 1;
+		all->status = 2;
 		free(line);
 	}
 	return (1);

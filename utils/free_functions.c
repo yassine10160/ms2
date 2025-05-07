@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/07 16:01:50 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:13:38 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	free_new_line(t_all *all)
 		free(all->pids);
 	all->f_here_doc = 0;
 	close_init_fd(&all->fd_save[0], &all->fd_save[1]);
-	free_data(all->first);
+	if(all->first)
+		free_data(all->first);
 	all->first = init_data();
 }
