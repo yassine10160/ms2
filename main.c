@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/06 13:03:33 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 16:03:08 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int ac, char **av, char **env)
 		line = readline("Schwarzenegger : ");
 		if (line)
 		{
-			add_history(line);
 			process_line(line, all);
+			add_history(line);
 		}
 		else
 		{
