@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/06 13:34:14 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 11:58:34 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -356,5 +356,6 @@ char	*ft_strcat(char *str_a, char *str_b, int flag, int i);
 char	*ft_strndup(char *str, int n);
 char	**env_to_strs(t_env *env, int i, int count);
 char	**cmds_to_strs(t_cmds *cmds, int count, int i);
+int		ft_strncmp(const char *s1, const char *s2, int n);
 
 #endif

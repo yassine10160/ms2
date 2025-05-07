@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/06 13:34:45 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 14:27:35 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	handle_redirection(t_all *all, t_cmds **tmp, t_data *data, int fd)
 			safe_open(all, data, (*tmp)->next->token, OUTFILE);
 		*tmp = remove_cmd(*tmp);
 		*tmp = remove_cmd(*tmp);
+		// printf("node->prev: %s\n", (*tmp)->prev->token);
+		// printf("node: %s\n", (*tmp)->token);
+		// printf("node->next: %s\n", (*tmp)->next->token);
 		data->cmds = *tmp;
 	}
 }

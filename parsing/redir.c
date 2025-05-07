@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/06 13:03:53 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/07 13:14:07 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_delim(char *s, int index, int len)
 	i = 0;
 	sq = 0;
 	dq = 0;
-	delim = ft_calloc(len, sizeof(char));
+	delim = ft_calloc(len + 1, sizeof(char));
 	if (!delim)
 		return (NULL);
 	while (s[index] && (s[index] != ' ' || ((sq % 2) || (dq % 2))))
@@ -89,8 +89,7 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 	{
 		write(0, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
-		printf("delimiter : %s\n", delim);
-		if (!line || ft_strcmp(line, delim))
+		if (!line || ft_strncmp(line, delim, ft_strlen(delim)) == -10)
 		{
 			free(line);
 			break ;
