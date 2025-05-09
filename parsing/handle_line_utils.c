@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/07 14:31:01 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/09 13:57:54 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	process_lines(char **s, t_all *all, int i)
 	while (s && s[i])
 	{
 		buf = expand_var(s[i], all, 0, 0);
+		printf("%s\n", buf);
 		if (!buf)
 		{
 			free_strs(s);

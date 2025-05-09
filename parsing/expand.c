@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/07 15:34:28 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/09 14:14:19 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,16 @@ char	*expand_status(char *line, int status)
 int	find_var_end(char *line, int i, int *sq, int *dq)
 {
 	int	j;
-	int	save;
+	int	save_dq;
+	int	save_sq;
 
 	j = i;
-	save = *dq;
+	save_dq = *dq;
+	save_sq = *sq;
 	while (line[j] && line[j] != ' ' && line[j] != '\n' && !(*sq % 2) && line[j] != '=')
 	{
 		is_in_quote(line[j], sq, dq);
-		if (*dq != save)
+		if (*dq != save_dq || *sq != save_sq)
 			break ;
 		j++;
 	}
@@ -99,10 +101,12 @@ char	*expand_var(char *line, t_all *all, int i, int j)
 		is_in_quote(line[i], &sq, &dq);
 		if (should_expand(line, i, sq))
 		{
+			printf("LINE[%d] = %c\n",i, line[i]);
 			j = find_var_end(line, i, &sq, &dq);
 			line = search_var_in_env(line, line + i, (j - i - 1), all);
 			if (!line)
 				return (NULL);
+			printf("line = %s\n", line);
 		}
 		i++;
 	}

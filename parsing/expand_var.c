@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:29:39 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/07 15:39:33 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/09 14:15:40 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	copy_var(char *var_value, char *s, int i_var, int i_s)
 		i_var++;
 	while (var_value && var_value[i_var])
 	{
+		printf("var_value[%d] = %c\n", i_var, var_value[i_var]);
 		s[i_s++] = var_value[i_var++];
 	}
 	return (i_s);
@@ -45,9 +46,11 @@ int	copy_var(char *var_value, char *s, int i_var, int i_s)
 
 int	handle_dollar(char *line, int i, int *sq, int *dq)
 {
-	int	save;
+	int	save_dq;
+	int	save_sq;
 
-	save = *dq;
+	save_dq = *dq;
+	save_sq = *sq;
 	if (!(*sq % 2) && line[i] && line[i] == '$'
 		&& line[i + 1] && line[i + 1] == '?')
 	{
@@ -57,7 +60,7 @@ int	handle_dollar(char *line, int i, int *sq, int *dq)
 	while (line[i] && line[i] != ' ' && !(*sq % 2) && line[i] != '=')
 	{
 		is_in_quote(line[i], sq, dq);
-		if (save != *dq)
+		if (save_dq != *dq || save_sq != *sq)
 			break ;
 		i++;
 	}
