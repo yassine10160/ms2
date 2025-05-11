@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   strcpy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:07:47 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/20 14:56:15 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/09 16:34:15 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*ft_strndup(char *str, int n)
 	int		i;
 
 	i = 0;
-	dup = malloc(sizeof(char) * (n + 1));
+	dup = ft_calloc(sizeof(char), n + 5);
 	if (!dup)
 		return (NULL);
 	while (str && str[i] && i < n)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/07 13:14:07 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:26:43 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	write_and_expand_file(t_all *all, int fd, char *line, bool is_quote)
 	i = 0;
 	if (!is_quote)
 	{
-		buf = expand_var(line, all, 0, 0);
+		buf = expand_var(line, all);
 		if (!buf)
 		{
 			free(line);
@@ -77,6 +77,7 @@ void	write_and_expand_file(t_all *all, int fd, char *line, bool is_quote)
 		write(fd, &line[i], 1);
 		i++;
 	}
+	free(line);
 }
 
 int	handle_here_doc(t_all *all, char *delim, bool is_quote)
@@ -91,7 +92,8 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 		line = get_next_line(STDIN_FILENO);
 		if (!line || ft_strncmp(line, delim, ft_strlen(delim)) == -10)
 		{
-			free(line);
+			if (line)
+				free(line);
 			break ;
 		}
 		write_and_expand_file(all, fd, line, is_quote);

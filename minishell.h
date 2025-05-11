@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/07 11:58:34 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/09 16:25:29 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int		should_expand(char *line, int i, int sq);
 char	*expand_status(char *line, int status);
 int		find_var_end(char *line, int i, int *sq, int *dq);
 char	*search_var_in_env(char *line, char *var, int end_var, t_all *all);
-char	*expand_var(char *line, t_all *all, int i, int j);
+char	*expand_var(char *line, t_all *all);
 
 /*
 ** parsing/expand_null.c

@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/09 14:14:19 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/11 15:11:57 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,22 @@ char	*expand_status(char *line, int status)
 	return (result);
 }
 
-int	find_var_end(char *line, int i, int *sq, int *dq)
+int find_var_end(char *line, int i, int *sq, int *dq)
 {
-	int	j;
-	int	save_dq;
-	int	save_sq;
+	int j;
+	int save_dq;
+	int save_sq;
 
 	j = i;
 	save_dq = *dq;
 	save_sq = *sq;
-	while (line[j] && line[j] != ' ' && line[j] != '\n' && !(*sq % 2) && line[j] != '=')
+	while (line && line[j] && line[j] != ' ' && line[j] != '\n'
+			&& !(*sq % 2)  && line[j] != '=')
 	{
+		if (line[j + 1] && (line[j + 1] == '\'' || line[j + 1] == '"'))
+			break ;
+		if (j != i && line[j + 1] && line[j + 1] == '$')
+			break ;
 		is_in_quote(line[j], sq, dq);
 		if (*dq != save_dq || *sq != save_sq)
 			break ;
@@ -89,11 +94,15 @@ char	*search_var_in_env(char *line, char *var, int end_var, t_all *all)
 	return (expanded_line);
 }
 
-char	*expand_var(char *line, t_all *all, int i, int j)
+char	*expand_var(char *line, t_all *all)
 {
 	int	sq;
 	int	dq;
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
 	dq = 0;
 	sq = 0;
 	while (line && line[i])
@@ -101,12 +110,13 @@ char	*expand_var(char *line, t_all *all, int i, int j)
 		is_in_quote(line[i], &sq, &dq);
 		if (should_expand(line, i, sq))
 		{
-			printf("LINE[%d] = %c\n",i, line[i]);
 			j = find_var_end(line, i, &sq, &dq);
-			line = search_var_in_env(line, line + i, (j - i - 1), all);
+			line = search_var_in_env(line, line + i, (j - i), all);
 			if (!line)
 				return (NULL);
-			printf("line = %s\n", line);
+			i = -1;
+			sq = 0;
+			dq = 0;
 		}
 		i++;
 	}
