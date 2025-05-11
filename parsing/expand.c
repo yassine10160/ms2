@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:27:45 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/11 15:11:57 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/11 15:27:29 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int find_var_end(char *line, int i, int *sq, int *dq)
 	while (line && line[j] && line[j] != ' ' && line[j] != '\n'
 			&& !(*sq % 2)  && line[j] != '=')
 	{
-		if (line[j + 1] && (line[j + 1] == '\'' || line[j + 1] == '"'))
+		if (line[j + 1] && (line[j + 1] == '\''
+				|| line[j + 1] == '"' || line[j + 1] == '='))
 			break ;
 		if (j != i && line[j + 1] && line[j + 1] == '$')
 			break ;
