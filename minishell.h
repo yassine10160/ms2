@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/09 16:25:29 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:17:42 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <stdbool.h>
+# include <signal.h>
 
 # define INFILE 1
 # define OUTFILE 2
@@ -73,8 +74,8 @@ typedef struct s_all
 	int				fd_save[2];
 	int				f_here_doc;
 	int				status;
+	int				g_pid;
 }	t_all;
-
 /*
 ** main.c
 */
@@ -307,6 +308,13 @@ int		is_digit(char c);
 int		is_alphanum(char c);
 void	is_in_quote(char c, int *sq, int *dq);
 int		pos_in_str(char *str, char c);
+
+/*
+** utils/put_str.c
+*/
+void	put_str_fd(char *str, int fd);
+void	put_str_error(char *cmd, char *str, int fd);
+void	put_str_function(char *function, char *cmd, char *str, int fd);
 
 /*
 ** utils/char_utils2.c

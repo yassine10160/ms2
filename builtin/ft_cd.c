@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:22:20 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/02 17:57:07 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:21:29 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	get_home(t_env *env, char **arg)
 	ptr = find_in_env(env, "HOME");
 	if (!ptr)
 	{
-		printf("cd: HOME not set\n");
+		put_str_fd("cd: HOME not set\n", 2);
 		return (1);
 	}
 	*arg = ft_strcat(ptr->line + 5, NULL, 0, 0);
@@ -67,11 +67,11 @@ int	ft_cd(t_env *env, char *arg)
 		return (1);
 	old_pwd = get_pwd("OLDPWD=");
 	if (!old_pwd)
-		printf("getcwd : no working directory\n");
+		put_str_fd("getcwd : no working directory\n", 2);
 	if (chdir(arg) == -1)
 	{
 		free(old_pwd);
-		printf("cd: %s: No such file or directory\n", arg);
+		put_str_function("cd", arg, "No such file or directory", 2);
 		return (1);
 	}
 	new_pwd = get_pwd("PWD=");

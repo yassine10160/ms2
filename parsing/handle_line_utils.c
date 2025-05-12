@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/09 16:25:58 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:25:22 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 	{
 		data->fd_in = open(file, O_RDONLY);
 		if (data->fd_in == -1)
-			printf("%s : No such file\n", file);
+			put_str_function(NULL, file, "No such file", 2);
 	}
 	else if (type == OUTFILE)
 	{

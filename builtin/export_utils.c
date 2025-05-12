@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:28:18 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/05 16:28:33 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:27:27 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,12 @@ int	is_valid_identifier(char *var_name, char *token)
 	int	i;
 
 	i = 0;
-	if (!is_alpha(var_name[0]))
-	{
-		printf("export: '%s': not a valid identifier\n", token);
-		return (0);
-	}
 	while (var_name[i])
 	{
-		if (!is_alphanum(var_name[i]) && var_name[i] != '_')
+		if (!is_alphanum(var_name[i]) && var_name[i] != '_'
+			&& !is_alpha(var_name[0]))
 		{
-			printf("export: '%s': not a valid identifier\n", token);
+			put_str_function("export", token, "not a  valid identifer", 2);
 			return (0);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/09 14:49:42 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 13:50:45 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	free_all(t_all *all)
 
 void	free_new_line(t_all *all)
 {
+	all->g_pid = 0;
 	if (all->f_here_doc)
 		unlink(".tmp");
 	if (all->pids)

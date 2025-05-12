@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 14:15:52 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:30:24 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	no_cmd(char *cmd)
+{
+	if (ft_strcmp(cmd, "./") == 1)
+		put_str_error(cmd, "No such file or directory", 2);
+	else
+		put_str_error(cmd, "command not found", 2);
+}
 
 int	index_path_cmd(char *cmd, char **path)
 {
@@ -66,21 +74,20 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 	if ((!path || !cmd) && !check_local(cmd, &path_cmd))
 	{
 		if (!path)
-			printf("Error : PATH not defined\n");
+			put_str_fd("Error : PATH not defined\n", 2);
 	}
 	else if (path && cmd && !path_cmd)
 	{
 		i = index_path_cmd(cmd, path);
+		if (path)
+			free_strs(path);
 		if (i == -1)
 		{
-			free_strs(path);
+			no_cmd(cmd);
 			all->status = 127;
-			printf("%s : command not found\n", cmd);
-			return (NULL);
 		}
-		path_cmd = ft_strcat(path[i], cmd, 0, 0);
+		else
+			path_cmd = ft_strcat(path[i], cmd, 0, 0);
 	}
-	if (path)
-		free_strs(path);
 	return (path_cmd);
 }

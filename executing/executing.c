@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/09 16:08:12 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 13:50:32 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,20 @@ void	execute_cmd(t_all *all, int *pids, int i)
 	{
 		builtin = is_builtin(all->first->cmds->token);
 		if (builtin != 0 && !all->first->next && !all->first->prev)
+		{
+			all->g_pid = 0;
 			all->status = builtin_caller(all, builtin);
+		}
 		else if (builtin != 0)
+		{
+			all->g_pid = pids[i];
 			pids[i] = builtin_child(all, builtin);
+		}
 		else
+		{
+			all->g_pid = pids[i];
 			pids[i] = shell_cmd(all);
+		}
 	}
 	if (!reset_std_descriptors(&all->fd_save[0], &all->fd_save[1]))
 		ft_exit(all, NULL);

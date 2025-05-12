@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 14:14:18 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/12 14:23:44 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	clean_resources(char **cmds, char **env, char *path_cmd)
 int	handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all)
 {
 	clean_resources(cmds, env, path_cmd);
-	printf("fork : error\n");
+	put_str_fd("fork : error\n", 2);
 	ft_exit(all, NULL);
 	return (-1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:31:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 10:39:46 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/12 14:23:20 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_pwd(void)
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
-		printf("getcwd : no working directory\n");
+		put_str_fd("getcwd : no working directory\n", 2);
 	else
 		printf("%s\n", pwd);
 	if (!pwd)
