@@ -6,11 +6,23 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:10:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/06 12:57:53 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 16:17:23 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*handle_exec_error(char *cmd, char *path_cmd, t_all *all, int is_dir)
+{
+	if (is_dir)
+		put_str_error(cmd, "Is a directory", 2);
+	else
+		put_str_error(cmd, "permission denied", 2);
+	
+	all->status = 126;
+	free(path_cmd);
+	return (NULL);
+}
 
 int	extract_exit_status(int wait_status)
 {

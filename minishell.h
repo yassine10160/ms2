@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 14:17:42 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 15:18:20 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <signal.h>
+# include <sys/stat.h>
 
 # define INFILE 1
 # define OUTFILE 2
