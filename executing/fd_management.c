@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_management.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:53:08 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 14:08:29 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/12 19:15:36 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ int	setup_output_redirection(t_all *all)
 int	setup_redirections(t_all *all, int *fd_save_in, int *fd_save_out)
 {
 	*fd_save_in = dup(STDIN_FILENO);
+	if (*fd_save_in == -1)
+		return (0);
 	*fd_save_out = dup(STDOUT_FILENO);
+	if (*fd_save_out == -1)
+		return (0);
 	if (setup_input_redirection(all))
 		return (0);
 	if (setup_output_redirection(all))

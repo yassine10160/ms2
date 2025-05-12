@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 16:17:33 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 19:18:40 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*check_file_permission(char *cmd, char *path_cmd, t_all *all)
 {
 	struct stat	statbuf;
-	
+
 	if (lstat(path_cmd, &statbuf) == 0)
 	{
 		if (S_ISREG(statbuf.st_mode))
@@ -40,7 +40,6 @@ char	*handle_not_found(char *cmd, char **path, t_all *all)
 		put_str_error(cmd, "No such file or directory", 2);
 	else
 		put_str_error(cmd, "command not found", 2);
-		
 	all->status = 127;
 	return (NULL);
 }
@@ -96,18 +95,21 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 {
 	int		i;
 	char	*path_cmd;
-	
+
+	path_cmd = NULL;
 	if (!cmd)
 		return (NULL);
-	i = index_path_cmd(cmd, path);
-	if (check_local(cmd, &path_cmd) && i == -1)
+	if (check_local(cmd, &path_cmd))
 		return (check_file_permission(cmd, path_cmd, all));
+	if (path_cmd)
+		free(path_cmd);
 	if (!path)
 	{
 		put_str_fd("Error: PATH not defined\n", 2);
 		all->status = 127;
 		return (NULL);
 	}
+	i = index_path_cmd(cmd, path);
 	if (i == -1)
 		return (handle_not_found(cmd, path, all));
 	path_cmd = ft_strcat(path[i], cmd, 0, 0);

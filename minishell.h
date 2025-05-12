@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 15:18:20 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/12 16:21:06 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ int		builtin_caller(t_all *all, int builtin);
 /*
 ** executing/check_cmd.c
 */
+char	*check_file_permission(char *cmd, char *path_cmd, t_all *all);
+char	*handle_not_found(char *cmd, char **path, t_all *all);
 int		index_path_cmd(char *cmd, char **path);
 int		check_local(char *cmd, char **path_cmd);
 char	*get_path_cmd(char *cmd, char **path, t_all *all);
@@ -163,6 +165,7 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all);
 /*
 ** executing/cmd_status.c
 */
+char	*handle_exec_error(char *cmd, char *path_cmd, t_all *all, int is_dir);
 int		extract_exit_status(int wait_status);
 void	wait_for_processes(t_all *all, int *pids, int cmd_count);
 int		*init_pids_array(int cmd_count);
