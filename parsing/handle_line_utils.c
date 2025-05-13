@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 14:25:22 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/13 19:26:24 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 	{
 		data->fd_in = open(file, O_RDONLY);
 		if (data->fd_in == -1)
-			put_str_function(NULL, file, "No such file", 2);
+			put_str_error(file, "No such file or directory", 2);
 	}
 	else if (type == OUTFILE)
 	{
@@ -28,7 +28,7 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 	}
 	else
 	{
-		data->fd_out = open(file, O_WRONLY | O_CREAT, 0777);
+		data->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (data->fd_out == -1)
 			ft_exit(all, NULL);
 	}
@@ -53,7 +53,8 @@ void	handle_redirection(t_all *all, t_cmds **tmp, t_data *data, int fd)
 		else
 			safe_open(all, data, (*tmp)->next->token, OUTFILE);
 		*tmp = remove_cmd(*tmp);
-		*tmp = remove_cmd(*tmp);
+		if (*tmp)
+			*tmp = remove_cmd(*tmp);
 		data->cmds = *tmp;
 	}
 }

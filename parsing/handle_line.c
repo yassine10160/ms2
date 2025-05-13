@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/07 14:31:07 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:01:51 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	**handle_space(t_all *all, char *line, int *fd)
 		if (!buf)
 		{
 			free_strs(s);
-			free_all(all);
 			ft_exit(all, NULL);
 		}
 		*fd = check_here_doc(all, buf);

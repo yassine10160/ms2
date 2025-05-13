@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 19:18:40 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/13 19:10:31 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	index_path_cmd(char *cmd, char **path)
 int	check_local(char *cmd, char **path_cmd)
 {
 	char	*pwd;
+	char	*tmp;
 
 	pwd = get_pwd(NULL);
 	if (!pwd)
@@ -80,8 +81,12 @@ int	check_local(char *cmd, char **path_cmd)
 		*path_cmd = NULL;
 		return (0);
 	}
-	*path_cmd = ft_strcat(ft_strcat(pwd, "/", 0, 0), cmd, 0, 0);
+	tmp = ft_strcat(pwd, "/", 0, 0);
 	free(pwd);
+	if (!tmp)
+		return (0);
+	*path_cmd = ft_strcat(tmp, cmd, 0, 0);
+	free(tmp);
 	if (!*path_cmd)
 		return (0);
 	if (access(*path_cmd, F_OK) == 0)

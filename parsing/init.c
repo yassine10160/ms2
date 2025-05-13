@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/05 15:07:45 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/13 19:41:11 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ t_cmds	*remove_cmd(t_cmds *current)
 		free(current->token);
 		free(current);
 	}
-	if (next->token)
-		current = next;
-	else
+	if (prev && prev->token)
 		current = prev;
+	else
+		current = next;
 	return (current);
 }
 
@@ -134,7 +134,7 @@ t_cmds	*remove_cmd(t_cmds *current)
 // 		tmp = all->first->cmds;
 // 		tmp->token = ft_strdup("ls");
 // 		printf("cmds: %s\n", tmp->token);
-// 		tmp = add_next_cmds(tmp);
+// 		tmp = add_prev_cmds(tmp);
 // 		tmp->token = ft_strdup(">");
 // 		printf("cmds: %s\n", tmp->token);
 // 		tmp = add_next_cmds(tmp);

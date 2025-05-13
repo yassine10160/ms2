@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:03:13 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 13:50:45 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/13 19:39:54 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ void	free_data(t_data *data)
 {
 	t_data	*save;
 
-	if (!data)
+	if (!data && !data->next)
 		return ;
 	while (data->prev)
 		data = data->prev;
 	while (data)
 	{
 		free_cmds(data->cmds);
-		if (data->fd_in != 0)
+		if (data->fd_in > 0)
 			close(data->fd_in);
-		if (data->fd_out != 1)
+		if (data->fd_out > 1)
 			close(data->fd_out);
 		if (data->pipe_fd[0] != -2)
 			close(data->pipe_fd[0]);
@@ -83,6 +83,7 @@ void	free_all(t_all *all)
 		unlink(".tmp");
 	if (all->pids)
 		free(all->pids);
+	all->pids = NULL;
 	close_init_fd(&all->fd_save[0], &all->fd_save[1]);
 	free_env(all->env);
 	free_data(all->first);
@@ -97,6 +98,7 @@ void	free_new_line(t_all *all)
 		unlink(".tmp");
 	if (all->pids)
 		free(all->pids);
+	all->pids = NULL;
 	all->f_here_doc = 0;
 	close_init_fd(&all->fd_save[0], &all->fd_save[1]);
 	if (all->first)

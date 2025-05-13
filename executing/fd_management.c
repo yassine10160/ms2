@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fd_management.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:53:08 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/12 19:15:36 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/13 19:04:12 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 int	setup_input_redirection(t_all *all)
 {
-	if (all->first->fd_in == -1)
-		return (0);
-	if (all->first->fd_in != 0)
+	if (all->first->fd_in > 0)
 	{
 		if (dup2(all->first->fd_in, STDIN_FILENO) == -1)
 			return (1);
@@ -35,7 +33,7 @@ int	setup_input_redirection(t_all *all)
 
 int	setup_output_redirection(t_all *all)
 {
-	if (all->first->fd_out != 1)
+	if (all->first->fd_out > 1)
 	{
 		if (dup2(all->first->fd_out, STDOUT_FILENO) == -1)
 			return (1);
@@ -69,9 +67,9 @@ int	setup_redirections(t_all *all, int *fd_save_in, int *fd_save_out)
 
 void	close_init_fd(int *fd_in, int *fd_out)
 {
-	if (*fd_in != -1)
+	if (*fd_in > 0)
 		close(*fd_in);
-	if (*fd_out != -1)
+	if (*fd_out > 1)
 		close(*fd_out);
 	*fd_in = -1;
 	*fd_out = -1;

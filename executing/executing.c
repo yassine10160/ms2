@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/12 13:50:32 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/13 19:38:08 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,11 @@ void	execute_cmd(t_all *all, int *pids, int i)
 {
 	int	builtin;
 
+	if (!all->first || !all->first->cmds || !all->first->cmds->token)
+	{
+		all->status = 0;
+		return ;
+	}
 	if (!setup_redirections(all, &all->fd_save[0], &all->fd_save[1]))
 		ft_exit(all, NULL);
 	if (all->first->cmds->token && all->first->fd_in != -1)
@@ -98,7 +103,7 @@ void	executing(t_all *all, int i)
 	t_data	*save;
 	int		cmd_count;
 
-	if (!all->first->cmds)
+	if (!all->first->cmds && !all->first->next)
 		free_new_line(all);
 	else
 	{
