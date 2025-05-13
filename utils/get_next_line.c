@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:55:06 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/04/29 14:08:55 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/13 13:50:17 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	*sa_gnl(int fd)
+{
+	write(fd, "\n", 1);
+	put_str_error("warning", "here_document delimited by ctrl_D", fd);
+	return (NULL);
+}
 
 char	*ft_strjoin_check(char *s1, char *s2)
 {
@@ -68,7 +75,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	else if (bytes == 0)
-		return (str);
+		return (sa_gnl(fd));
 	if (ft_index_line(buff) != -1 && bytes == -2 && ft_index_line(str) == -1)
 	{
 		str = ft_strjoin_check(str, buff);
