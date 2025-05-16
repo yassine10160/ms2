@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 16:21:06 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/16 16:48:32 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define APPEND 5
 
 # define BUFFER_SIZE 1000
+
 
 typedef enum e_builtin
 {
@@ -369,5 +370,10 @@ char	*ft_strndup(char *str, int n);
 char	**env_to_strs(t_env *env, int i, int count);
 char	**cmds_to_strs(t_cmds *cmds, int count, int i);
 int		ft_strncmp(const char *s1, const char *s2, int n);
+
+extern int g_stop;
+
+void	parent_handler();
+void	child_handler();
 
 #endif

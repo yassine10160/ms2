@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:19:27 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/13 19:22:03 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/16 17:49:23 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_exit(t_all *all, t_cmds *cmd)
 	{
 		put_str_fd("exit\n", 2);
 		free_all(all);
-		exit(0);
+		exit(all->status);
 	}
 	cmd = cmd->next;
 	while (cmd && cmd->token && cmd->token[i])
@@ -79,8 +79,3 @@ void	ft_exit(t_all *all, t_cmds *cmd)
 		exit(i % 256);
 	}
 }
-
-// int main()
-// {
-// 	ft_exit(NULL, "12345");
-// }
