@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/14 14:20:16 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:10:23 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	execute_cmd(t_all *all, int *pids, int i)
 	if (!all->first || !all->first->cmds || !all->first->cmds->token)
 	{
 		all->status = 0;
+		if (g_stop != 0)
+			all->status = 130;
 		return ;
 	}
 	if (!setup_redirections(all, &all->fd_save[0], &all->fd_save[1]))
@@ -104,7 +106,7 @@ void	executing(t_all *all, int i)
 	int		cmd_count;
 
 	if (!all->first->cmds && !all->first->next)
-		free_new_line(all);
+	free_new_line(all);
 	else
 	{
 		save = all->first;

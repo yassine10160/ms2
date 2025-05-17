@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/16 16:47:48 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:05:11 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,10 @@ void	handle_line(t_all **all, char *line)
 	(*all)->first = tmp;
 	handle_all(*all, fd);
 	tmp = (*all)->first;
+	// if (ft_strncmp((*all)->first->cmds->token, "./minishell", 11))
 	child_handler();
+	// printf("status: %d\n",(*all)->status);
+	// else
+		// parent_handler();
 	executing(*all, 0);
 }

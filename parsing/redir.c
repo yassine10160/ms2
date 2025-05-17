@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/16 18:12:22 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/17 18:10:37 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,14 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 	fd = open(".tmp", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (1)
 	{
-		// parent_handler();
-		// if (g_stop == 2)
-		// {
-		// 	rl_on_new_line();
-		// 	rl_replace_line("", 1);
-		// 	// rl_redisplay();
-		// 	break;
-		// }
+		here_doc_handler();
 		write(0, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
+		if (g_stop == 2)
+		{
+			all->status = 130;
+			break;
+		}
 		if (!line || ft_strncmp(line, delim, ft_strlen(delim)) == -10)
 		{
 			if (line)

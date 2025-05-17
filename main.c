@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/16 17:54:17 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/17 17:44:05 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		parent_handler();
+		// g_stop = 0;
 		line = readline("Schwarzenegger : ");
 		if (g_stop == 2)
 			all->status = 130;
@@ -42,6 +43,5 @@ int	main(int ac, char **av, char **env)
 		}
 		else
 			ft_exit(all, NULL);
-		g_stop = 0;
 	}
 }

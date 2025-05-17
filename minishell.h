@@ -6,7 +6,7 @@
 /*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/16 16:48:32 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/17 17:41:14 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,5 +375,5 @@ extern int g_stop;
 
 void	parent_handler();
 void	child_handler();
-
+void	here_doc_handler();
 #endif
