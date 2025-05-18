@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:07:12 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/17 18:11:53 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:31:37 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-void parent_sig(int s)
+void	parent_sig(int s)
 {
 	if (s == SIGINT)
 	{
@@ -25,7 +24,7 @@ void parent_sig(int s)
 	}
 }
 
-void here_doc_sig(int s)
+void	here_doc_sig(int s)
 {
 	if (s == SIGINT)
 	{
@@ -36,9 +35,9 @@ void here_doc_sig(int s)
 	}
 }
 
-void	parent_handler()
+void	parent_handler(void)
 {
-	struct sigaction s;
+	struct sigaction	s;
 
 	g_stop = 0;
 	sigemptyset(&s.sa_mask);
@@ -48,9 +47,9 @@ void	parent_handler()
 	sigaction(SIGINT, &s, NULL);
 }
 
-void	here_doc_handler()
+void	here_doc_handler(void)
 {
-	struct sigaction s;
+	struct sigaction	s;
 
 	sigemptyset(&s.sa_mask);
 	signal(SIGQUIT, SIG_IGN);
@@ -74,15 +73,13 @@ void	child_sig(int s)
 	}
 }
 
-void child_handler()
+void	child_handler(void)
 {
-	struct  sigaction s;
-	
+	struct sigaction	s;
+
 	sigemptyset(&s.sa_mask);
 	s.sa_handler = child_sig;
 	s.sa_flags = SA_RESTART;
 	sigaction(SIGQUIT, &s, NULL);
 	sigaction(SIGINT, &s, NULL);
-	
 }
-

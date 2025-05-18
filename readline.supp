@@ -1,3 +1,12 @@
+# Bin command suppressions
+{
+   bin_command_leaks
+   Memcheck:Leak
+   match-leak-kinds: all
+   ...
+   obj:*/bin/*
+}
+
 # Readline library suppressions
 {
    readline_initialize

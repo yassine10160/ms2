@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:19:27 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/16 17:49:23 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:24:17 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 int	ft_atoi(char *str)
 {
@@ -47,7 +46,7 @@ void	loop_exit(t_all *all, char *cmd, int *i)
 	{
 		put_str_function("exit", cmd, "numeric argument required", 2);
 		put_str_fd("exit\n", 2);
-		free_all(all); 
+		free_all(all);
 		exit(2);
 	}
 	*i = *i + 1;
@@ -55,27 +54,27 @@ void	loop_exit(t_all *all, char *cmd, int *i)
 
 void	ft_exit(t_all *all, t_cmds *cmd)
 {
+	int	tmp;
 	int	i;
 
 	i = 0;
 	if (!cmd || !cmd->next || !cmd->next->token)
 	{
 		put_str_fd("exit\n", 2);
+		tmp = all->status;
 		free_all(all);
-		exit(all->status);
+		exit(tmp);
 	}
 	cmd = cmd->next;
 	while (cmd && cmd->token && cmd->token[i])
-	{
 		loop_exit(all, cmd->token, &i);
-	}
 	if (!cmd->token[i] && cmd->next && cmd->next->token)
 		put_str_error("exit", "too many arguments", 2);
 	else
 	{
-		i = ft_atoi(cmd->token);
+		tmp = ft_atoi(cmd->token);
 		put_str_fd("exit\n", 2);
 		free_all(all);
-		exit(i % 256);
+		exit(tmp % 256);
 	}
 }

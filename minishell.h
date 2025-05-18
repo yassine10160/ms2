@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/17 17:41:14 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:27:56 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 # include <sys/stat.h>
 
+# define HERE_DOC 0
 # define INFILE 1
 # define OUTFILE 2
 # define PIPE 3
@@ -31,7 +32,6 @@
 # define APPEND 5
 
 # define BUFFER_SIZE 1000
-
 
 typedef enum e_builtin
 {
@@ -76,7 +76,6 @@ typedef struct s_all
 	int				fd_save[2];
 	int				f_here_doc;
 	int				status;
-	int				g_pid;
 }	t_all;
 /*
 ** main.c
@@ -371,9 +370,10 @@ char	**env_to_strs(t_env *env, int i, int count);
 char	**cmds_to_strs(t_cmds *cmds, int count, int i);
 int		ft_strncmp(const char *s1, const char *s2, int n);
 
-extern int g_stop;
+extern int	g_stop;
 
-void	parent_handler();
-void	child_handler();
-void	here_doc_handler();
+void	parent_handler(void);
+void	child_handler(void);
+void	here_doc_handler(void);
+
 #endif

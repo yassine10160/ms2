@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/13 19:26:24 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/18 14:24:40 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void	safe_open(t_all *all, t_data *data, char *file, int type)
 		if (data->fd_out == -1)
 			ft_exit(all, NULL);
 	}
+	else if (type == HERE_DOC)
+	{
+		data->fd_in = open(file, O_RDONLY);
+		if (data->fd_in == -1)
+			put_str_fd("here_doc: Error\n", 2);
+	}
 	else
 	{
 		data->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0777);
@@ -41,7 +47,7 @@ void	handle_redirection(t_all *all, t_cmds **tmp, t_data *data, int fd)
 		if (is_here_doc((*tmp)->token) == -1)
 			safe_open(all, data, (*tmp)->next->token, INFILE);
 		else if (fd != -2)
-			data->fd_in = fd;
+			safe_open(all, data, ".tmp", HERE_DOC);
 		*tmp = remove_cmd(*tmp);
 		*tmp = remove_cmd(*tmp);
 		data->cmds = *tmp;

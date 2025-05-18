@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/17 18:10:37 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/18 14:25:00 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 		if (g_stop == 2)
 		{
 			all->status = 130;
-			break;
+			break ;
 		}
 		if (!line || ft_strncmp(line, delim, ft_strlen(delim)) == -10)
 		{
@@ -105,7 +105,6 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 		write_and_expand_file(all, fd, line, is_quote);
 	}
 	close(fd);
-	fd = open(".tmp", O_RDONLY);
 	return (fd);
 }
 
