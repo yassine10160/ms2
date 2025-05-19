@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/16 17:28:12 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:06:01 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@ t_cmds	*remove_cmd(t_cmds *current)
 		free(current->token);
 		free(current);
 	}
-	if (prev && prev->token)
-		current = prev;
-	else
+	if (next && next->token)
 		current = next;
+	else
+		current = prev;
 	return (current);
 }
 

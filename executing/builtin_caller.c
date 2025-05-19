@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/05 16:22:02 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:21:12 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ int	caller_next(t_all *all, int builtin)
 	int		rtn;
 
 	save = all->first->cmds;
-	if (builtin == CD)
-	{
-		if (all->first->cmds->next)
-			return (ft_cd(all->env, all->first->cmds->next->token));
-	}
-	else if (builtin == EXPORT)
+	if (builtin == EXPORT)
 	{
 		all->first->cmds = all->first->cmds->next;
 		while (all->first->cmds)
@@ -53,6 +48,16 @@ int	builtin_caller(t_all *all, int builtin)
 		ft_env(all->env);
 	else if (builtin == PWD)
 		return (ft_pwd());
+	else if (builtin == CD)
+	{
+		if (all->first->cmds->next)
+		{
+			if (all->first->cmds->next && all->first->cmds->next->next && all->first->cmds->next->next->token)
+				put_str_error("cd", "too many arguments", 2);
+			else if (all->first->cmds->next)
+				return (ft_cd(all->env, all->first->cmds->next->token));
+		}
+	}
 	else
 		return (caller_next(all, builtin));
 	return (0);

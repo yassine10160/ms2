@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:22:54 by mazakov           #+#    #+#             */
-/*   Updated: 2025/04/22 13:03:38 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 14:22:09 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_echo(t_cmds *cmd)
 	while (cmd->next && cmd->token)
 	{
 		printf("%s", cmd->token);
-		if (cmd->next)
+		if (cmd->next && cmd->next->token)
 			printf(" ");
 		cmd = cmd->next;
 	}
