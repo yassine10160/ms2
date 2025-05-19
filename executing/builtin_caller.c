@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_caller.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/19 16:30:35 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:14:37 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,19 @@ int	caller_next(t_all *all, int builtin)
 int	builtin_caller(t_all *all, int builtin)
 {
 	if (builtin == EXIT)
-		ft_exit(all, all->first->cmds->next);
+		return (ft_exit(all, all->first->cmds->next));
 	else if (builtin == ECHO)
 		ft_echo(all->first->cmds->next);
 	else if (builtin == UNSET)
-		all->status = ft_unset(all->env, all->first->cmds);
+		return (ft_unset(all->env, all->first->cmds));
 	else if (builtin == ENV)
 		ft_env(all->env);
 	else if (builtin == CD)
 	{
 		if (all->first->cmds->next)
 		{
-			if (all->first->cmds->next && all->first->cmds->next->next && all->first->cmds->next->next->token)
+			if (all->first->cmds->next && all->first->cmds->next->next
+				&& all->first->cmds->next->next->token)
 			{
 				put_str_error("cd", "too many arguments", 2);
 				return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 17:15:11 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:19:42 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	ft_env(t_env *env);
 ** builtin/ft_exit.c
 */
 int		ft_atoi(char *str);
-void	ft_exit(t_all *all, t_cmds *cmd);
+int		ft_exit(t_all *all, t_cmds *cmd);
 
 /*
 ** builtin/ft_export.c
@@ -144,7 +144,7 @@ int		ft_pwd(void);
 /*
 ** builtin/ft_unset.c
 */
-void	remove_node(t_env *node);
+t_env	*remove_node(t_env *node);
 int		ft_unset(t_env *env, t_cmds *cmd);
 
 /*
@@ -156,6 +156,7 @@ int		builtin_caller(t_all *all, int builtin);
 /*
 ** executing/check_cmd.c
 */
+int		ft_strchr(const char *s, int c);
 char	*check_file_permission(char *cmd, char *path_cmd, t_all *all);
 char	*handle_not_found(char *cmd, t_all *all);
 int		index_path_cmd(char *cmd, char **path);
@@ -204,7 +205,7 @@ char	*str_dup_c(char *str, char c_limit, char c_join);
 int		count_str_c_limit(char *str, char c_limit);
 int		find_path_string(t_env **env);
 char	**split_c(char *str, char c_limit, char c_join);
-char	**get_path_env(t_env *env);
+char	**get_path_env(t_env *env, t_all *all);
 
 /*
 ** executing/shell_cmd.c
@@ -257,8 +258,8 @@ void	handle_line(t_all **all, char *line);
 /*
 ** parsing/handle_line_utils.c
 */
-void	safe_open(t_all *all, t_data *data, char *file, int type);
-void	handle_redirection(t_all *all, t_cmds **tmp, t_data *data, int fd);
+void	safe_open(t_data *data, char *file, int type);
+void	handle_redirection(t_cmds **tmp, t_data *data, int fd);
 int		process_lines(char **s, t_all *all, int i);
 
 /*

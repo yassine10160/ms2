@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:19:27 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 16:43:59 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 22:42:19 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	process_exit_args(t_all *all, t_cmds *cmd)
 	{
 		put_str_fd("exit\n", 2);
 		put_str_error("exit", "too many arguments", 2);
-		all->status = 1;
 		return (1);
 	}
 	else
@@ -79,7 +78,7 @@ int	process_exit_args(t_all *all, t_cmds *cmd)
 	}
 }
 
-void	ft_exit(t_all *all, t_cmds *cmd)
+int	ft_exit(t_all *all, t_cmds *cmd)
 {
 	int	tmp;
 	
@@ -91,9 +90,10 @@ void	ft_exit(t_all *all, t_cmds *cmd)
 		exit(tmp);
 	}
 	if (process_exit_args(all, cmd))
-		return ;
+		return (1);
 	tmp = all->status;
 	put_str_fd("exit\n", 2);
 	free_all(all);
 	exit(tmp);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/19 15:11:29 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 22:23:18 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	handle_all(t_all *all, int fd)
 	data = all->first;
 	while (tmp && data)
 	{
-		handle_redirection(all, &tmp, data, fd);
+		handle_redirection(&tmp, data, fd);
 		if (!tmp || !tmp->next)
 		{
 			if (data->next)

@@ -3,120 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 17:14:44 by dmazari          ###   ########.fr       */
+/*   Created: 2025/05/20 00:38:11 by mazakov           #+#    #+#             */
+/*   Updated: 2025/05/20 00:39:35 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*check_file_permission(char *cmd, char *path_cmd, t_all *all)
+int	ft_strchr(const char *s, int c)
 {
-	struct stat	statbuf;
-
-	if (lstat(path_cmd, &statbuf) == 0)
-	{
-		if (S_ISREG(statbuf.st_mode))
-		{
-			if (statbuf.st_mode & S_IXUSR)
-				return (path_cmd);
-			else
-				return (handle_exec_error(cmd, path_cmd, all, 0));
-		}
-		else
-			return (handle_exec_error(cmd, path_cmd, all, 1));
-	}
-	free(path_cmd);
-	return (NULL);
-}
-
-char	*handle_not_found(char *cmd, t_all *all)
-{
-	if (ft_strcmp(cmd, "./") == 1)
-		put_str_error(cmd, "No such file or directory", 2);
-	else
-		put_str_error(cmd, "command not found", 2);
-	all->status = 127;
-	return (NULL);
-}
-
-int	index_path_cmd(char *cmd, char **path)
-{
-	int		i;
-	char	*path_cmd;
+	int	i;
 
 	i = 0;
-	if (!cmd || !path)
-		return (-1);
-	if (ft_strcmp(cmd, "./") == 1)
-		return (-1);
-	while (path[i])
+	if (!s)
+		return (0);
+	while (s[i])
 	{
-		path_cmd = ft_strcat(path[i], cmd, 0, 0);
-		if (!path_cmd)
-			return (-1);
-		if (access(path_cmd, F_OK | X_OK) == 0)
-		{
-			free(path_cmd);
-			return (i);
-		}
-		free(path_cmd);
+		if (s[i] == (char)c)
+			return (1);
 		i++;
 	}
-	return (-1);
-}
-
-int	check_local(char *cmd, char **path_cmd)
-{
-	char	*pwd;
-	char	*tmp;
-
-	pwd = get_pwd(NULL);
-	if (!pwd)
-	{
-		*path_cmd = NULL;
-		return (0);
-	}
-	tmp = ft_strcat(pwd, "/", 0, 0);
-	free(pwd);
-	if (!tmp)
-		return (0);
-	*path_cmd = ft_strcat(tmp, cmd, 0, 0);
-	free(tmp);
-	if (!*path_cmd)
-		return (0);
-	if (access(*path_cmd, F_OK) == 0)
-		return (1);
-	free(*path_cmd);
-	*path_cmd = NULL;
 	return (0);
 }
 
-char	*get_path_cmd(char *cmd, char **path, t_all *all)
+int	check_path(char *path_i, char *cmd, char **path_cmd)
 {
-	int		i;
-	char	*path_cmd;
+	struct stat	statbuf;
 
-	path_cmd = NULL;
-	if (!cmd)
-		return (NULL);
-	if (access(cmd, F_OK | X_OK) == 0)
-		return (ft_strdup(cmd));
-	if (check_local(cmd, &path_cmd))
-		return (check_file_permission(cmd, path_cmd, all));
-	if (path_cmd)
-		free(path_cmd);
-	if (!path)
+	*path_cmd = ft_strcat(path_i, cmd, 0, 0);
+	if (!*path_cmd)
+		return (-1);
+	if (access(*path_cmd, F_OK) == 0)
 	{
-		put_str_fd("Error: PATH not defined\n", 2);
+		if (lstat(*path_cmd, &statbuf) == 0)
+		{
+			if (S_ISDIR(statbuf.st_mode))
+			{
+				free(*path_cmd);
+				return (0);
+			}
+			if (access(*path_cmd, X_OK) == 0)
+				return (1);
+		}
+	}
+	free(*path_cmd);
+	return (0);
+}
+
+static char	*handle_direct_cmd(char *cmd, t_all *all)
+{
+	struct stat	statbuf;
+
+	if (access(cmd, F_OK) != 0)
+	{
+		put_str_error(cmd, "No such file or directory", 2);
 		all->status = 127;
 		return (NULL);
 	}
-	i = index_path_cmd(cmd, path);
-	if (i == -1)
-		return (handle_not_found(cmd, all));
-	path_cmd = ft_strcat(path[i], cmd, 0, 0);
-	return (check_file_permission(cmd, path_cmd, all));
+	if (lstat(cmd, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
+	{
+		put_str_error(cmd, "Is a directory", 2);
+		all->status = 126;
+		return (NULL);
+	}
+	if (access(cmd, X_OK) != 0)
+	{
+		put_str_error(cmd, "Permission denied", 2);
+		all->status = 126;
+		return (NULL);
+	}
+	return (ft_strdup(cmd));
+}
+
+char	*get_path_cmd(char *cmd, char **path, t_all *all, int i)
+{
+	char	*path_cmd;
+	int		result;
+
+	if (!cmd || !cmd[0])
+		return (NULL);
+	if (ft_strchr(cmd, '/'))
+		return (handle_direct_cmd(cmd, all));
+	if (!path)
+	{
+		put_str_error(cmd, "command not found", 2);
+		all->status = 127;
+		return (NULL);
+	}
+	i = -1;
+	while (path[++i])
+	{
+		result = check_path(path[i], cmd, &path_cmd);
+		if (result == 1)
+			return (path_cmd);
+		else if (result == -1)
+			return (NULL);
+	}
+	put_str_error(cmd, "command not found", 2);
+	all->status = 127;
+	return (NULL);
 }

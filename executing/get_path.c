@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:55:37 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/06 13:15:01 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:17:41 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	**split_c(char	*str, char c_limit, char c_join)
 	return (strs);
 }
 
-char	**get_path_env(t_env *env)
+char	**get_path_env(t_env *env, t_all *all)
 {
 	int		i;
 	char	**path;
@@ -108,6 +108,6 @@ char	**get_path_env(t_env *env)
 		return (NULL);
 	path = split_c(env->line + 5, ':', '/');
 	if (!path)
-		return (NULL);
+		ft_exit(all, NULL);
 	return (path);
 }

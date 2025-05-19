@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 16:28:15 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 23:21:34 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	remove_node(t_env *node)
+t_env	*remove_node(t_env *node)
 {
 	t_env	*prev;
 	t_env	*next;
@@ -28,7 +28,13 @@ void	remove_node(t_env *node)
 		if (node->line)
 			free(node->line);
 		free(node);
+		if (prev)
+			return (prev);
+		if (next)
+			return (next);
+		return (NULL);
 	}
+	return (NULL);
 }
 
 int	ft_unset(t_env *env, t_cmds *cmd)
@@ -43,9 +49,8 @@ int	ft_unset(t_env *env, t_cmds *cmd)
 		while (cmd)
 		{
 			save = find_in_env(env, cmd->token);
-			env = env->next;
 			if (save)
-				remove_node(save);
+				env = remove_node(save);
 			cmd = cmd->next;
 		}
 		cmd = ptr;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/19 17:07:21 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:39:45 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd)
 {
 	char	**path;
 
-	path = get_path_env(all->env);
+	path = get_path_env(all->env, all);
 	*cmds = cmds_to_strs(all->first->cmds, 1, 0);
 	if (!*cmds)
 		ft_exit(all, NULL);
@@ -55,7 +55,7 @@ int	prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd)
 		free_strs(*cmds);
 		ft_exit(all, NULL);
 	}
-	*path_cmd = get_path_cmd((*cmds)[0], path, all);
+	*path_cmd = get_path_cmd((*cmds)[0], path, all, 0);
 	if (!*path_cmd)
 	{
 		if (path)
