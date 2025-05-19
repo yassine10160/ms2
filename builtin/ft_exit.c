@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:19:27 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 22:42:19 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:58:45 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ void	loop_exit(t_all *all, char *cmd, int *i)
 	}
 	*i = *i + 1;
 }
+
 int	process_exit_args(t_all *all, t_cmds *cmd)
 {
 	int	tmp;
 	int	i;
-	
+
 	i = 0;
 	if (!cmd || !cmd->token)
 		return (0);
@@ -81,7 +82,7 @@ int	process_exit_args(t_all *all, t_cmds *cmd)
 int	ft_exit(t_all *all, t_cmds *cmd)
 {
 	int	tmp;
-	
+
 	if (!cmd || !cmd->next)
 	{
 		tmp = all->status;

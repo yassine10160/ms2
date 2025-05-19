@@ -6,7 +6,7 @@
 /*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/20 00:19:42 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 00:54:48 by mazakov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define APPEND 5
 
 # define BUFFER_SIZE 1000
+
+extern int	g_stop;
 
 typedef enum e_builtin
 {
@@ -77,6 +79,7 @@ typedef struct s_all
 	int				f_here_doc;
 	int				status;
 }	t_all;
+
 /*
 ** main.c
 */
@@ -128,6 +131,8 @@ void	ft_env(t_env *env);
 ** builtin/ft_exit.c
 */
 int		ft_atoi(char *str);
+void	loop_exit(t_all *all, char *cmd, int *i);
+int		process_exit_args(t_all *all, t_cmds *cmd);
 int		ft_exit(t_all *all, t_cmds *cmd);
 
 /*
@@ -157,16 +162,13 @@ int		builtin_caller(t_all *all, int builtin);
 ** executing/check_cmd.c
 */
 int		ft_strchr(const char *s, int c);
-char	*check_file_permission(char *cmd, char *path_cmd, t_all *all);
-char	*handle_not_found(char *cmd, t_all *all);
-int		index_path_cmd(char *cmd, char **path);
-int		check_local(char *cmd, char **path_cmd);
-char	*get_path_cmd(char *cmd, char **path, t_all *all);
+int		check_path(char *path_i, char *cmd, char **path_cmd);
+char	*get_path_cmd(char *cmd, char **path, t_all *all, int i);
 
 /*
 ** executing/cmd_status.c
 */
-char	*handle_exec_error(char *cmd, char *path_cmd, t_all *all, int is_dir);
+char	*handle_exec_error(char *cmd, char *path_cmd, t_all *all, int type);
 int		extract_exit_status(int wait_status);
 void	wait_for_processes(t_all *all, int *pids, int cmd_count);
 int		*init_pids_array(int cmd_count);
@@ -188,15 +190,6 @@ int		setup_output_redirection(t_all *all);
 int		setup_redirections(t_all *all, int *fd_save_in, int *fd_save_out);
 void	close_init_fd(int *fd_in, int *fd_out);
 int		reset_std_descriptors(int *fd_save_in, int *fd_save_out);
-
-/*
-** executing/handle_input.c
-*/
-void	write_error(char *line, char *s, t_all *all, int status);
-int		parse_err(char c);
-int		parse_error(char *s, t_all *all);
-int		is_closed(char *line);
-int		process_line(char *line, t_all *all);
 
 /*
 ** executing/get_path.c
@@ -246,6 +239,14 @@ char	*alloc_expanded_str(char *line, char *var_value, int i_var);
 int		copy_var(char *var_value, char *s, int i_var, int i_s);
 int		handle_dollar(char *line, int i, int *sq, int *dq);
 char	*expand_line_var(char *line, char *var_value, int i_var, int sq);
+
+/*
+** parsing/handle_input.c
+*/
+void	write_error(char *line, char *s, t_all *all, int status);
+int		parse_err(char c);
+int		parse_error(char *s, t_all *all);
+int		is_closed(char *line);
 
 /*
 ** parsing/handle_line.c
@@ -315,13 +316,6 @@ void	is_in_quote(char c, int *sq, int *dq);
 int		pos_in_str(char *str, char c);
 
 /*
-** utils/put_str.c
-*/
-void	put_str_fd(char *str, int fd);
-void	put_str_error(char *cmd, char *str, int fd);
-void	put_str_function(char *function, char *cmd, char *str, int fd);
-
-/*
 ** utils/char_utils2.c
 */
 void	is_in_sq(char c, int *sq);
@@ -344,12 +338,21 @@ void	*ft_calloc(size_t nmemb, size_t size);
 /*
 ** utils/ft_itoa.c
 */
+int		ft_strncmp(const char *s1, const char *s2, int n);
 int		len_nb(int nb);
 char	*ft_itoa(int nb);
 
 /*
+** utils/ft_put_str.c
+*/
+void	put_str_fd(char *str, int fd);
+void	put_str_error(char *cmd, char *str, int fd);
+void	put_str_function(char *function, char *cmd, char *str, int fd);
+
+/*
 ** utils/get_next_line.c
 */
+void	*sa_gnl(int fd);
 char	*ft_strjoin_check(char *s1, char *s2);
 int		read_file(char *buff, char **str, int fd);
 char	*get_next_line(int fd);
@@ -362,6 +365,16 @@ int		ft_index_line(char *s);
 void	ft_reset(char *s, int stop);
 
 /*
+** utils/sig_handle.c
+*/
+void	parent_sig(int s);
+void	here_doc_sig(int s);
+void	parent_handler(void);
+void	here_doc_handler(void);
+void	child_sig(int s);
+void	child_handler(void);
+
+/*
 ** utils/strcpy.c
 */
 size_t	ft_strlen(char *line);
@@ -369,12 +382,5 @@ char	*ft_strcat(char *str_a, char *str_b, int flag, int i);
 char	*ft_strndup(char *str, int n);
 char	**env_to_strs(t_env *env, int i, int count);
 char	**cmds_to_strs(t_cmds *cmds, int count, int i);
-int		ft_strncmp(const char *s1, const char *s2, int n);
-
-extern int	g_stop;
-
-void	parent_handler(void);
-void	child_handler(void);
-void	here_doc_handler(void);
 
 #endif
