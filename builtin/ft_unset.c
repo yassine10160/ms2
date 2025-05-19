@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/05 10:39:14 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/19 16:18:05 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	remove_node(t_env *node)
 	{
 		prev = node->prev;
 		next = node->next;
-		prev->next = next;
+		if (prev)
+			prev->next = next;
 		if (next)
 			next->prev = prev;
 		if (node->line)

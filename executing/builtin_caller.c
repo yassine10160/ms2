@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/19 15:21:12 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 16:10:47 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	caller_next(t_all *all, int builtin)
 		all->first->cmds = save;
 		return (rtn);
 	}
+	else if (builtin == PWD)
+		return (ft_pwd());
 	return (0);
 }
 
@@ -43,17 +45,18 @@ int	builtin_caller(t_all *all, int builtin)
 	else if (builtin == ECHO)
 		ft_echo(all->first->cmds->next);
 	else if (builtin == UNSET)
-		ft_unset(all->env, all->first->cmds);
+		return (ft_unset(all->env, all->first->cmds));
 	else if (builtin == ENV)
 		ft_env(all->env);
-	else if (builtin == PWD)
-		return (ft_pwd());
 	else if (builtin == CD)
 	{
 		if (all->first->cmds->next)
 		{
 			if (all->first->cmds->next && all->first->cmds->next->next && all->first->cmds->next->next->token)
+			{
 				put_str_error("cd", "too many arguments", 2);
+				return (1);
+			}
 			else if (all->first->cmds->next)
 				return (ft_cd(all->env, all->first->cmds->next->token));
 		}

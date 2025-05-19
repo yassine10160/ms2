@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:28:18 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/19 14:46:38 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 15:49:51 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,16 @@ int	is_valid_identifier(char *var_name, char *token)
 	int	i;
 
 	i = 0;
+	if (!is_alpha(var_name[0]))
+	{
+		put_str_function("export", token, "not a  valid identifier", 2);
+		return (0);
+	}
 	while (var_name[i])
 	{
-		if (!is_alphanum(var_name[i]) && var_name[i] != '_'
-			&& !is_alpha(var_name[0]))
+		if (!is_alphanum(var_name[i]) && var_name[i] != '_')
 		{
-			put_str_function("export", token, "not a  valid identifer", 2);
+			put_str_function("export", token, "not a  valid identifier", 2);
 			return (0);
 		}
 		i++;

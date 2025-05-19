@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:19:27 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 15:24:40 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 16:01:13 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,19 @@ int	ft_atoi(char *str)
 
 void	loop_exit(t_all *all, char *cmd, int *i)
 {
-	if (*i == 0 && cmd[*i] == '-' && cmd[*i] == '+')
+	if (*i == 0 && (cmd[*i] == '-' || cmd[*i] == '+'))
 		*i = *i + 1;
 	if (!is_digit(cmd[*i]))
 	{
 		put_str_function("exit", cmd, "numeric argument required", 2);
-		put_str_fd("exit\n", 2);
+		put_str_fd("exit\n", 1);
 		free_all(all);
 		exit(2);
 	}
 	*i = *i + 1;
 }
 
-void	ft_exit(t_all *all, t_cmds *cmd)
+void ft_exit(t_all *all, t_cmds *cmd)
 {
 	int	tmp;
 	int	i;
@@ -62,21 +62,32 @@ void	ft_exit(t_all *all, t_cmds *cmd)
 	i = 0;
 	if (!cmd || !cmd->next)
 	{
-		put_str_fd("exit\n", 2);
 		tmp = all->status;
 		free_all(all);
 		exit(tmp);
 	}
-	cmd = cmd->next;
-	while (cmd && cmd->token && cmd->token[i])
-		loop_exit(all, cmd->token, &i);
-	if (!cmd->token[i] && cmd->next && !cmd->next->token)
-		put_str_error("exit", "too many arguments", 2);
+	if (cmd && cmd->token)
+	{
+		while (cmd->token[i])
+			loop_exit(all, cmd->token, &i);
+		if (cmd->next && cmd->next->token)
+		{
+			put_str_error("exit", "too many arguments", 2);
+			all->status = 1;
+		}
+		else
+		{
+			tmp = ft_atoi(cmd->token);
+			put_str_fd("exit\n", 1);
+			free_all(all);
+			exit(tmp % 256);
+		}
+	}
 	else
 	{
-		tmp = ft_atoi(cmd->token);
-		put_str_fd("exit\n", 2);
+		tmp = all->status;
+		put_str_fd("exit\n", 1);
 		free_all(all);
-		exit(tmp % 256);
+		exit(tmp);
 	}
 }
