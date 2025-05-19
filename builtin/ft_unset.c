@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 16:18:05 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 16:28:15 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_unset(t_env *env, t_cmds *cmd)
 		while (cmd)
 		{
 			save = find_in_env(env, cmd->token);
+			env = env->next;
 			if (save)
 				remove_node(save);
 			cmd = cmd->next;

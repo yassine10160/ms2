@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/12 14:23:44 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:07:21 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,9 @@ int	handle_fork_error(char **cmds, char **env, char *path_cmd, t_all *all)
 
 int	prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd)
 {
+	char	**path;
+
+	path = get_path_env(all->env);
 	*cmds = cmds_to_strs(all->first->cmds, 1, 0);
 	if (!*cmds)
 		ft_exit(all, NULL);
@@ -52,12 +55,16 @@ int	prepare_execution(t_all *all, char ***cmds, char ***env, char **path_cmd)
 		free_strs(*cmds);
 		ft_exit(all, NULL);
 	}
-	*path_cmd = get_path_cmd((*cmds)[0], get_path_env(all->env), all);
+	*path_cmd = get_path_cmd((*cmds)[0], path, all);
 	if (!*path_cmd)
 	{
+		if (path)
+			free_strs(path);
 		clean_resources(*cmds, *env, NULL);
 		return (0);
 	}
+	if (path)
+		free_strs(path);
 	return (1);
 }
 

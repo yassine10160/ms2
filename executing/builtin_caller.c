@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/19 16:10:47 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 16:30:35 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	builtin_caller(t_all *all, int builtin)
 	else if (builtin == ECHO)
 		ft_echo(all->first->cmds->next);
 	else if (builtin == UNSET)
-		return (ft_unset(all->env, all->first->cmds));
+		all->status = ft_unset(all->env, all->first->cmds);
 	else if (builtin == ENV)
 		ft_env(all->env);
 	else if (builtin == CD)

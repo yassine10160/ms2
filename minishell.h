@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/18 14:27:56 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:15:11 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ int		builtin_caller(t_all *all, int builtin);
 ** executing/check_cmd.c
 */
 char	*check_file_permission(char *cmd, char *path_cmd, t_all *all);
-char	*handle_not_found(char *cmd, char **path, t_all *all);
+char	*handle_not_found(char *cmd, t_all *all);
 int		index_path_cmd(char *cmd, char **path);
 int		check_local(char *cmd, char **path_cmd);
 char	*get_path_cmd(char *cmd, char **path, t_all *all);

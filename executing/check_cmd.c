@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:52:41 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 16:06:08 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:14:44 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ char	*check_file_permission(char *cmd, char *path_cmd, t_all *all)
 	return (NULL);
 }
 
-char	*handle_not_found(char *cmd, char **path, t_all *all)
+char	*handle_not_found(char *cmd, t_all *all)
 {
-	if (path)
-		free_strs(path);
 	if (ft_strcmp(cmd, "./") == 1)
 		put_str_error(cmd, "No such file or directory", 2);
 	else
@@ -104,6 +102,8 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 	path_cmd = NULL;
 	if (!cmd)
 		return (NULL);
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (ft_strdup(cmd));
 	if (check_local(cmd, &path_cmd))
 		return (check_file_permission(cmd, path_cmd, all));
 	if (path_cmd)
@@ -116,8 +116,7 @@ char	*get_path_cmd(char *cmd, char **path, t_all *all)
 	}
 	i = index_path_cmd(cmd, path);
 	if (i == -1)
-		return (handle_not_found(cmd, path, all));
+		return (handle_not_found(cmd, all));
 	path_cmd = ft_strcat(path[i], cmd, 0, 0);
-	free_strs(path);
 	return (check_file_permission(cmd, path_cmd, all));
 }

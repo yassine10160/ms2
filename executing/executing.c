@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/18 14:17:11 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/19 17:09:40 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,9 @@ void	execute_cmd(t_all *all, int *pids, int i)
 	}
 	if (!setup_redirections(all, &all->fd_save[0], &all->fd_save[1]))
 		ft_exit(all, NULL);
-	if (all->first->cmds->token && all->first->fd_in != -1)
+	if (all->first->fd_in == -1 || all->first->fd_out == -1)
+		all->status = 1;
+	else if (all->first->cmds->token)
 	{
 		builtin = is_builtin(all->first->cmds->token);
 		if (builtin != 0 && !all->first->next && !all->first->prev)
