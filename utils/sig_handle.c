@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_handle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 14:07:12 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/18 14:31:37 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:46:37 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	parent_sig(int s)
 {
 	if (s == SIGINT)
 	{
-		write(1, "\n", 1);
+		write(0, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		rl_redisplay();
@@ -28,7 +28,7 @@ void	here_doc_sig(int s)
 {
 	if (s == SIGINT)
 	{
-		write(1, "\n", 1);
+		write(0, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 1);
 		g_stop = 2;
@@ -68,18 +68,23 @@ void	child_sig(int s)
 	}
 	if (s == SIGINT)
 	{
-		write(1, "\n", 1);
+		write(0, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 1);
 		g_stop = 2;
 	}
 }
 
-void	child_handler(void)
+void	child_handler(int back)
 {
 	struct sigaction	s;
 
 	sigemptyset(&s.sa_mask);
 	s.sa_handler = child_sig;
 	s.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &s, NULL);
+	if (back)
+		sigaction(SIGQUIT, &s, NULL);
+	else
+		signal(SIGQUIT, SIG_IGN);
 	sigaction(SIGINT, &s, NULL);
 }

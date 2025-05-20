@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quote_and_space.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/19 16:34:12 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:37:37 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,25 @@ char	*str_dup_minishell(char *s, int *i, int k, int j)
 	return (str);
 }
 
+bool	check_redir_quote(char *str, int i)
+{
+	int	sq;
+	int	dq;
+
+	sq = 0;
+	dq = 0;
+	while (str[i])
+	{
+		is_in_quote(str[i], &sq, &dq);
+		if ((str[i] == ' ') && !(sq % 2) && !(dq % 2))
+			break ;
+		if (is_redir(str[i]) && ((sq % 2) || (dq % 2)))
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 int	split_quote_and_space(char *str, t_all *all)
 {
 	t_cmds	*save;
@@ -72,6 +91,7 @@ int	split_quote_and_space(char *str, t_all *all)
 			i++;
 		else
 		{
+			all->first->cmds->is_quote_redir = check_redir_quote(str, i);
 			all->first->cmds->token = str_dup_minishell(str, &i, i, 0);
 			if (!all->first->cmds->token)
 				return (1);

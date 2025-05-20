@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/19 22:23:18 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:44:32 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	handle_all(t_all *all, int fd)
 				break ;
 			tmp = data->cmds;
 		}
-		else if (!is_infile(tmp->token) && !is_outfile(tmp->token))
+		else if ((!is_infile(tmp->token) && !is_outfile(tmp->token)) || tmp->is_quote_redir)
 			tmp = tmp->next;
 	}
 }
@@ -99,10 +99,6 @@ void	handle_line(t_all **all, char *line)
 	(*all)->first = tmp;
 	handle_all(*all, fd);
 	tmp = (*all)->first;
-	// if (ft_strncmp((*all)->first->cmds->token, "./minishell", 11))
-	child_handler();
-	// printf("status: %d\n",(*all)->status);
-	// else
-		// parent_handler();
+	child_handler(1);
 	executing(*all, 0);
 }

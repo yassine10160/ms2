@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executing.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:39:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/19 22:38:29 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:28:02 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,18 @@ int	builtin_child(t_all *all, int builtin)
 	int	rtn;
 
 	pid = fork();
+	// signal(SIGINT, SIG_IGN);
 	if (pid < 0)
 		handle_fork_error(NULL, NULL, NULL, all);
 	if (pid == 0)
 	{
+		// signal(SIGINT, SIG_IGN);
+		// child_handler();
 		rtn = builtin_caller(all, builtin);
 		free_all(all);
 		exit(rtn);
 	}
+	// parent_handler();
 	return (pid);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/19 22:57:01 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 16:58:13 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ void	safe_open(t_data *data, char *file, int type)
 
 void	handle_redirection(t_cmds **tmp, t_data *data, int fd)
 {
-	if (is_infile((*tmp)->token))
+	if (is_infile((*tmp)->token) && !(*tmp)->is_quote_redir)
 	{
 		if (is_here_doc((*tmp)->token) == -1)
-			safe_open(data, (*tmp)->next->token, INFILE);
+		safe_open(data, (*tmp)->next->token, INFILE);
 		else if (fd != -2)
-			safe_open(data, ".tmp", HERE_DOC);
+		safe_open(data, ".tmp", HERE_DOC);
 		*tmp = remove_cmd(*tmp);
 		*tmp = remove_cmd(*tmp);
 		data->cmds = *tmp;
 	}
-	else if (is_outfile((*tmp)->token))
+	else if (is_outfile((*tmp)->token) && !(*tmp)->is_quote_redir)
 	{
 		if (is_append((*tmp)->token))
 			safe_open(data, (*tmp)->next->token, APPEND);

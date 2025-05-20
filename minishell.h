@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/20 00:54:48 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/20 19:43:46 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_cmds
 	char			*token;
 	struct s_cmds	*prev;
 	struct s_cmds	*next;
+	bool			is_quote_redir;
 }	t_cmds;
 
 typedef struct s_env
@@ -214,6 +215,7 @@ int		shell_cmd(t_all *all);
 */
 int		count_space(char *line);
 char	*add_space(char *line);
+int		is_redir(char c);
 
 /*
 ** parsing/expand.c
@@ -372,7 +374,7 @@ void	here_doc_sig(int s);
 void	parent_handler(void);
 void	here_doc_handler(void);
 void	child_sig(int s);
-void	child_handler(void);
+void	child_handler(int check);
 
 /*
 ** utils/strcpy.c

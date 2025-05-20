@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   add_space.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 15:10:16 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/05 14:21:28 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/20 15:11:01 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	is_redir(char c)
+int	is_redir(char c)
 {
 	if (c == '<' || c == '>')
 		return (1);
