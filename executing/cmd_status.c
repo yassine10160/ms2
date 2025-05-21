@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_status.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 18:10:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/20 00:17:16 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:52:24 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	wait_for_processes(t_all *all, int *pids, int cmd_count)
 {
 	int	i;
 	int	status;
+	int	sig;
 
 	i = 0;
 	while (i < cmd_count)
@@ -48,6 +49,11 @@ void	wait_for_processes(t_all *all, int *pids, int cmd_count)
 		if (pids[i] > 0)
 		{
 			waitpid(pids[i], &status, 0);
+			sig = WTERMSIG(status);
+			if (sig == SIGQUIT)
+				put_str_fd("Quit (core dumped)\n", STDERR_FILENO);
+			else if (sig == SIGINT)
+				put_str_fd("\n", STDERR_FILENO);
 			if (i == cmd_count - 1)
 				all->status = extract_exit_status(status);
 		}

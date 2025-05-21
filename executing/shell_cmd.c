@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/21 13:22:19 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:51:36 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,10 @@ int	shell_cmd(t_all *all)
 	signal(SIGINT, SIG_IGN);
 	if (pid == 0)
 	{
-		child_handler(1);
+		child_handler(0);
 		free_all(all);
 		execute_in_child(cmds, env, path_cmd);
 	}
-	else
-		signal(SIGQUIT, SIG_IGN);
 	clean_resources(cmds, env, path_cmd);
 	return (pid);
 }

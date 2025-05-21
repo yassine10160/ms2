@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/21 11:55:19 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:14:41 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int ac, char **av, char **env)
 	all = init_all(env);
 	while (1)
 	{
+		signal(SIGQUIT, SIG_IGN);
 		parent_handler();
 		line = readline("Schwarzenegger$ ");
 		if (g_stop == 2 || g_stop == 3)
