@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_null.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 13:28:57 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/07 15:40:01 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/21 16:04:51 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	skip_var(char *line, int i, int *sq, int *dq)
 	int	save;
 
 	save = *dq;
-	while (line[i] && line[i] != ' ' && !(*sq % 2) && line[i] != '=')
+	while (line[i] && line[i] != ' ' && !(*sq % 2) && line[i] != '='
+		&& line[i] != '\'' && line[i] != '"')
 	{
 		is_in_quote(line[i], sq, dq);
 		if (save != *dq)
