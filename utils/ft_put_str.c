@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_put_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:01:07 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/12 14:28:50 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/21 14:39:18 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	put_str_error(char *cmd, char *str, int fd)
 	if (cmd)
 	{
 		put_str_fd(cmd, fd);
-		put_str_fd(" : ", fd);
+		put_str_fd(": ", fd);
 	}
 	if (str)
 	{
@@ -42,7 +42,7 @@ void	put_str_function(char *function, char *cmd, char *str, int fd)
 	if (cmd)
 		put_str_fd(cmd, fd);
 	if (function)
-		put_str_fd("' : ", fd);
+		put_str_fd("': ", fd);
 	if (str)
 	{
 		put_str_fd(str, fd);
