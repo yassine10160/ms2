@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 11:08:05 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/20 19:52:18 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:55:19 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,10 @@ int	main(int ac, char **av, char **env)
 	{
 		parent_handler();
 		line = readline("Schwarzenegger$ ");
-		if (g_stop == 2)
-			all->status = 130;
-		if (g_stop == 3)
-			all->status = 131;
+		if (g_stop == 2 || g_stop == 3)
+			all->status = 128 + g_stop;
 		if (line)
 		{
-
 			add_history(line);
 			process_line(line, all);
 		}

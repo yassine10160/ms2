@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quote_and_space.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/20 16:37:37 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:48:07 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*str_dup_minishell(char *s, int *i, int k, int j)
 	int		dq;
 	int		sq;
 
-	str = malloc(sizeof(char) * (word_len(s + *i) + 1));
+	str = ft_calloc(sizeof(char) * (word_len(s + *i) + 1));
 	if (!str)
 		return (NULL);
 	dq = 0;
@@ -47,7 +47,8 @@ char	*str_dup_minishell(char *s, int *i, int k, int j)
 		is_in_quote(s[k], &sq, &dq);
 		if ((s[k] == ' ') && !(sq % 2) && !(dq % 2))
 			break ;
-		if (s[k] == '$' && s[k + 1] && s[k + 1] != ' ' && !is_alpha(s[k + 1]) && (!((sq + dq) % 2) && !(dq % 2)))
+		if (s[k] == '$' && s[k + 1] && s[k + 1] != ' '
+			&& !is_alpha(s[k + 1]) && (!((sq + dq) % 2) && !(dq % 2)))
 			k += 2;
 		else if ((s[k] == '\'' && ((sq % 2) || (!(dq % 2))))
 			|| (s[k] == '\"' && ((dq % 2) || (!(sq % 2)))))
@@ -56,7 +57,6 @@ char	*str_dup_minishell(char *s, int *i, int k, int j)
 			str[j++] = s[k++];
 	}
 	*i = k;
-	str[j] = '\0';
 	return (str);
 }
 

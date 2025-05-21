@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/20 16:39:41 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:53:39 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,23 +91,24 @@ t_data	*add_next_data(t_data *current)
 	return (new);
 }
 
-t_cmds	*remove_cmd(t_cmds *current)
+void	remove_cmd(t_cmds *current)
 {
 	t_cmds	*next;
 	t_cmds	*prev;
 
 	if (!current)
-		return (NULL);
+		return ;
 	prev = current->prev;
 	next = current->next;
+	if (next && !next->token && !prev)
+	{
+		free(next);
+		next = NULL;
+	}
 	if (prev)
 		prev->next = next;
-	else if (next)
-		next->prev = NULL;
 	if (next)
 		next->prev = prev;
-	else if (prev)
-		prev->next = NULL;
 	if (current && current->token)
 	{
 		free(current->token);
@@ -117,7 +118,6 @@ t_cmds	*remove_cmd(t_cmds *current)
 		current = next;
 	else
 		current = prev;
-	return (current);
 }
 
 // int main(int ac, char **av, char **env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/20 16:58:13 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:47:30 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,25 @@
 
 void	safe_open(t_data *data, char *file, int type)
 {
-	if (data->fd_out == -1)
-		return ;
-	if (type == INFILE)
+	if (type == INFILE && data->fd_out != -1)
 	{
 		data->fd_in = open(file, O_RDONLY);
 		if (data->fd_in == -1)
 			put_str_error(file, "No such file or directory", 2);
 	}
-	else if (type == OUTFILE)
+	else if (type == OUTFILE && data->fd_out != -1)
 	{
 		data->fd_out = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 		if (data->fd_out == -1)
 			put_str_error(file, "Permission denied", 2);
 	}
-	else if (type == HERE_DOC)
+	else if (type == HERE_DOC && data->fd_out != -1)
 	{
 		data->fd_in = open(file, O_RDONLY);
 		if (data->fd_in == -1)
 			put_str_fd("here_doc: Error\n", 2);
 	}
-	else
+	else if (data->fd_out != -1)
 	{
 		data->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (data->fd_out == -1)
@@ -47,11 +45,11 @@ void	handle_redirection(t_cmds **tmp, t_data *data, int fd)
 	if (is_infile((*tmp)->token) && !(*tmp)->is_quote_redir)
 	{
 		if (is_here_doc((*tmp)->token) == -1)
-		safe_open(data, (*tmp)->next->token, INFILE);
+			safe_open(data, (*tmp)->next->token, INFILE);
 		else if (fd != -2)
-		safe_open(data, ".tmp", HERE_DOC);
-		*tmp = remove_cmd(*tmp);
-		*tmp = remove_cmd(*tmp);
+			safe_open(data, ".tmp", HERE_DOC);
+		remove_cmd(*tmp);
+		remove_cmd(*tmp);
 		data->cmds = *tmp;
 	}
 	else if (is_outfile((*tmp)->token) && !(*tmp)->is_quote_redir)
@@ -60,9 +58,8 @@ void	handle_redirection(t_cmds **tmp, t_data *data, int fd)
 			safe_open(data, (*tmp)->next->token, APPEND);
 		else
 			safe_open(data, (*tmp)->next->token, OUTFILE);
-		*tmp = remove_cmd(*tmp);
-		if (*tmp)
-			*tmp = remove_cmd(*tmp);
+		remove_cmd(*tmp);
+		remove_cmd(*tmp);
 		data->cmds = *tmp;
 	}
 }

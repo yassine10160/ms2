@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/20 19:43:46 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:50:38 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,7 @@ t_data	*init_data(void);
 t_all	*init_all(char **env);
 t_cmds	*add_next_cmds(t_cmds *current);
 t_data	*add_next_data(t_data *current);
-t_cmds	*remove_cmd(t_cmds *current);
+void	remove_cmd(t_cmds *current);
 
 /*
 ** parsing/redir_utils.c
@@ -367,11 +367,15 @@ int		ft_index_line(char *s);
 void	ft_reset(char *s, int stop);
 
 /*
-** utils/sig_handle.c
+** utils/sig_handle_b.c
 */
 void	parent_sig(int s);
 void	here_doc_sig(int s);
 void	parent_handler(void);
+
+/*
+** utils/sig_handle_a.c
+*/
 void	here_doc_handler(void);
 void	child_sig(int s);
 void	child_handler(int check);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/20 19:44:32 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 12:45:42 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ void	handle_all(t_all *all, int fd)
 				break ;
 			tmp = data->cmds;
 		}
-		else if ((!is_infile(tmp->token) && !is_outfile(tmp->token)) || tmp->is_quote_redir)
+		else if ((!is_infile(tmp->token) && !is_outfile(tmp->token))
+			|| tmp->is_quote_redir)
 			tmp = tmp->next;
 	}
 }

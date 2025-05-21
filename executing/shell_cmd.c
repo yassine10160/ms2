@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 16:24:31 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/20 20:01:54 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 11:56:01 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,14 @@ int	shell_cmd(t_all *all)
 	if (pid < 0)
 		return (handle_fork_error(cmds, env, path_cmd, all));
 	signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
 	if (pid == 0)
 	{
-		// signal(SIGQUIT, SIG_IGN);
-		// parent_handler();
 		child_handler(1);
 		free_all(all);
 		execute_in_child(cmds, env, path_cmd);
 	}
 	else
-	{
-		// parent_handler();
 		signal(SIGQUIT, SIG_IGN);
-		// signal(SIGINT, SIG_IGN);
-		// child_handler(0);
-	}
 	clean_resources(cmds, env, path_cmd);
 	return (pid);
 }
