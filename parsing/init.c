@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/21 13:45:20 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:19:21 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ t_cmds	*add_next_cmds(t_cmds *current)
 		return (NULL);
 	new->prev = current;
 	new->next = NULL;
-	current->next = new;
+	if (current)
+		current->next = new;
 	return (new);
 }
 
@@ -85,7 +86,8 @@ t_data	*add_next_data(t_data *current)
 	new = init_data();
 	if (!new)
 		return (NULL);
-	current->next = new;
+	if (current)
+		current->next = new;
 	new->prev = current;
 	new->next = NULL;
 	return (new);

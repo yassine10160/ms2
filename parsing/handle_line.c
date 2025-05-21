@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/21 14:47:58 by yafahfou         ###   ########.fr       */
+/*   Updated: 2025/05/21 15:21:48 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ void	handle_all(t_all *all, int fd)
 {
 	t_cmds	*tmp;
 	t_data	*data;
+	t_data	*save;
 
 	tmp = all->first->cmds;
 	data = all->first;
+	save = all->first;
 	while (tmp && data)
 	{
 		handle_redirection(&tmp, data, fd);
@@ -87,6 +89,7 @@ void	handle_all(t_all *all, int fd)
 			|| tmp->is_quote_redir)
 			tmp = tmp->next;
 	}
+	all->first = save;
 }
 
 void	handle_line(t_all **all, char *line)

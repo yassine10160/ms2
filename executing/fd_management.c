@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 16:53:08 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/13 19:04:12 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 15:53:59 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	setup_input_redirection(t_all *all)
 {
-	if (all->first->fd_in > 0)
+	if (all && all->first && all->first->fd_in > 0)
 	{
 		if (dup2(all->first->fd_in, STDIN_FILENO) == -1)
 			return (1);
 		close(all->first->fd_in);
 		all->first->fd_in = 0;
 	}
-	else if (all->first->prev)
+	else if (all && all->first && all->first->prev)
 	{
 		if (dup2(all->first->prev->pipe_fd[0], STDIN_FILENO) == -1)
 			return (1);
@@ -33,14 +33,14 @@ int	setup_input_redirection(t_all *all)
 
 int	setup_output_redirection(t_all *all)
 {
-	if (all->first->fd_out > 1)
+	if (all && all->first && all->first->fd_out > 1)
 	{
 		if (dup2(all->first->fd_out, STDOUT_FILENO) == -1)
 			return (1);
 		close(all->first->fd_out);
 		all->first->fd_out = 1;
 	}
-	else if (all->first->next)
+	else if (all && all->first && all->first->next)
 	{
 		if (dup2(all->first->pipe_fd[1], STDOUT_FILENO) == -1)
 			return (1);
@@ -71,8 +71,8 @@ void	close_init_fd(int *fd_in, int *fd_out)
 		close(*fd_in);
 	if (*fd_out > 1)
 		close(*fd_out);
-	*fd_in = -1;
-	*fd_out = -1;
+	*fd_in = -2;
+	*fd_out = -2;
 }
 
 int	reset_std_descriptors(int *fd_save_in, int *fd_save_out)
