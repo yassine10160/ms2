@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:43 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/21 11:53:39 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:45:20 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,15 @@ t_data	*add_next_data(t_data *current)
 	return (new);
 }
 
-void	remove_cmd(t_cmds *current)
+void	remove_cmd(t_cmds **current)
 {
 	t_cmds	*next;
 	t_cmds	*prev;
 
 	if (!current)
 		return ;
-	prev = current->prev;
-	next = current->next;
+	prev = (*current)->prev;
+	next = (*current)->next;
 	if (next && !next->token && !prev)
 	{
 		free(next);
@@ -109,15 +109,15 @@ void	remove_cmd(t_cmds *current)
 		prev->next = next;
 	if (next)
 		next->prev = prev;
-	if (current && current->token)
+	if (current && (*current)->token)
 	{
-		free(current->token);
-		free(current);
+		free((*current)->token);
+		free((*current));
 	}
 	if (next && next->token)
-		current = next;
+		(*current) = next;
 	else
-		current = prev;
+		(*current) = prev;
 }
 
 // int main(int ac, char **av, char **env)

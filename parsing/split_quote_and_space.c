@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 10:14:56 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/21 12:48:07 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:03:30 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*str_dup_minishell(char *s, int *i, int k, int j)
 	int		dq;
 	int		sq;
 
-	str = ft_calloc(sizeof(char) * (word_len(s + *i) + 1));
+	str = ft_calloc(sizeof(char) * (word_len(s + *i) + 1), 1);
 	if (!str)
 		return (NULL);
 	dq = 0;

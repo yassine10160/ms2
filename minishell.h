@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/21 12:50:38 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:44:31 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 
 # define BUFFER_SIZE 1000
 
-extern int	g_stop;
+extern int	g_stop ;
 
 typedef enum e_builtin
 {
@@ -272,7 +272,7 @@ t_data	*init_data(void);
 t_all	*init_all(char **env);
 t_cmds	*add_next_cmds(t_cmds *current);
 t_data	*add_next_data(t_data *current);
-void	remove_cmd(t_cmds *current);
+void	remove_cmd(t_cmds **current);
 
 /*
 ** parsing/redir_utils.c

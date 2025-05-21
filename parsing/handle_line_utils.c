@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/21 12:47:30 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 13:46:00 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	handle_redirection(t_cmds **tmp, t_data *data, int fd)
 			safe_open(data, (*tmp)->next->token, INFILE);
 		else if (fd != -2)
 			safe_open(data, ".tmp", HERE_DOC);
-		remove_cmd(*tmp);
-		remove_cmd(*tmp);
+		remove_cmd(tmp);
+		remove_cmd(tmp);
 		data->cmds = *tmp;
 	}
 	else if (is_outfile((*tmp)->token) && !(*tmp)->is_quote_redir)
@@ -58,8 +58,8 @@ void	handle_redirection(t_cmds **tmp, t_data *data, int fd)
 			safe_open(data, (*tmp)->next->token, APPEND);
 		else
 			safe_open(data, (*tmp)->next->token, OUTFILE);
-		remove_cmd(*tmp);
-		remove_cmd(*tmp);
+		remove_cmd(tmp);
+		remove_cmd(tmp);
 		data->cmds = *tmp;
 	}
 }
