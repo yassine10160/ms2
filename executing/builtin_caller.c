@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_caller.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 16:16:05 by dorianmazar       #+#    #+#             */
-/*   Updated: 2025/05/20 00:14:37 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/24 21:10:15 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	builtin_caller(t_all *all, int builtin)
 	else if (builtin == ECHO)
 		ft_echo(all->first->cmds->next);
 	else if (builtin == UNSET)
-		return (ft_unset(all->env, all->first->cmds));
+		return (ft_unset(&all->env, all->first->cmds));
 	else if (builtin == ENV)
 		ft_env(all->env);
 	else if (builtin == CD)

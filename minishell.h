@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/21 15:32:08 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/24 21:10:23 by dorianmazar      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,8 @@ int		ft_pwd(void);
 /*
 ** builtin/ft_unset.c
 */
-t_env	*remove_node(t_env *node);
-int		ft_unset(t_env *env, t_cmds *cmd);
+void	remove_node(t_env **node);
+int		ft_unset(t_env **env, t_cmds *cmd);
 
 /*
 ** executing/builtin_caller.c
