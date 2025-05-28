@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:50:29 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/24 21:10:23 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/28 12:36:45 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,7 +278,7 @@ void	remove_cmd(t_cmds **current);
 ** parsing/redir_utils.c
 */
 int		is_outfile(char *s);
-int		is_here_doc(char *s);
+int		is_here_doc(char *s, int k);
 int		is_append(char *s);
 int		is_infile(char *s);
 bool	is_quote_delim(char *s, int index);
@@ -287,10 +287,10 @@ bool	is_quote_delim(char *s, int index);
 ** parsing/redir.c
 */
 int		len_delim(char *s, int start);
-char	*get_delim(char *s, int index, int len);
+char	*get_delim(char *s, int index, int len, int k);
 void	write_and_expand_file(t_all *all, int fd, char *line, bool is_quote);
 int		handle_here_doc(t_all *all, char *delim, bool is_quote);
-int		check_here_doc(t_all *all, char *s);
+int		check_here_doc(t_all *all, char *s, int *k);
 
 /*
 ** parsing/split_pipe.c

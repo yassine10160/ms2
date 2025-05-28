@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 14:38:45 by dmazari           #+#    #+#             */
-/*   Updated: 2025/05/05 14:39:01 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:13:43 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	is_outfile(char *s)
 	return (0);
 }
 
-int	is_here_doc(char *s)
+int	is_here_doc(char *s, int k)
 {
 	int	i;
 	int	sq;
 	int	dq;
 
-	i = 0;
+	i = k;
 	sq = 0;
 	dq = 0;
 	while (s && s[i])
@@ -33,6 +33,8 @@ int	is_here_doc(char *s)
 		is_in_quote(s[i], &sq, &dq);
 		if (s[i] == '<' && s[i + 1] == '<' && !(sq % 2) && !(dq % 2))
 		{
+			if (s[i + 2] && s[i + 2] == '<')
+				break ;
 			i = i + 2;
 			while (s[i] && s[i] == ' ')
 				i++;

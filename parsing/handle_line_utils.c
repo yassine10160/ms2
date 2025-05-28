@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_line_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yafahfou <yafahfou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:16:22 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/21 16:21:05 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:14:33 by yafahfou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handle_redirection(t_cmds **tmp, t_data *data, int fd)
 {
 	if (is_infile((*tmp)->token) && !(*tmp)->is_quote_redir)
 	{
-		if (is_here_doc((*tmp)->token) == -1)
+		if (is_here_doc((*tmp)->token, 0) == -1)
 			safe_open(data, (*tmp)->next->token, INFILE);
 		else if (fd != -2)
 			safe_open(data, ".tmp", HERE_DOC);

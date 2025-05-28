@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorianmazari <dorianmazari@student.42.f    +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:36:50 by mazakov           #+#    #+#             */
-/*   Updated: 2025/05/24 21:21:57 by dorianmazar      ###   ########.fr       */
+/*   Updated: 2025/05/28 12:35:36 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,3 @@ int	ft_unset(t_env **env, t_cmds *cmd)
 	cmd = ptr;
 	return (0);
 }
-
-// int	main(int ac, char **av, char **env)
-// {
-// 	t_all *all;
-
-// 	(void)ac;
-// 	(void)av;
-// 	all = init_all(env);
-// 	all->first->cmds->token = ft_strdup("a");
-// 	ft_export(all->env, ft_strdup("a=salut"));
-// 	ft_env(all->env);
-// 	ft_unset(all->env, all->first->cmds);
-// 	ft_env(all->env);
-// 	ft_exit(all, NULL);
-// }

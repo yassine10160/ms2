@@ -6,16 +6,35 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 15:27:59 by yassinefahf       #+#    #+#             */
-/*   Updated: 2025/05/21 15:21:48 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:52:39 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static int	process_pipe_segment(t_all *all, char ***s, int i, int *fd)
+{
+	char	*buf;
+	int		index;
+
+	index = 0;
+	buf = add_space((*s)[i]);
+	if (!buf)
+		return (-1);
+	*fd = check_here_doc(all, buf, &index);
+	while (*fd > 0 && buf[index] && is_here_doc(buf, index) != -1)
+	{
+		close(*fd);
+		*fd = check_here_doc(all, buf, &index);
+	}
+	free((*s)[i]);
+	(*s)[i] = buf;
+	return (0);
+}
+
 char	**handle_space(t_all *all, char *line, int *fd)
 {
 	char	**s;
-	char	*buf;
 	int		i;
 
 	i = 0;
@@ -25,15 +44,12 @@ char	**handle_space(t_all *all, char *line, int *fd)
 		ft_exit(all, NULL);
 	while (s && s[i])
 	{
-		buf = add_space(s[i]);
-		if (!buf)
+		if (process_pipe_segment(all, &s, i, fd) == -1)
 		{
 			free_strs(s);
 			ft_exit(all, NULL);
 		}
-		*fd = check_here_doc(all, buf);
-		free(s[i]);
-		s[i++] = buf;
+		i++;
 	}
 	return (s);
 }

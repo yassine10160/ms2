@@ -6,7 +6,7 @@
 /*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 17:55:06 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/21 15:09:17 by dmazari          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:48:06 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	read_file(char *buff, char **str, int fd)
 		if (bytes > 0)
 			buff[bytes] = '\0';
 		*str = ft_strjoin_check(*str, buff);
-		add_history(*str);
 		if (!*str || bytes == -1 || buff[0] == '\0')
 			return (free(*str), -1);
 		ft_reset(buff, ft_index_line(buff) + 1);

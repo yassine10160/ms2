@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mazakov <mazakov@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dmazari <dmazari@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:50:23 by yafahfou          #+#    #+#             */
-/*   Updated: 2025/05/18 14:25:00 by mazakov          ###   ########.fr       */
+/*   Updated: 2025/05/21 17:53:23 by dmazari          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	len_delim(char *s, int start)
 	return (len);
 }
 
-char	*get_delim(char *s, int index, int len)
+char	*get_delim(char *s, int index, int len, int k)
 {
 	int		i;
 	int		sq;
@@ -44,13 +44,15 @@ char	*get_delim(char *s, int index, int len)
 	delim = ft_calloc(len + 1, sizeof(char));
 	if (!delim)
 		return (NULL);
-	while (s[index] && (s[index] != ' ' || ((sq % 2) || (dq % 2))))
+	while (s[index] && (s[index] != ' ' || ((sq % 2)
+				|| (dq % 2))) && s[index] != '<')
 	{
 		is_in_quote(s[index], &sq, &dq);
 		if (s[index] != '\"' && s[index] != '\'')
 			delim[i++] = s[index];
 		index++;
 	}
+	k = i;
 	return (delim);
 }
 
@@ -108,7 +110,7 @@ int	handle_here_doc(t_all *all, char *delim, bool is_quote)
 	return (fd);
 }
 
-int	check_here_doc(t_all *all, char *s)
+int	check_here_doc(t_all *all, char *s, int *k)
 {
 	bool	is_quote;
 	int		index;
@@ -118,13 +120,14 @@ int	check_here_doc(t_all *all, char *s)
 
 	fd = -2;
 	is_quote = false;
-	index = is_here_doc(s);
+	index = is_here_doc(s, *k);
 	if (index != -1)
 	{
 		all->f_here_doc = 1;
 		len = len_delim(s, index);
 		is_quote = is_quote_delim(s, index);
-		delim = get_delim(s, index, len);
+		delim = get_delim(s, index, len, *k);
+		*k = index;
 		if (!delim)
 			ft_exit(all, NULL);
 		fd = handle_here_doc(all, delim, is_quote);
